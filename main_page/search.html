@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>一键查找</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<style>
+			 input::-webkit-input-placeholder{
+			 	font-size: 16px;
+	            color:#333333;
+	        }
+	        table{
+	        	width:100%;
+	        	text-align: center;
+	        	table-layout: fixed;
+	        }
+	        
+	        table tr td{color:#333333}
+	        
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                /*height: 45px;*/
+                font-size: 15px;
+	        }
+	        
+	        table td{
+	        	font-size: 13px;
+	        	height: 40px;
+	        	border-bottom: 1px solid #eee;
+	        }
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #fff;overflow: hidden;">
+			<!--<form class="mui-input-group">-->
+				<div style="width: 100%;height: 20%;background: #EEEEEE;">
+					<div id="dw_ss" class="dw_area">
+						<img src="../images/img/dw_xz.png" style="width: 70px;height:70px;margin-left: 80px;margin-top: 4%;float: left;"/>
+						<img onclick="ryss()"  src="../images/img/ry_wxz.png" style="width: 50px;height:50px;margin-right: 70px;margin-top: 7%;float: right;"/>
+					</div>
+					<div id="ry_ss" style="display: none;" class="ry_area">
+						<img onclick="dwss()"  src="../images/img/dw_wxz.png" style="width: 50px;height:50px;margin-left: 80px;margin-top: 6%;float: left;"/>
+						<img  src="../images/img/ry_xz.png" style="width: 70px;height:70px;margin-right: 70px;margin-top: 4%;float: right;"/>
+					</div>
+				</div>
+				<div style="width：100%;height:6%;">
+					<table style="height: 100%;">
+						<tr>
+							<td style="text-align: left;padding-left:15px;width: 25%;color: #999999;">地区</td>
+							<td style="text-align: left;padding-left:15px;width: 75%;border: 0;" id="dqlb"></td>
+						</tr>
+					</table>
+				</div>
+				<div style="width：100%;height:7%;">
+					<table style="height: 100%;">
+						<tr>
+							<td style="width: 85%;text-align: left;"><input id='gjz' type="text" class="mui-input-clear mui-input" placeholder="请输入单位信息" style="width:98%;margin-bottom:0;border:0;height: 100%;"></td>
+							<td style="width: 15%;"><img id="czbtn" src="../images/img/search.png" style="width:33px;height:26px;border:0;"/></td>
+						</tr>
+					</table>
+				</div>
+			<!--</form>-->
+			<div style="width：100%;height:10%;clear: both;" id="dwbt" class="dw_area">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<td style="width: 12%;">序号</td>
+						<td style="width: 25%;">主管局</td>
+						<td style="width: 47%;">单位名称</td>
+						<td style="width: 15%;"></td>
+					</tr>
+				</table>
+			</div>
+			
+			<div style="width：100%;height:10%;clear: both;display: none;" id="rybt" class="ry_area">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<td style="width: 10%;">序号</td>
+						<td style="width: 18%;">单位</td>
+						<td style="width: 15%;">姓名</td>
+						<td style="width: 10%;">性别</td>
+						<td style="width: 22%;">编制类别</td>
+						<td style="width: 22%;">岗位等级</td>
+					</tr>
+				</table>
+			</div>
+			<div style="width：100%;height: 55%;overflow: auto;"  id="dwtab" class="dw_area">
+				<table class="dwlb cxlb"></table>
+			</div>
+			<div style="width：100%;height: 55%;overflow: auto;display: none;"  id="rytab" class="ry_area">
+				<table class="rylb cxlb"></table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
+		<script>
+			$(function(){
+				
+			})
+			
+			function getdqxx(district){//查询地区选项
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getdqlist',{
+					data:{
+						district:district
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						if(data == ""){
+							return;
+						}
+						//   地区代码：district 地区名称：district_name 
+						var str = "<span class='mui-badge1' style='padding:0px; width:65%; float:left;'>"+
+							"<select class='mui-h5 dqsel' href='#' style='margin:auto; color:#000;padding:5px 10px;'>"+
+							"<option  value='' class=''>"+'请选择地区'+"</option>";
+						var data = eval("("+data+")");
+						$("#dqlb").html("");
+						for(i in data){
+							str+="<option  value='"+data[i].district+"' class=''>"+data[i].district_name+"</option>";
+						}
+						$("#dqlb").html(str+"</span>");
+						$(".mui-badge1 option[value='"+district+"']").attr("selected","selected"); 
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}//getdqxx
+			
+			function dwss(){//点击单位图片(搜索单位)
+				$(".rylb tr").remove();
+				$(".ry_area").hide();
+				$(".dw_area").show();
+				$("#gjz").val("");
+				$("#gjz").attr("placeholder","请输入单位信息");
+				cxdwlb('');//模糊查询所有单位
+			}
+			function ryss(){//点击人员图片(搜索人员)
+				$(".dwlb tr").remove();
+				$(".dw_area").hide();
+				$(".ry_area").show();
+				$("#gjz").val("");
+				$("#gjz").attr("placeholder","请输入人员姓名");
+			}
+			
+			function cxdwlb(name){//查询单位列表（第一次加载，以及之后的模糊查询）
+				var district = plus.storage.getItem('district');
+				if($(".dqsel").val() == ""){
+					$(".dqsel").val(district)
+				}
+				district = $(".dqsel").val();
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getdwlist',{
+					data:{
+						district:district,
+						sel_name:name
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data) 
+						//[{"zgj_name":"1","company_num":"320600001726","company_name":"国家队2"}
+						var str = "";
+						var data = eval("("+data+")");
+						$(".dwlb tr").remove();
+						for(i in data){
+							str+="<tr id='"+i+"'>"+
+							"<td class='index' style='width: 12%;'>"+(i*1+1)+"</td>"+
+							"<td style='width: 25%;'>"+(data[i].zgj_name == undefined ? "" : data[i].zgj_name)+"</td>"+
+							"<td style='width: 47%;'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
+							"<td style='width: 15%;' class='dw_jt'><img src='../images/img/jt_right.png' style='width: 20px;height: 20px;'></td>"+
+							"<td style='display:none;'>"+data[i].company_num+"</td>"+
+							"</tr>";
+						}
+						$(".dwlb").append(str);
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr);
+						console.log(type);
+						console.log(errorThrown);
+					}
+				});
+			}//cxdwlb
+			function cxrylb(name){//查询人员列表（模糊查询）
+				var district = plus.storage.getItem('district');
+				if($(".dqsel").val() == ""){
+					$(".dqsel").val(district)
+				}
+				district = $(".dqsel").val();
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_list_ry_yjcz',{
+					data:{
+						district:district,
+						sel_name:name
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						//[{"company_num":"","worker_code":"","worker_name":"","sex":"","jb_name":"","blood_type_name":""}
+						var str = "";
+						var data = eval("("+data+")");
+						$(".rylb tr").remove();
+						for(i in data){
+							str+="<tr>"+
+							"<td class='index' style='width: 10%;'>"+(i*1+1)+"</td>"+
+							"<td style='width: 18%;'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].worker_name == undefined ? "" : data[i].worker_name)+"</td>"+
+							"<td style='width: 10%;'>"+(data[i].sex == undefined ? "" : data[i].sex)+"</td>"+
+							"<td style='display:none;'>"+data[i].company_num+"</td>"+
+							"<td style='width: 22%;'>"+(data[i].blood_type_name == undefined ? "" : data[i].blood_type_name)+"</td>"+
+							"<td style='width: 22%;'>"+(data[i].jb_name == undefined ? "" : data[i].jb_name)+"</td>"+
+							"<td style='display:none;'>"+data[i].worker_code+"</td>"+
+							"</tr>";
+						}
+						$(".rylb").append(str);
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr);
+						console.log(type);
+						console.log(errorThrown);
+					}
+				});
+			}//cxrylb
+			
+			(function($, doc) {
+				mui.init({});
+
+				
+				$.plusReady(function() {
+					//cxdwlb('');//首次进入查询单位列表,sel_name传空值
+					
+					var district = plus.storage.getItem('district');
+					getdqxx(district);//查询地区选项
+					
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+					document.getElementById("czbtn").addEventListener('tap',function(){//模糊查询
+						var gjz = document.getElementById("gjz").getAttribute("placeholder");
+						if(gjz == "请输入单位信息"){
+							cxdwlb(doc.getElementById('gjz').value);
+						}else{
+							if(doc.getElementById('gjz').value == ""){
+								mui.toast('人员姓名不能为空');
+							}else{
+								cxrylb(doc.getElementById('gjz').value);
+							}
+						}
+					})
+					
+					
+					mui(".cxlb").on('tap','tr',function(){
+					  //获取id
+					  //var id = this.getAttribute("id"); 根据id获取对应元素
+					  var rid=this.children;//获取选中行
+     				  var company_num = rid[4].innerHTML;
+     				  plus.storage.setItem('company_num', company_num);
+					  //打开新闻详情*/
+					  mui.openWindow({
+					    id:'dwjbxx',
+					    url: '../dwjbxx/main.html'
+					  });
+					}) 
+					
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

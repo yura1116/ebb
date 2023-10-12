@@ -1,0 +1,148 @@
+{
+	"index.html": {
+		"refer": [
+			"login.html"
+		]
+	},
+	"main.html": {
+		"resources": [
+			"tab/search.html",
+			"main_page/search.html",
+			"main_page/bzwj.html",
+			"main_page/bzjg.html",
+			"main_page/zgjbzjg.html",
+			"main_page/qsbzjg.html"
+		],
+		"refer": [
+			"tab/search.html",
+			"main_page/search.html",
+			"main_page/bzjg.html",
+			"main_page/bzwj.html",
+			"main_page/bzgk.html",
+			"main_page/zgjbzjg.html",
+			"main_page/qsbzjg.html"
+		]
+	},
+	"login.html": {
+		"refer": [
+			"main.html",
+			"login.html"
+		]
+	},
+	"main_page/search.html": {
+		"refer": [
+			"dwxx/main.html",
+			"dwjbxx/main.html"
+		]
+	},
+	"dwjbxx/main.html": {
+		"resources": [
+			"dwjbxx/dwxx.html"
+		],
+		"refer": [
+			"dwjbxx/dwxx.html",
+			"dwjbxx/jgyg.html",
+			"dwjbxx/dwpz.html",
+			"dwjbxx/dwxx_dwpz.html",
+			"dwjbxx/nsjglb.html",
+			"dwjbxx/nsjgxx.html",
+			"dwjbxx/ryxx.html",
+			"dwjbxx/rylb.html",
+			"dwjbxx/rybd.html"
+		]
+	},
+	"dwjbxx/dwpz.html": {
+		"resources": [
+			"dwjbxx/bzpz.html",
+			"dwjbxx/dwpz_bzpz.html"
+		],
+		"refer": [
+			"dwjbxx/bzpz.html",
+			"dwjbxx/dwpz_bzpz.html",
+			"dwjbxx/dwpz_gwpz.html",
+			"dwjbxx/dwpz_zspz.html"
+		]
+	},
+	"dwjbxx/dwxx_dwpz.html": {
+		"resources": [
+			"dwjbxx/bzpz.html"
+		],
+		"refer": [
+			"dwjbxx/bzpz.html"
+		]
+	},
+	"dwjbxx/nsjglb.html": {
+		"refer": [
+			"dwjbxx/nsjgxx.html"
+		]
+	},
+	"dwjbxx/rylb.html": {
+		"refer": [
+			"dwjbxx/ryxx.html",
+			"dwjbxx/rylb.html"
+		]
+	},
+	"main_page/bzwj.html": {
+		"refer": [
+			"main_page/bzwj_xx.html"
+		]
+	},
+	"main_page/bzwj_xx.html": {
+		"refer": [
+			"main_page/bzwj_xx.html",
+			"web/viewer.html",
+			"main_page/bzwj_yd.html",
+			"login.html",
+			"main_page/bzwj_pdf.html"
+		]
+	},
+	"main_page/bzjg.html": {
+		"refer": [
+			"dwjbxx/main.html"
+		],
+		"resources": [
+			"images/img/jt_down.png"
+		]
+	},
+	"dwjbxx/jgyg.html": {
+		"refer": [
+			"main_page/bzwj_xx.html",
+			"main_page/bzwj_pdf.html"
+		]
+	},
+	"main_page/zgjbzjg.html": {
+		"refer": [
+			"main_page/zgjbzxx.html",
+			"main_page/zgj_jgbz_sbws_nsjg.html"
+		]
+	},
+	"main_page/zgjbzxx.html": {
+		"refer": [
+			"dwjbxx/main.html",
+			"main_page/zgjbzjg.html",
+			"main_page/sbwsqk.html",
+			"main_page/bzqkhzb.html"
+		]
+	},
+	"main_page/qsbzjg.html": {
+		"refer": [
+			"main_page/zgjbzjg.html",
+			"main_page/bzgk.html"
+		]
+	},
+	"main_page/zgj_jgbz_sbws_nsjg.html": {
+		"refer": [
+			"main_page/sbwsqk.html",
+			"dwjbxx/dwpz.html",
+			"dwjbxx/dwpz_bzpz.html",
+			"dwjbxx/jgbz_xz_dwpz.html",
+			"dwjbxx/jgbz_xz_rylb.html",
+			"dwjbxx/jgbz_xz_bwry.html"
+		]
+	},
+	"dwjbxx/jgbz_xz_rylb.html": {
+		"refer": [
+			"dwjbxx/ryxx.html"
+		]
+	}
+}

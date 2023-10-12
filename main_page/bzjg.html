@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>编制结构</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<script src=""></script>
+		<style>
+	        table{
+	        	width:100%;
+	        	text-align: center;
+	        	table-layout: fixed;
+	        }
+	        
+	        table input{
+	        	height: 70% !important;
+	        	margin:0 !important;
+	        	border:0 !important;
+	        }
+	        
+	        table tr td{color:#333333}
+	        
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                font-size: 15px;
+	        }
+	        
+	        table td{
+	        	font-size: 13px;
+	        	height: 40px;
+	        	background: #fff;
+	        }
+	        
+	        .mui-input-group:before{height:0;}
+	        .mui-input-group:after{height:0;}
+	        
+	        #bzjg_ss td{
+	        	text-align: left;
+	        	font-size: 14px;
+	        }
+	        .cd{background: #fff;padding:0 !important;margin: 0 0 0 0px !important;}
+	        input{font-size: 14px;padding:0 !important;}
+	        .bt{text-align: right !important;padding-right:25px;color: #999999;}
+	        #list {
+				/*避免导航边框和列表背景边框重叠，看起来像两条边框似得；*/
+				font-size: 13px;
+				line-height: 40px;
+			}
+			.mui-navigate-right span{
+				display: inline-block;
+				text-align: center;
+			}
+			.mui-table-view-chevron .mui-table-view-cell{padding-right:0;}
+			.mui-table-view-cell{padding:0 0;}
+			.mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn){margin-right: 0;}
+			.mui-table-view-cell>a:not(.mui-btn){margin:0 0;}
+			.mui-table-view-cell.mui-collapse.mui-active>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse.mui-active>.mui-push-right:after{
+				background: url(../images/img/jt_down.png) no-repeat center center;
+				content: '';
+				width: 20px;
+				height: 20px;
+				background-size: 20px auto;
+			}
+			
+			.mui-navigate-right:after, .mui-push-right:after{
+				background: url(../images/img/jt_right.png) no-repeat center center;
+				content: '';
+				width: 20px;
+				height: 20px;
+				background-size: 20px auto;
+			}
+			.mui-table-view-cell.mui-collapse>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse>.mui-push-right:after{content:''}
+			.mui-table-view-cell.mui-collapse.mui-active{background: #eee;}
+			.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell{padding-left:0px !important;}
+			.mui-table-view-cell.mui-collapse .mui-table-view.mui-table-view-chevron{margin-right: 0px !important;}
+			.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell:after{left:0;}
+			.mui-table-view-cell:after{left:0;}
+			#bzjglb span{text-overflow: ellipsis;white-space:nowrap;display:inline-block;overflow: hidden;vertical-align:bottom;}
+			.mui-table-view-cell.mui-collapse.mui-active{background: #fff;}
+			.mui-table-view-cell:after {height: 0;}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
+			<div style="width:100%;height:33%;margin-top:3%;">
+				<table style="height: 100%;" id="bzjg_ss">
+					<tr>
+						<td style="width:40%;" class="bt">地区</td>
+						<td style="width:60%;" id="dqlb"></td>
+					</tr>
+					<tr>
+						<td class="bt">系统类别</td>
+						<td id="xtlbtd"  style=""></td>
+					</tr>
+					<tr>
+						<td  class="bt">单位名称</td>
+						<td><input type="text" id="sel_name" value="" placeholder="请输入单位名称"></td>
+					</tr>
+					<tr>
+						<td  colspan="2" style="text-align: center;"><input type="button" onclick="cxbzjg()" style="border:1px solid #12AAC1;background: #12AAC1;border-radius: 25px;color: #fff;width:130px;height:35px;font-size: 15px;text-align: center;" value="搜索"></td>
+					</tr>
+				</table>
+			</div>
+			<div style="width:100%;height:12%;clear: both;padding-top:3%;">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<td style="width: 11%;">序号</td>
+						<td style="width: 65%;">单位名称</td>
+						<td style="width: 10%;"></td>
+					</tr>
+				</table>
+			</div>
+			<div style="width:100%;height:51%;overflow: auto;background: #fff;">
+				<table class="bt_body" id="bzjglb"></table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js" ></script>
+		<script src="../js/jquery-1.9.1.min.js" ></script>
+		<script>
+			$(function(){
+				
+			})
+			
+			function getdqxx(district){//查询地区选项
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getdqlist',{
+					data:{
+						district:district
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						if(data == ""){
+							return;
+						}
+						//   地区代码：district 地区名称：district_name 
+						var str = "<span class='mui-badge1' style='padding:0px; width:65%; float:left;'>"+
+							"<select class='mui-h5 dqsel' href='#' style='margin:auto; color:#000;padding:5px 10px;'>"+
+							"<option  value='' class=''>"+'请选择地区'+"</option>";
+						var data = eval("("+data+")");
+						$("#dqlb").html("");
+						for(i in data){
+							str+="<option  value='"+data[i].district+"' class=''>"+data[i].district_name+"</option>";
+						}
+						$("#dqlb").html(str+"</span>");
+						$(".mui-badge1 option[value='"+district+"']").attr("selected","selected"); 
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}//getdqxx
+			
+			function getxtlbxx(){//查询系统类别选项
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getxtlblist',{
+					data:{},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}  
+						//   系统类别代码：g_code 系统类别名称：g_name 
+						var str = "<span class='mui-badge1' style='padding:0px; width:65%; float:left;'>"+
+							"<select class='mui-h5 xtlbsel' href='#' style='margin:auto; color:#000;padding:5px 10px;'>"+
+							"<option  value='' class=''>"+'请选择系统类别'+"</option>";
+						var data = eval("("+data+")");
+						$("#xtlbtd").html("");
+						for(i in data){
+							str+="<option value='"+data[i].g_code+"' class=''>"+data[i].g_name+"</option>";
+						}
+						$("#xtlbtd").html(str+"</span>");
+						$(".mui-badge1 option[value='001']").attr("selected","selected");
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}//getxtlbxx
+			
+			function cxbzjglb(){//地区、系统类别、单位名称模糊查询
+				var district = plus.storage.getItem('district');
+				if($(".dqsel").val() == ""){
+					$(".dqsel").val(district)
+				}
+				var sel_dq = $(".dqsel").val();
+				var sel_xtlb = $(".xtlbsel").val();
+				var sel_name = $("#sel_name").val();
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getbzjglist_sel',{
+					data:{
+						sel_dq:sel_dq,
+						sel_xtlb:sel_xtlb,
+						sel_name:sel_name
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						$("#bzjglb ul").remove();
+ 						// 主管局名称：zgj_name 单位代码：company_num 单位名称：company_name 类型：lx (行、参、事)
+						var str = "<ul id='list' class='mui-table-view mui-table-view-chevron'>";
+						var data = eval("("+data+")");
+						var a  = ""
+						for(i in data){
+							if(data[i].lx == "行"){
+								a = "../images/img/ztree/xzdw.png";
+							}else if(data[i].lx == "参"){
+								a = "../images/img/ztree/can.png";
+							}else if(data[i].lx == "事"){
+								a = "../images/img/ztree/sydw.png";
+							}
+							str+="<li class='mui-table-view-cell mui-collapse fjd'>"+
+										"<a class='nsjgjt' href='#'>"+
+											"<span style='width: 11%;' target='"+data[i].company_num+"'>"+(i*1+1)+"</span>"+
+											"<span style='width: 65%;text-align:left;padding-left:15px;' target='"+data[i].company_num+"'>"+
+											"<img src='"+a+"' style='margin: -2px 10px 0 0;vertical-align: middle;'>"+
+											(data[i].company_name == undefined ? "" : data[i].company_name)+"</span>"+
+											"<span style='width: 10%;color:#12AAC1' class='bzjgxq' target='"+data[i].company_num+"'>"+'详情'+"</span>"+
+											"<span style='width: 10%;' class='jt' id='"+data[i].company_num+"'><img src='../images/img/jt_down.png' style='width: 20px;height: 20px;vertical-align: middle;'></span>"+
+											"<span style='display:none;' id='"+data[i].company_num+"'>"+data[i].company_num+"</span>"+
+										"</a>"+
+								"</li>";
+						}
+						$("#bzjglb").append(str+"</ul>");
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}
+			
+			function cxbzjg(){
+				var district = plus.storage.getItem('district');
+				var sel_dq = $(".dqsel").val();
+				var sel_xtlb = $(".xtlbsel").val();
+				var sel_name = $("#sel_name").val();
+				
+				if(sel_name == ""){//单位名称为空调用首次查询
+					if($(".dqsel").val() != ""){
+						district = $(".dqsel").val();
+					}
+					getbzjglb(district);
+				}else{//单位名称不空 ，调用方法
+					cxbzjglb();
+				}
+			}
+		
+			function getbzjglb(district){//首次查询编制结构列表
+				var xtlb = $(".xtlbsel").val();
+				if(xtlb == undefined){
+					xtlb = "001";
+				}
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getzgjlist',{
+					data:{
+						sel_dq:district,
+						sel_xtlb:xtlb
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						if(data == ""){
+							return;
+						}
+						$("#bzjglb ul").remove();
+ 						// 主管局名称：zgj_name 单位代码：company_num 单位名称：company_name 类型：lx (行、参、事)
+						var str = "<ul id='list' class='mui-table-view mui-table-view-chevron'>";
+						var data = eval("("+data+")");
+						var a  = ""
+						for(i in data){
+							if(data[i].lx == "行"){
+								a = "../images/img/ztree/xzdw.png";
+							}else if(data[i].lx == "参"){
+								a = "../images/img/ztree/can.png";
+							}else if(data[i].lx == "事"){
+								a = "../images/img/ztree/sydw.png";
+							}
+							str+="<li class='mui-table-view-cell mui-collapse fjd'>"+
+										"<a class='nsjgjt' href='#'>"+
+											"<span style='width: 11%;' target='"+data[i].company_num+"'>"+(i*1+1)+"</span>"+
+											"<span style='width: 65%;text-align:left;padding-left:15px;' target='"+data[i].company_num+"'>"+
+											"<img src='"+a+"' style='margin: -2px 10px 0 0;vertical-align: middle;'>"+
+											(data[i].company_name == undefined ? "" : data[i].company_name)+"</span>"+"</span>"+
+											"<span style='width: 10%;color:#12AAC1;' class='bzjgxq' target='"+data[i].company_num+"'>"+'详情'+"</span>"+
+											"<span style='width: 10%;' class='jt' id='"+data[i].company_num+"'><img src='../images/img/jt_down.png' style='width: 20px;height: 20px;vertical-align: middle;'></span>"+
+											"<span style='display:none;' id='"+data[i].company_num+"'>"+data[i].company_num+"</span>"+
+										"</a>"+
+								"</li>";
+						}
+						$("#bzjglb").append(str+"</ul>");
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}
+			
+			function getxsdw(company_num,obj){
+				$(obj).parent().parent().find("ul").remove();
+				$("table a").css("background","#fff");
+				$(obj).parent().css("background","#eee");
+				//查询编制配置信息
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getxsdwlist',{
+					data:{
+						company_num:company_num
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						// 主管局名称：zgj_name 单位代码：company_num 单位名称：company_name 类型：lx (行、参、事)
+						var str = "<ul class='mui-table-view mui-table-view-chevron' style='margin:0;padding:0;'>";
+						var data = eval("("+data+")");
+						for(i in data){
+							if(data[i].lx == "行"){
+								a = "../images/img/ztree/xzdw.png";
+							}else if(data[i].lx == "参"){
+								a = "../images/img/ztree/can.png";
+							}else if(data[i].lx == "事"){
+								a = "../images/img/ztree/sydw.png";
+							}
+							str+="<li class='mui-table-view-cell'>"+
+										"<a class='cd' href='#' style=''>"+
+											"<span style='width: 60%;text-align:left;margin-left:20%;'  target='"+data[i].company_num+"'>"+'（ '+(i*1+1)+' ）'+
+											"<img src='"+a+"' style='margin: -2px 10px 0 10px;vertical-align: middle;'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+
+											"</span>"+
+											"<span style='width: 10%;color:#12AAC1' class='bzjgxq' target='"+data[i].company_num+"'>"+'详情'+"</span>"+
+											"<span style='width: 10%;' class='jt' target='"+data[i].company_num+"' id='"+data[i].company_num+"'><img src='../images/img/jt_down.png' style='width: 20px;height: 20px;vertical-align: middle;'></span>"+
+											"<span style='display:none;' id='"+data[i].company_num+"'>"+data[i].company_num+"</span>"+
+										"</a>"+
+									"</li>";
+						}
+						$(obj).parent().parent().append(str+"</ul>");
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//aja
+			}
+			
+			function bs(company_num){
+				$("#bzjglb span").css("background","#fff")
+				$("#"+company_num).parent().find("span").css("background","#eee")
+			}
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					
+					var district = plus.storage.getItem('district');
+					
+					getdqxx(district);//查询地区选项
+					getxtlbxx();//查询系统类别选项
+					getbzjglb(district)
+					
+					mui("#bzjglb").on('tap','.jt',function(){
+					  //获取id
+					  var company_num = this.getAttribute("id"); //根据id获取对应元素
+     				  getxsdw(company_num,this);
+					}) 
+					
+					mui("#bzjglb").on('tap','.bzjgxq',function(){
+						var company_num = this.getAttribute("target");
+						bs(company_num);
+						plus.storage.setItem('company_num', company_num);
+						//打开新闻详情*/
+						mui.openWindow({
+						   id:'dwjbxx',
+						   url: '../dwjbxx/main.html'
+						});
+					})
+					
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

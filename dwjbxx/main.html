@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主页-单位信息</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			*{background: #fff;}
+			.mui-active{color:#12AAC1 !important}
+			a{overflow: inherit !important;}
+			.mui-bar-tab .dwxx_tab.mui-active{border-bottom: 1px solid #12AAC1;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-bar-tab .mui-tab-item{height:9%;}
+			.mui-bar-nav.mui-bar .mui-icon{margin:0;padding:0;}
+			.mui-bar .mui-icon{margin:0;padding:0;}
+			.mui-pull-left{float: none;color:#fff;}
+			.mui-tab-label{font-size: 14px;}
+			.dwpz {
+				display: table-cell;
+				overflow: hidden;
+				width: 1%;
+				height: 50px;
+				text-align: center;
+				vertical-align: middle;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				color: #929292 !important;
+			}
+		</style>
+	</head>
+
+	<body>
+        <header class="mui-bar mui-bar-nav" style="background: #12AAC1;height: 60px;padding:0;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+        <nav class="mui-bar mui-bar-tab" style="top:60px !important;height: 50px !important;bottom: 0 !important;color: #999999;background: #fff;box-shadow:none;">
+            <a id="defaultTab" class="mui-tab-item mui-active dwxx_tab" href="dwxx.html">
+                <span class="mui-tab-label">单位信息</span>
+            </a>
+            <a class="dwpz" href="#">
+                <span class="mui-tab-label">单位配置</span>
+            </a>
+            <a class="mui-tab-item dwxx_tab" href="jgyg.html">
+                <span class="mui-tab-label">机构沿革</span>
+            </a>
+            <a class="mui-tab-item  dwxx_tab" href="nsjglb.html">
+                <span class="mui-tab-label">内设机构</span>
+            </a>
+            <a class="mui-tab-item  dwxx_tab" href="rylb.html">
+                <span class="mui-tab-label">人员信息</span>
+            </a>
+             <a class="mui-tab-item dwxx_tab" href="rybd.html">
+                <span class="mui-tab-label">人员变动</span>
+            </a>
+        </nav>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					//点击单位配置
+					mui(".mui-bar-tab").on('tap','.dwpz',function(){
+					  mui.openWindow({
+					    id:'dwpz',
+					    url:'dwpz.html'
+					  });
+					}) 
+					
+					var pages = ["dwxx.html","jgyg.html","nsjglb.html","rylb.html","rybd.html"];
+				    var arr = document.getElementsByClassName("dwxx_tab")
+				    var styles = {
+				        top:"110px",
+                		bottom:"0",
+			        	width:'100%',
+				    }
+				    var pageArr = [];
+				    var slef = plus.webview.currentWebview();
+				    for(var i=0; i<arr.length; i++){
+				    	//for(var i=0; i<arr.length; i++){官方提供的demo是首次运行时全部的子页面都加载出来，只是不显示，实际使用中点击对应的选项卡，再打开对应的页面
+				        // 有几个选项卡，需要创建几个子页面
+				        var page = plus.webview.create(pages[i],pages[i],styles);
+				        pageArr.push(page);
+				        !function(i){
+				            arr[i].addEventListener("tap",function(){
+				                // 让当前页面(i)显示，不是当前页面隐藏
+				                for(var j=0; j<pageArr.length; j++){
+				                    if(j!=i) pageArr[j].hide();
+				                    else pageArr[j].show();
+				                }
+				                /* 让新创建的webview，追加合并到当前的窗口上。合并成一个窗口。
+				                 * 目的：将父子窗口合并成一个页面，实现同开同关的效果。 避免点击返回安监室，子页面先关闭，而父页面的头部和尾部没有关闭的BUG。
+				                 */
+				                slef.append(pageArr[i]);
+				            })
+				        }(i);
+				    }
+				    // 默认触发第0个选项卡的tap事件。
+				    mui.trigger(arr[0],"tap");
+					
+//					var activeTab = pages[0];  //设置默认
+//					mui('.mui-bar-tab').on('tap', 'a', function(e) {  //选项卡点击事件   
+//						var targetTab = this.getAttribute('href');  
+//						if (targetTab == activeTab) {  
+//						return;  
+//						}  
+//						var self = plus.webview.currentWebview();  
+//						var sub = plus.webview.create(targetTab, targetTab, styles);  
+//						self.append(sub);  
+//						//隐藏当前;  
+//						plus.webview.hide(activeTab);//这里应该是关闭页面，隐藏会影响加载速度 
+//						  plus.webview.close(activeTab); 
+//						//更改当前活跃的选项卡  
+//						activeTab = targetTab;  
+//					});
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html'
+						});
+					})
+					
+					//退出系统
+					document.getElementById('exit').addEventListener('tap', function() {
+						var btn = ["确定","再看看"];
+						mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+						if(e.index==0){
+						  //mui.currentWebview.close();//退出当前页面
+						  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+							if (mui.os.ios){
+							    const threadClass = plus.ios.importClass("NSThread");
+							    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+							    plus.ios.invoke(mainThread, "exit");
+							}else if (mui.os.android){
+							    plus.runtime.quit();
+							}
+	
+						}
+						});
+					})
+					
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

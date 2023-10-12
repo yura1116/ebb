@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主管局及下属单位编制信息</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<style>
+			*{background: #eee;}
+			table{
+	        	width:100%;
+	        	text-align: center;
+	        	/*table-layout: fixed;*/
+	        }
+	        
+			tr td{font-size: 14px;height: 25px;background: #fff;border:1px solid #eee;}
+			.bt_tab td{
+	        	background: #DEDEDE;
+                font-size: 15px;
+                border:0;
+	        }
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-pull-left{float: none;color:#fff;}
+			.mui-bar-nav.mui-bar .mui-icon{margin:0;padding:0;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #12AAC1;height: 60px;padding:0;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+        <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:60px;padding: 0;background: #eee;">
+			<div style="text-align: center;font-size: 18px;height: 40px;line-height: 40px;">机构编制信息</div>
+			<div style="width:100%;height:25%;">
+				<table id="zgjbzlb" style="height: 100%;"> 
+					<tr class="bt_tab">
+						<td style="width:13%;" rowspan="2">部门名称</td>
+						<td style="width:13%;" rowspan="2" colspan="2">编制类别</td>
+						<td colspan="5">人员编制信息</td>
+					</tr>
+					<tr class="bt_tab">
+						<td style="width:13%">核定</td>
+						<td style="width:13%">实配</td>
+						<td style="width:13%">有效<br>计划</td>
+						<td style="width:13%">空编</td>
+						<td style="width:13%">编外</td>
+					</tr>
+					<tr>
+						<td rowspan="3" id="company_name"></td>
+						<td colspan="2">行政</td>
+						<td id="hds_xz" class="jgbz_tr"></td>
+						<td id="sps_xz" class="jgbz_tr"></td>
+						<td id="yxjhs_xz"></td>
+						<td id="kbs_xz"></td>
+						<td id="bw_xz" class="jgbz_tr"></td>
+					</tr>
+					<tr>
+						<td style="border:1px solid #fff"></td>
+						<td>事业</td>
+						<td id="hds_sy" class="jgbz_tr"></td>
+						<td id="sps_sy"></td>
+						<td id="yxjhs_sy"></td>
+						<td id="kbs_sy"></td>
+						<td id="bw_sy"></td>
+					</tr>
+					<tr>
+						<td style="width:3%;"></td>
+						<td style="width:13%;">&nbsp;&nbsp;其中:<br>参公</td>
+						<td id="hds_cg"></td>
+						<td id="sps_cg"></td>
+						<td id="yxjhs_cg"></td>
+						<td id="kbs_cg"></td>
+						<td id="bw_cg"></td>
+					</tr>
+				</table>
+			</div>
+			<div style="text-align: center;font-size: 18px;height: 40px;line-height: 40px;">苏北五市排名情况</div>
+			<div style="width:100%;height:20%;">
+				<table id="" style="height: 100%;"> 
+					<tr class="bt_tab">
+						<td style="width:13%;">苏北五市</td>
+						<td style="width:13%;">编制</td>
+						<td style="width:13%;">排名</td>
+					</tr>
+					<tr>
+						<td>连云港</td>
+						<td id="bzs_lyg"></td>
+						<td id="pm_lyg"></td>
+					</tr>
+					<tr>
+						<td>淮安</td>
+						<td id="bzs_has"></td>
+						<td id="pm_has"></td>
+					</tr>
+					<tr>
+						<td>盐城</td>
+						<td id="bzs_ycs"></td>
+						<td id="pm_ycs"></td>
+					</tr>
+					<tr>
+						<td>徐州</td>
+						<td id="bzs_xzs"></td>
+						<td id="pm_xzs"></td>
+					</tr>
+					<tr>
+						<td>宿迁</td>
+						<td id="bzs_sqs"></td>
+						<td id="pm_sqs"></td>
+					</tr>
+				</table>
+			</div>
+			<div style="text-align: center;font-size: 18px;height: 40px;line-height: 40px;">内设机构信息</div>
+			<div style="width:100%;height:38%;overflow: auto;">
+				<table id="nsjglb"> 
+					<tr class="bt_tab">
+						<td style="width:13%;">序号</td>
+						<td style="width:13%;">内设机构名称</td>
+						<td style="width:13%;">编制数</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			$(function(){
+				
+			})
+			
+			
+			function getbzpzxx(){
+				var zgjnum = plus.storage.getItem('zgjnum');
+				var username = plus.storage.getItem('username');
+				//查询编制配置信息
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_dwr_jgbzxx',{
+					data:{
+						company_num:zgjnum
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						var data = eval("("+data+")");//转换为json对象
+						$.each(data,function (key,value) {
+						   $("#"+key).text(value);
+						});
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+				
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_dwr_sbwsqk',{
+					data:{
+						company_num:zgjnum
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						var data = eval("("+data+")");//转换为json对象
+						$.each(data,function (key,value) {
+						   $("#"+key).text(value);
+						});
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+				
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_list_nsjg',{
+					data:{
+						company_num:zgjnum
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						var str = "";
+						var data = eval("("+data+")");
+						$("#nsjglb tr:gt(0)").remove();
+						for(i in data){
+							str+="<tr id='"+i+"' target='"+data[i].gg_bm_id+"'>"+
+							"<td style='width: 13%;border:1px solid #eee;' class='' target='"+data[i].gg_bm_id+"'>"+(i*1+1)+"</td>"+
+							"<td style='width: 18%;border:1px solid #eee;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].gg_bm_mc == undefined ? "" : data[i].gg_bm_mc)+"</td>"+
+							"<td style='width: 19%;border:1px solid #eee;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].curr_stuff == undefined ? "" : data[i].curr_stuff)+"</td>"+
+							"</tr>";
+						}//
+						$("#nsjglb").append(str);
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}
+			
+			function getjgdwcount(){//获取下级单位数量
+				var zgjnum = plus.storage.getItem('zgjnum');
+				var xjdw = "";
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getjgdwcount',{
+					data:{
+						company_num:zgjnum
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					async : false,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						xjdw = data;
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+				return xjdw;
+			}
+			
+			function goto_xj_page(dwcount,flag,zgjnum){//点击数字 跳转页面
+				if(dwcount > 0){//有下级单位
+									
+				}else{//没有下级单位
+					if(flag == "hds_xz"){
+						plus.storage.setItem('company_num', zgjnum);
+						mui.openWindow({
+						   id:'jgbz_xz_dwpz',
+						   url:'../dwjbxx/jgbz_xz_dwpz.html'
+						}); 
+					}else if(flag == "sps_xz"){
+						plus.storage.setItem('company_num', zgjnum);
+						mui.openWindow({
+						   id:'jgbz_xz_rylb',
+						   url:'../dwjbxx/jgbz_xz_rylb.html'
+						}); 
+					}else if(flag == "bw_xz"){
+						plus.storage.setItem('company_num', zgjnum);
+						mui.openWindow({
+						   id:'jgbz_xz_bwry',
+						   url:'../dwjbxx/jgbz_xz_bwry.html'
+						}); 
+					}
+				}
+			}
+			
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					
+					getbzpzxx();//查询编制配置信息
+					
+					mui("#zgjbzlb").on('tap','.jgbz_tr',function(){//行政核定
+						var flag = this.getAttribute("id");
+						var zgjnum = plus.storage.getItem('zgjnum');
+						var dwcount = getjgdwcount();
+						goto_xj_page(dwcount,flag,zgjnum);
+					})
+					
+					/*mui("#zgjbzlb").on('tap','#sps_xz',function(){//行政实配
+						var zgjnum = plus.storage.getItem('zgjnum');
+						var dwcount = getjgdwcount();
+						goto_xj_page(dwcount,"sps_xz",zgjnum);
+					})
+					
+					mui("#zgjbzlb").on('tap','#bw_xz',function(){//行政编外
+						var zgjnum = plus.storage.getItem('zgjnum');
+						var dwcount = getjgdwcount();
+						goto_xj_page(dwcount,"bw_xz",zgjnum);
+					})*/
+					
+					/*mui("#zgjbzlb").on('tap','.dwxxdj',function(){
+						var company_num = this.getAttribute("target");
+						//bs(company_num);
+						plus.storage.setItem('company_num', company_num);
+						mui.openWindow({
+						   id:'dwjbxx',
+						   url: '../dwjbxx/main.html'
+						});
+					})*/
+					/*mui("#zgjbzlb").on('tap','.sbwsqk',function(){//苏北五市详情
+						var sbwsqk = this.getAttribute("data-sbwsqk");
+						var company_num = this.getAttribute("data-company_num");
+						if(sbwsqk == "有"){
+							plus.storage.setItem('company_num', company_num);
+							mui.openWindow({
+							   id:'sbwsqk',
+							   url: 'sbwsqk.html'
+							});
+						}
+					})*/
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html',
+						});
+					})
+					
+					//退出系统
+					document.getElementById('exit').addEventListener('tap', function() {
+						var btn = ["确定","再看看"];
+						mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+						if(e.index==0){
+						  //mui.currentWebview.close();//退出当前页面
+						  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+							if (mui.os.ios){
+							    const threadClass = plus.ios.importClass("NSThread");
+							    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+							    plus.ios.invoke(mainThread, "exit");
+							}else if (mui.os.android){
+							    plus.runtime.quit();
+							}
+						}
+						});
+					})//exit
+					
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

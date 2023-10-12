@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>单位信息</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			*{background: #eee;}
+			a{overflow: inherit !important;}
+			table tr td{background: #fff;border:1px solid #eee;text-align: center;font-size: 14px;height: 40pt;}
+			.bt_h{color:#999999;border-right: none;}
+			.wb_h{border-left: none;}
+			input{width:100%;padding:0 5px !important;margin:0 !important;border:0 !important;font-size: 14px;}
+			 ::-webkit-input-placeholder { /* WebKit browsers */
+			    color: #000;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			    color: #000;
+			}
+			 ::-moz-placeholder { /* Mozilla Firefox 19+ */
+			    color: #000;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			    color: #000;
+			}
+		</style>
+	</head>
+
+	<body>
+        <div class="mui-content" style="width:100%;height: 100%;position: absolute;">
+			<form class="" style="margin-top:3%;width:100%;">
+				<table style="width:100%;">
+					<tr>
+						<td class="bt_h" style="width:30%;">单位名称</td>
+						<td style="width:68%;" class="wb_h"><input id='company_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">单位性质</td>
+						<td class="wb_h"><input id='deptproperty_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">机构类别</td>
+						<td class="wb_h"><input id='vc2_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">机构规格</td>
+						<td class="wb_h"><input id='company_level_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">机构属性</td>
+						<td class="wb_h"><input id='jgsx_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">主管局</td>
+						<td class="wb_h"><input id='zgj_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">统一社会信用代码</td>
+						<td class="wb_h"><input id='tyshxydm' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+					
+					var company_num = plus.storage.getItem('company_num');
+					//查询单位信息
+					mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getdwinfo',{
+						data:{
+							company_num:company_num
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:60000,//超时时间设置为10秒；
+						crossDomain: true,
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+						beforeSend: function() {
+				        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+					    },
+					    complete: function() {
+					    	plus.nativeUI.closeWaiting();
+					    },
+						success:function(data){
+							//console.log(data)
+							/** 单位代码：company_num、单位名称：company_name、单位性质：deptproperty_name、机构类别：vc2_name、机构规格：company_level_name、机构属性：jgsx_name*/
+							var data = eval("("+data+")");//转换为json对象
+							document.getElementById("company_name").value=(data.company_name==undefined ?"":data.company_name);
+							document.getElementById("deptproperty_name").value=(data.deptproperty_name==undefined ?"":data.deptproperty_name);
+							document.getElementById("vc2_name").value=(data.vc2_name==undefined ?"":data.vc2_name);
+							document.getElementById("company_level_name").value=(data.company_level_name==undefined ?"":data.company_level_name);
+							document.getElementById("jgsx_name").value=(data.jgsx_name==undefined ?"":data.jgsx_name);
+							document.getElementById("zgj_name").value=(data.zgj_name==undefined ?"":data.zgj_name);
+							document.getElementById("tyshxydm").value=(data.tyshxydm==undefined ?"":data.tyshxydm);
+	
+						},
+						error:function(xhr,type,errorThrown){//异常处理；
+							console.log(xhr + type + errorThrown);
+						}
+					});//ajax
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主页-单位信息</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<style>
+			.mui-active{color:#12AAC1 !important}
+			a{overflow: inherit !important;}
+			.mui-bar-tab .dwxx_tab.mui-active{border-bottom: 1px solid #12AAC1;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-pull-left{float: none;color:#fff;}
+			
+			table{
+	        	width:100%;
+	        	text-align: center;
+	        	table-layout: fixed;
+	        }
+	        
+	        table tr td{color:#333333;}
+	        
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                font-size: 15px;
+	        }
+	        
+	        table td{
+	        	font-size: 13px;
+	        	height: 40px;
+	        	background: #fff;
+	        }
+	        
+	        .mui-input-group:before{height:0;}
+	        .mui-input-group:after{height:0;}
+	        
+	        #ryxx_ss td{
+	        	text-align: left;
+	        	font-size: 14px;
+	        }
+	        .bt{text-align: right !important;padding-right:10px;color: #999999;}
+	       	input{width:100%;padding:0 5px !important;margin:0 !important;border:0 !important;font-size: 14px;}
+			 ::-webkit-input-placeholder { /* WebKit browsers */
+			    color: #000;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			    color: #000;
+			}
+			 ::-moz-placeholder { /* Mozilla Firefox 19+ */
+			    color: #000;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			    color: #000;
+			}
+		</style>
+	</head>
+
+	<body>
+        <header class="mui-bar mui-bar-nav" style="background: #12AAC1;height: 60px;padding:0;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;color: #fff;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;color: #fff;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;color: #fff;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+        <div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
+			<div style="width：100%;height:12%;clear: both;margin-top:3%;">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<td style="width: 15%;">序号</td>
+						<td style="width: 15%;">姓名</td>
+						<td style="width: 10%;">性别</td>
+						<td style="width: 25%;">状态</td>
+						<td style="width: 25%;">岗位名称</td>
+					</tr>
+				</table>
+			</div>
+			<div style="width：100%;height:81%;overflow: auto;background: #fff;">
+				<table class="bt_body"></table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<script>
+			function cxrylb(){
+				var sel_name = $("#xm").val();
+//				if(sel_name == ""){
+//					mui.toast('人员姓名不能为空');
+//					return;
+//				}
+				var company_num = plus.storage.getItem('company_num');
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_list_bwry_xz_xsdwwjg',{
+					data:{
+						company_num:company_num,
+						sel_name:sel_name
+					},
+					dataType:'json',//服务器返回json格式数据
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						console.log(data)
+						// /** 单位代码：company_num 人员代码：worker_code 姓名：worker_name 性别：sex 编制类别：blood_type_name 岗位等级/职务层次：jb_name
+						var str = "";
+						var data = eval("("+data+")");
+						$(".bt_body tr").remove();
+						for(i in data){
+							str+="<tr target='"+data[i].worker_code+"'>"+
+							"<td class='index' style='width: 15%;' id='"+data[i].worker_code+"'>"+(i*1+1)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].worker_name == undefined ? "" : data[i].worker_name)+"</td>"+
+							"<td style='width: 10%;'>"+(data[i].sex == undefined ? "" : data[i].sex)+"</td>"+
+							"<td style='width: 25%;'>"+(data[i].zt == undefined ? "" : data[i].zt)+"</td>"+
+							"<td style='width: 25%;'>"+(data[i].gwmc == undefined ? "" : data[i].gwmc)+"</td>"+
+							"<td style='display:none;'>"+data[i].company_num+"</td>"+
+							"<td style='display:none;'>"+data[i].worker_code+"</td>"+
+							"</tr>";
+						}
+						$(".bt_body").append(str);
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr+type+errorThrown);
+					}
+				});
+			}//cx
+			
+			function bs(worker_code){
+				$(".bt_body tr").find("td").css("background","#fff")
+				$("#"+worker_code).parent().find("td").css("background","#eee")
+			}
+			
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					
+					cxrylb();//第一次加载查询人员列表
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html'
+						});
+					})
+					
+					//退出系统
+					document.getElementById('exit').addEventListener('tap', function() {
+						var btn = ["确定","再看看"];
+						mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+						if(e.index==0){
+						  //mui.currentWebview.close();//退出当前页面
+						  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+							if (mui.os.ios){
+							    const threadClass = plus.ios.importClass("NSThread");
+							    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+							    plus.ios.invoke(mainThread, "exit");
+							}else if (mui.os.android){
+							    plus.runtime.quit();
+							}
+	
+						}
+						});
+					})
+					
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

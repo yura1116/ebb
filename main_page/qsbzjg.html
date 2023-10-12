@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主页-全市编制结构</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<script src=""></script>
+		<style>
+			*{
+				font:13px sans-serif;
+				background: #fff;
+				text-align: center;
+			}
+	        #btwz{
+				height: 60px;
+				font:20px sans-serif;
+				line-height: 60px;
+				border-bottom: 1px dashed #eee;
+				margin-top: 3%;
+			}
+			.mkdiv{
+				width:100%;
+				border-bottom:1px dashed #eee;
+			}
+			.mkdiv span{
+				border-bottom:1px solid #000;
+			}
+			
+			.zcdiv{
+				width:85%;
+				float: left;
+				font-size: 15px;
+			}
+			
+			.zcbg{
+				width:15%;
+				height:100%;
+				float: left;
+				background: url(../images/zc1.png) no-repeat center;
+				background-size:18px 220px;
+			}
+			
+			.ycjtbj{
+				width:36%;
+				height:96%;
+				float: left;
+				background: url(../images/jt1.png) no-repeat center center;
+				background-size: 59px auto;
+			}
+			
+			.ycjtbj1{
+				width:36%;
+				height:96%;
+				float: left;
+				background: url(../images/jt2.png) no-repeat center center;
+				background-size: 59px auto;
+			}
+			
+			#bkbzzl .ycjtbj{
+				background-size: 100%;
+				width:30%;
+			}
+			#bkbzzl .ycjtbj1{
+				background-size: 100%;
+				width:30%;
+				height:70%;
+			}
+			
+			#qxbzzl .ycjtbj{
+				background-size: 100%;
+				width:30%;
+			}
+			#qxbzzl .ycjtbj1{
+				background-size: 100%;
+				width:30%;
+				height:80%;
+			}
+			#qsbzpm .ycjtbj{
+				background-size: 100%;
+			}
+			#qsbzpm .ycjtbj1{
+				background-size: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" style="width: 100%;height:100%;background: #eee;">
+			<div id="btwz">全市编制概况<div>
+			<div style="width: 200px;height:35px;background: transparent;position: fixed;bottom:2%;left:50%;z-index: 1;margin-left:-100px;"><input type="button" onclick="jrdw()" style="border:1px solid #12AAC1;background: #12AAC1;border-radius: 25px;color: #fff;width:80%;height:100%;text-align: center;" value="进入单位"></div>
+			<div id="bzzl" class="mkdiv" style="height:400px;">
+				<div style="width:30%;height:100%;float: left;position: relative;">
+					<div style="position: relative;height:100%;" class="zcdiv">
+						<div style="margin-top:120px;">全市</div>
+						<span style="width:55%;position: absolute;top:36%;left:20%;height:40px;line-height: 50px;" id="hds_hj_qs"></span>
+						<div style="width:100%;position: absolute;top:53%;left:5%;">
+							<span style="height:40px;line-height: 50px;width:38%;float: left;font-size: 13px;border:0;">(在职:</span>
+							<span style="height:40px;line-height: 50px;width:50%;float: left;" id="sps_hj_qs">&nbsp;</span>
+							<span style="height:40px;line-height: 50px;width:5%;float: left;border:0;">）</span>
+						</div>
+					</div>
+					<div class="zcbg"></div>
+				</div>
+				<div style="width:27%;height:100%;float: left;">
+					<div style="height:50%;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+						<span style="width:60%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_qs"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_xz_qs">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:50%;padding-top:10px;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+						<span style="width:60%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_qs"></span>
+						<span style="width: 35%;float: left;margin-top:22px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:27px;"  id="sps_sy_qs">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+					</div>
+				</div>
+				<div style="width:42%;height:40%;float: left;margin-right:1%;">
+					<div class="ycjtbj"></div>
+					<div style="width:60%;float: left;">
+						<div style="height:40%;">
+							<div style="width:45%;float: left;padding-top:10px;">党政群</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="hds_dzq_qs"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_qs">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 45%;float: left;padding-top:10px;">政&nbsp;法</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;"  id="hds_zf_qs"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_qs">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+				<div style="width:42%;height:55%;float: left;margin-right:1%;">
+					<div class="ycjtbj1"></div>
+					<div style="width:64%;float: left;">
+						<div style="height:40%;">
+							<div style="width:50%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;" id="hds_qe_qs"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_qs">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_ce_qs"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_qs">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_qs"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_qs">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="sbj" class="mkdiv" style="height:400px;">
+				<div style="width:30%;height:100%;float: left;position: relative;">
+					<div style="position: relative;height:100%;" class="zcdiv">
+						<div style="margin-top:120px;">市本级</div>
+						<span style="width:55%;height:40px;position: absolute;top:36%;left:20%;line-height: 50px;" id="hds_hj_sbj"></span>
+						<div style="width:100%;position: absolute;top:53%;left:5%;">
+							<span style="height:40px;line-height: 50px;width:38%;float: left;font-size: 13px;border:0;">(在职:</span>
+							<span style="height:40px;line-height: 50px;width:50%;float: left;" id="sps_hj_sbj">&nbsp;</span>
+							<span style="height:40px;line-height: 50px;width:5%;float: left;border:0;">）</span>
+						</div>
+					</div>
+					<div class="zcbg"></div>
+				</div>
+				<div style="width:27%;height:100%;float: left;">
+					<div style="height:50%;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:40px;">行&nbsp;政</div>
+						<span style="width:60%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_sbj"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_xz_sbj">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:50%;padding-top:10px;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:26px;">事&nbsp;业</div>
+						<span style="width:60%;height:30px;float: left;margin-top:20px;line-height: 40px;"  id="hds_sy_sbj"></span>
+						<span style="width: 35%;float: left;margin-top:22px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:27px;"  id="sps_sy_sbj">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+					</div>
+				</div>
+				<div style="width:42%;height:40%;float: left;margin-right:1%;">
+					<div class="ycjtbj"></div>
+					<div style="width:60%;height:100%;float: left;">
+						<div style="height:40%;">
+							<div style="width:45%;float: left;padding-top:10px;">党政群</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="hds_dzq_sbj"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_sbj">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 45%;float: left;padding-top:10px;">政&nbsp;法</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;"  id="hds_zf_sbj"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_sbj">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+				<div style="width:42%;height:55%;float: left;margin-right:1%;">
+					<div class="ycjtbj1"></div>
+					<div style="width:64%;float: left;">
+						<div style="height:40%;">
+							<div style="width:50%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;" id="hds_qe_sbj"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_sbj">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_ce_sbj"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_sbj">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_sbj"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_sbj">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="bk" class="mkdiv" style="height:400px;">
+				<div style="width:30%;height:100%;float: left;position: relative;">
+					<div style="position: relative;height:100%;" class="zcdiv">
+						<div style="margin-top:120px;">板块</div>
+						<span style="width:55%;position: absolute;top:36%;left:20%;height:40px;line-height: 50px;" id="hds_hj_bk"></span>
+						<div style="width:100%;position: absolute;top:53%;left:5%;">
+							<span style="height:40px;line-height: 50px;width:38%;float: left;font-size: 13px;border:0;">(在职:</span>
+							<span style="height:40px;line-height: 50px;width:50%;float: left;" id="sps_hj_bk">&nbsp;</span>
+							<span style="height:40px;line-height: 50px;width:5%;float: left;border:0;">）</span>
+						</div>
+					</div>
+					<div class="zcbg"></div>
+				</div>
+				<div style="width:27%;height:100%;float: left;">
+					<div style="height:50%;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+						<span style="width:60%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_bk"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_xz_bk">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:50%;padding-top:10px;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+						<span style="width:60%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_bk"></span>
+						<span style="width: 35%;float: left;margin-top:22px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:27px;"  id="sps_sy_bk">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+					</div>
+				</div>
+				<div style="width:42%;height:40%;float: left;margin-right:1%;">
+					<div class="ycjtbj"></div>
+					<div style="width:60%;float: left;">
+						<div style="height:40%;">
+							<div style="width:45%;float: left;padding-top:10px;">党政群</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="hds_dzq_bk"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_bk">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 45%;float: left;padding-top:10px;">政&nbsp;法</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;"  id="hds_zf_bk"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_bk">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+				<div style="width:42%;height:55%;float: left;margin-right:1%;">
+					<div class="ycjtbj1"></div>
+					<div style="width:64%;float: left;">
+						<div style="height:40%;">
+							<div style="width:50%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;" id="hds_qe_bk"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_bk">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_ce_bk"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_bk">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_bk"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_bk">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="qx" class="mkdiv" style="height:400px;">
+				<div style="width:30%;height:100%;float: left;position: relative;">
+					<div style="position: relative;height:100%;" class="zcdiv">
+						<div style="margin-top:120px;">区县</div>
+						<span style="width:55%;position: absolute;top:36%;left:20%;height:40px;line-height: 50px;" id="hds_hj_qx"></span>
+						<div style="width:100%;position: absolute;top:53%;left:5%;">
+							<span style="height:40px;line-height: 50px;width:38%;float: left;font-size: 13px;border:0;">(在职:</span>
+							<span style="height:40px;line-height: 50px;width:50%;float: left;" id="sps_hj_qx">&nbsp;</span>
+							<span style="height:40px;line-height: 50px;width:5%;float: left;border:0;">）</span>
+						</div>
+					</div>
+					<div class="zcbg"></div>
+				</div>
+				<div style="width:27%;height:100%;float: left;">
+					<div style="height:50%;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+						<span style="width:60%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_qx"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_xz_qx">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:50%;padding-top:10px;">
+						<div style="width: 35%;margin-left: 5%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+						<span style="width:60%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_qx"></span>
+						<span style="width: 35%;float: left;margin-top:22px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:27px;"  id="sps_sy_qx">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+					</div>
+				</div>
+				<div style="width:42%;height:40%;float: left;margin-right:1%;">
+					<div class="ycjtbj"></div>
+					<div style="width:60%;float: left;">
+						<div style="height:40%;">
+							<div style="width:45%;float: left;padding-top:10px;">党政群</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="hds_dzq_qx"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_qx">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 45%;float: left;padding-top:10px;">政&nbsp;法</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;"  id="hds_zf_qx"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_qx">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+				<div style="width:42%;height:55%;float: left;margin-right:1%;">
+					<div class="ycjtbj1"></div>
+					<div style="width:64%;float: left;">
+						<div style="height:40%;">
+							<div style="width:50%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;" id="hds_qe_qx"></span>
+							<span style="width:35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_qx">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_ce_qx"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_qx">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+						<div style="height:40%;">
+							<div style="width: 50%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_qx"></span>
+							<span style="width: 35%;float: left;margin-left: 5%;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_qx">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="bkbzzl" class="mkdiv" style="height:1500px;">
+				<div style="width:15%;height:100%;float: left;position: relative;">
+					<div style="position: relative;height:100%;" class="zcdiv">
+						<div style="margin-top:500px;">板块</div>
+						<span style="width:55%;position: absolute;top:36%;left:20%;height:40px;line-height: 50px;" id="hds_hj_bkbzzl"></span>
+						<div style="width:100%;position: absolute;top:53%;left:5%;">
+							<span style="height:40px;line-height: 50px;width:38%;float: left;font-size: 13px;border:0;">(在职:</span>
+							<span style="height:40px;line-height: 50px;width:50%;float: left;" id="sps_hj_bkbzzl">&nbsp;</span>
+							<span style="height:40px;line-height: 50px;width:5%;float: left;border:0;">）</span>
+						</div>
+					</div>
+					
+					<div  style="height:93%;background: url(../images/zc3.png) no-repeat center;background-size: 22px 1100px;"  class="zcbg"></div>
+				</div>
+				<div style="width:25%;height:100%;float: left;">
+					<div style="height:25%;padding-top:80px;">
+						<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">开发区</div>
+						<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_kfq"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_kfq">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:25%;padding-top:45px;">
+						<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">高新区</div>
+						<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_gxq"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_gxq">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:25%;padding-top:45px;">
+						<div style="width: 55%;float: left;margin-top:40px;" class="xinzhen">云台景区</div>
+						<span style="width:45%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_ytjq"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_ytjq">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:25%;padding-top:40px;">
+						<div style="width: 55%;float: left;margin-top:40px;" class="xinzhen">徐圩新区</div>
+						<span style="width:45%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_xwxq"></span>
+						<span style="width: 35%;float: left;margin-top:26px;margin-left: 5%;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_xwxq">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+				</div>
+				<div style="width:25%;height:100%;float: left;">
+					<div style="height:22%;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_kfq"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_kfq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_kfq"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_kfq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:22%;padding-top:45px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_gxq"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_gxq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_gxq"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_gxq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:25%;padding-top:70px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_ytjq"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_ytjq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_ytjq"></span>
+								<span style="width:50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_ytjq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:25%;padding-top:60px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_xwxq"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_xwxq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_xwxq"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_xwxq">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="width:35%;height:100%;float: left;">
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_kfq"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_kfq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_kfq"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_kfq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_kfq"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_kfq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_kfq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_kfq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_kfq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_kfq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_gxq"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_gxq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_gxq"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_gxq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_gxq"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_gxq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_gxq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_gxq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_gxq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_gxq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_ytjq"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_ytjq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_ytjq"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_ytjq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_ytjq"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_ytjq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_ytjq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_ytjq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_ytjq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_ytjq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_xwxq"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_xwxq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_xwxq"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_xwxq">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_xwxq"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_xwxq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_xwxq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_xwxq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_xwxq"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_xwxq">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="qxbzzl" class="mkdiv" style="height:2250px;">
+				<div style="width:15%;height:100%;float: left;position: relative;">
+					<div style="position: relative;height:100%;" class="zcdiv">
+						<div style="margin-top:750px;">区县</div>
+						<span style="width:55%;position: absolute;top:36%;left:20%;height:40px;line-height: 50px;" id="hds_hj_qxbzzl"></span>
+						<div style="width:100%;position: absolute;top:53%;left:5%;">
+							<span style="height:40px;line-height: 50px;width:38%;float: left;font-size: 13px;border:0;">(在职:</span>
+							<span style="height:40px;line-height: 50px;width:50%;float: left;" id="sps_hj_qxbzzl">&nbsp;</span>
+							<span style="height:40px;line-height: 50px;width:5%;float: left;border:0;">）</span>
+						</div>
+					</div>
+					
+					<div  style="height:93%;background: url(../images/zc5.png) no-repeat center;background-size: 22px 1800px;"  class="zcbg"></div>
+				</div>
+				<div style="width:25%;height:100%;float: left;">
+					<div style="height:16%;padding-top:80px;">
+						<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">赣&nbsp;榆</div>
+						<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_ganyu"></span>
+						<span style="width: 45%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_ganyu">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:16%;padding-top:65px;">
+						<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">海&nbsp;州</div>
+						<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_haizhou"></span>
+						<span style="width: 45%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_haizhou">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:16%;padding-top:65px;">
+						<div style="width: 55%;float: left;margin-top:40px;" class="xinzhen">连&nbsp;云</div>
+						<span style="width:45%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_lianyun"></span>
+						<span style="width: 45%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_lianyun">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:16%;padding-top:65px;">
+						<div style="width: 55%;float: left;margin-top:40px;" class="xinzhen">东&nbsp;海</div>
+						<span style="width:45%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_donghai"></span>
+						<span style="width: 35%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_donghai">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:16%;padding-top:65px;">
+						<div style="width: 55%;float: left;margin-top:40px;" class="xinzhen">灌&nbsp;云</div>
+						<span style="width:45%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_guanyun"></span>
+						<span style="width: 45%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_guanyun">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+					<div style="height:16%;padding-top:65px;">
+						<div style="width: 55%;float: left;margin-top:40px;" class="xinzhen">灌&nbsp;南</div>
+						<span style="width:45%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_hj_guannan"></span>
+						<span style="width: 45%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+						<span style="width:50%;float: left;margin-top:30px;"  id="sps_hj_guannan">&nbsp;</span>
+						<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+					</div>
+				</div>
+				<div style="width:25%;height:100%;float: left;">
+					<div style="height:14%;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_ganyu"></span>
+								<span style="width:50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_ganyu">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_ganyu"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_ganyu">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:16%;padding-top:60px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_haizhou"></span>
+								<span style="width:50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_haizhou">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_haizhou"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_haizhou">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:16%;padding-top:70px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_lianyun"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_lianyun">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_lianyun"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_lianyun">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:18%;padding-top:60px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_donghai"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_donghai">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_donghai"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_donghai">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:16%;padding-top:60px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_guanyun"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_guanyun">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_guanyun"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_guanyun">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+					<div style="height:16%;padding-top:60px;">
+						<div style="" class="ycjtbj"></div>
+						<div style="width:70%;height:100%;float: left;">
+							<div style="height:50%;">
+								<div style="width: 45%;float: left;margin-top:40px;" class="xinzhen">行&nbsp;政</div>
+								<span style="width:55%;height:40px;float: left;margin-top:28px;line-height: 50px;" id="hds_xz_guannan"></span>
+								<span style="width: 50%;float: left;margin-top:26px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:30px;"  id="sps_xz_guannan">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:26px;border:0;">）</span>
+							</div>
+							<div style="height:50%;padding-top:10px;">
+								<div style="width: 45%;float: left;margin-top:26px;"  class="shiye">事&nbsp;业</div>
+								<span style="width:55%;height:30px;float: left;margin-top:20px;line-height: 40px;" id="hds_sy_guannan"></span>
+								<span style="width: 50%;float: left;margin-top:22px;font-size: 13px;border:0;">(在职:</span>
+								<span style="width:45%;float: left;margin-top:27px;"  id="sps_sy_guannan">&nbsp;</span>
+								<span style="width:5%;float: left;margin-top:22px;border:0;">）</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="width:35%;height:100%;float: left;">
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_ganyu"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_ganyu">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_ganyu"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_ganyu">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_ganyu"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_ganyu">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_ganyu"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_ganyu">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_ganyu"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_ganyu">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_haizhou"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_haizhou">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_haizhou"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_haizhou">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_haizhou"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_haizhou">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_haizhou"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_haizhou">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_haizhou"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_haizhou">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_lianyun"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_lianyun">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_lianyun"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_lianyun">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_lianyun"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_lianyun">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_lianyun"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_lianyun">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_lianyun"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_lianyun">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_donghai"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_donghai">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_donghai"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_donghai">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_donghai"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_donghai">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_donghai"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_donghai">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_donghai"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_donghai">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_guanyun"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_guanyun">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_guanyun"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_guanyun">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_guanyun"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_guanyun">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_guanyun"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_guanyun">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_guanyun"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_guanyun">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:150px;">
+						<div class="ycjtbj"></div>
+						<div style="width:70%;float: left;height:100%;">
+								<div style="width:55%;float: left;padding-top:10px;">党政群</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;" id="hds_dzq_guannan"></span>
+								<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_dzq_guannan">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+								<div style="width: 55%;float: left;padding-top:10px;">政&nbsp;法</div>
+								<span style="width:43%;float: left;height:35px;line-height: 35px;"  id="hds_zf_guannan"></span>
+								<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+								<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_zf_guannan">&nbsp;</span>
+								<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+					<div style="height:220px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:100%;">
+							<div style="width:60%;float: left;padding-top:10px;">全额拨款</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;" id="hds_qe_guannan"></span>
+							<span style="width:45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_qe_guannan">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">差额补贴</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_ce_guannan"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_ce_guannan">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+							<div style="width: 60%;float: left;padding-top:10px;">经费自理</div>
+							<span style="width:40%;float: left;height:35px;line-height: 35px;"  id="hds_jfzl_guannan"></span>
+							<span style="width: 45%;float: left;font-size: 13px;border:0;height:35px;padding-top:10px;">(在职:</span>
+							<span style="width:50%;float: left;height:35px;line-height: 35px;"  id="sps_jfzl_guannan">&nbsp;</span>
+							<span style="width:5%;float: left;border:0;padding-top:10px;">）</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="qsbzpm" class="mkdiv" style="height:3100px;">
+				<div style="width:12%;height:100%;float: left;position: relative;">
+					<div style="position: relative;height:100%;" class="zcdiv">
+						<div style="margin-top:750px;">全省</div>
+					</div>
+					<div  style="height:93%;background: url(../images/zc5.png) no-repeat center;background-size: 22px 2650px;"  class="zcbg"></div>
+				</div>
+				<div style="width:12%;height:100%;float: left;">
+					<div style="height:200px;padding-top:95px;">
+						<div style="width: 100%;float: left;" class="xinzhen">南京市</div>
+					</div>
+					<div style="height:200px;padding-top:115px;">
+						<div style="width: 100%;float: left;" class="xinzhen">无锡市</div>
+					</div>
+					<div style="height:200px;padding-top:145px;">
+						<div style="width: 100%;float: left;" class="xinzhen">徐州市</div>
+					</div>
+					<div style="height:200px;padding-top:165px;">
+						<div style="width: 100%;float: left;" class="xinzhen">常州市</div>
+					</div>
+					<div style="height:200px;padding-top:195px;">
+						<div style="width: 100%;float: left;" class="xinzhen">苏州市</div>
+					</div>
+					<div style="height:200px;padding-top:210px;">
+						<div style="width: 100%;float: left;" class="xinzhen">南通市</div>
+					</div>
+					<div style="height:200px;padding-top:235px;">
+						<div style="width: 100%;float: left;" class="xinzhen">连云港市</div>
+					</div>
+					<div style="height:200px;padding-top:220px;">
+						<div style="width: 100%;float: left;" class="xinzhen">淮安市</div>
+					</div>
+					<div style="height:200px;padding-top:220px;">
+						<div style="width: 100%;float: left;" class="xinzhen">盐城市</div>
+					</div>
+					<div style="height:200px;padding-top:220px;">
+						<div style="width: 100%;float: left;" class="xinzhen">扬州市</div>
+					</div>
+					<div style="height:200px;padding-top:220px;">
+						<div style="width: 100%;float: left;" class="xinzhen">镇江市</div>
+					</div>
+					<div style="height:200px;padding-top:220px;">
+						<div style="width: 100%;float: left;" class="xinzhen">泰州市</div>
+					</div>
+					<div style="height:200px;padding-top:220px;">
+						<div style="width: 100%;float: left;" class="xinzhen">宿迁市</div>
+					</div>
+				</div>
+				<div style="width:25%;height:100%;float: left;">
+					<div style="height:180px;margin-top:20px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_nj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_nj"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_wx"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_wx"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:50px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_xz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_xz"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_cz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_cz"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:50px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_sz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_sz"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_nt"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_nt"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:50px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_lyg"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_lyg"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_ha"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:55%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_hj_ha"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_yc"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_yc"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_yz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_yz"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_zj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_zj"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_tz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_tz"></span>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;padding-top:30px;">
+							<div style="width:45%;float: left;margin-top: 10px;">编制</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="bz_hj_sq"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;padding-top:10px;">
+							<div style="width:45%;float: left;margin-top: 10px;">排名</div>
+							<span style="width:55%;float: left;height:35px;line-height: 35px;" id="pm_hj_sq"></span>
+						</div>
+					</div>
+				</div>
+				<div style="width:23%;height:100%;float: left;">
+					<div style="height:180px;margin-top:30px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:50px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:50px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:40px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:45px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:45px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:45px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:45px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:45px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:45px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+					<div style="height:180px;margin-top:45px;">
+						<div class="ycjtbj1"></div>
+						<div style="width:64%;float: left;height:33%;">
+							<div style="width:99%;float: left;">党政群</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">政法</div>
+						</div>
+						<div style="width:64%;float: left;height:33%;margin-top:10px;">
+							<div style="width:99%;float: left;">事业</div>
+						</div>
+					</div>
+				</div>
+				<div style="width:25%;height:100%;float: left;">
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_nj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_nj"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_nj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_nj"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_nj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_nj"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_wx"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_wx"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_wx"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_wx"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_wx"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_wx"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_xz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_xz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_xz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_xz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_xz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_xz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_cz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_cz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_cz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_cz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_cz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_cz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_sz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_sz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_sz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_sz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_sz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_sz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_nt"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_nt"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_nt"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_nt"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_nt"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_nt"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_lyg"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_lyg"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_lyg"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_lyg"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_lyg"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_lyg"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_ha"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_ha"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_ha"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_ha"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_ha"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_ha"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_yc"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_yc"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_yc"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_yc"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_yc"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_yc"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_yz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_yz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_yz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_yz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_yz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_yz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_zj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_zj"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_zj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_zj"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_zj"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_zj"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_tz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_tz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_tz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_tz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_tz"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_tz"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_dzq_sq"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_dzq_sq"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_zf_sq"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_zf_sq"></span>
+						</div>
+					</div>
+					<div style="height:75px;">
+						<div class="ycjtbj"></div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">编制</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="bz_sy_sq"></span>
+						</div>
+						<div style="width:64%;float: left;height:50%;">
+							<div style="width:55%;float: left;padding-top:10px;">排名</div>
+							<span style="width:43%;float: left;height:35px;line-height: 35px;" id="pm_sy_sq"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--<div style="height:200px;">
+				<span style="width:15%;float: left;height: 40px;line-height: 40px;">备注：</span>
+				<p style="width:85%;height:100%;color:#000;float: left;text-indent: 2em;overflow: auto;text-align: left;padding:10px 10px 10px 0;" id="bz"></p>
+			</div>-->
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js" ></script>
+		<script src="../js/jquery-1.9.1.min.js" ></script>
+		<script>
+			$(function(){
+				
+			})
+			function getqsbzgk(district){
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getqsbzgk',{
+					data:{
+						district:district,
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+				    	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						var data = eval("("+data+")");//转换为json对象
+						$.each(data,function (key,value) {
+						   $("#"+key).text(value);
+						});
+						/*板块,区县合计*/
+						$("#hds_hj_bkbzzl").text(data.hds_hj_kfq*1+data.hds_hj_gxq*1+data.hds_hj_ytjq*1+data.hds_hj_xwxq*1);
+						$("#sps_hj_bkbzzl").text(data.sps_hj_kfq*1+data.sps_hj_gxq*1+data.sps_hj_ytjq*1+data.sps_hj_xwxq*1);
+						$("#hds_hj_qxbzzl").text(data.hds_hj_ganyu*1+data.hds_hj_haizhou*1+data.hds_hj_lianyun*1+data.hds_hj_donghai*1+data.hds_hj_guanyun*1+data.hds_hj_guannan*1);
+						$("#sps_hj_qxbzzl").text(data.sps_hj_ganyu*1+data.sps_hj_haizhou*1+data.sps_hj_lianyun*1+data.sps_hj_donghai*1+data.sps_hj_guanyun*1+data.sps_hj_guannan*1);
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr+type+errorThrown);
+					}
+				});
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_dwr_qsbzpmqk',{
+					data:{
+						district:district,
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+				    	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						var data = eval("("+data+")");//转换为json对象
+						$.each(data,function (key,value) {
+						   $("#"+key).text(value);
+						});
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr+type+errorThrown);
+					}
+				});
+			}
+		
+			function jrdw(){//进入单位
+				mui.openWindow({
+				   id:'zgjbzjg',
+				   url: 'zgjbzjg.html'
+				});
+			}
+			
+			
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					
+					var district = plus.storage.getItem('district');
+					
+					getqsbzgk(district);//查询地区选项
+					
+					/*mui("#bzjglb").on('tap','.jt',function(){
+					  //获取id
+					  var company_num = this.getAttribute("id"); //根据id获取对应元素
+     				  getxsdw(company_num,this);
+					}) */
+					
+					mui("#bzzl").on('tap','.xinzhen',function(){
+						var aPage = plus.webview.currentWebview();
+						var bPage=aPage.opener();//获取父页面
+						var targetfile=plus.webview.getWebviewById(bPage.id);  //获取父页面ID
+						mui.fire(targetfile,'openbzgk_xz',{
+							
+						})
+					})
+					
+					mui("#bzzl").on('tap','.shiye',function(){
+						var aPage = plus.webview.currentWebview();
+						var bPage=aPage.opener();//获取父页面
+						var targetfile=plus.webview.getWebviewById(bPage.id);  //获取父页面ID
+						mui.fire(targetfile,'openbzgk_sy',{
+							
+						})
+					})
+					
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

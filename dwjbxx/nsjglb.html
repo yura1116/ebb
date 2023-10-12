@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>内设机构列表</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<style>
+	        table{
+	        	width:100%;
+	        	text-align: center;
+	        	table-layout: fixed;
+	        }
+	        
+	        table tr td{color:#333333}
+	        
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                font-size: 15px;
+	        }
+	        
+	        table td{
+	        	font-size: 13px;
+	        	height: 40px;
+	        	background: #fff;
+	        }
+	        
+	        .mui-input-group:before{height:0;}
+	        .mui-input-group:after{height:0;}
+	        
+	        #bzjg_ss td{
+	        	text-align: left;
+	        	font-size: 14px;
+	        }
+	        
+	        input{font-size: 14px;padding:0 !important;}
+	        .bt{text-align: right !important;padding-right:10px;color: #999999;}
+	        #list {
+				/*避免导航边框和列表背景边框重叠，看起来像两条边框似得；*/
+				font-size: 13px;
+				line-height: 40px;
+			}
+			.mui-navigate-right span{
+				display: inline-block;
+				text-align: center;
+			}
+			.mui-table-view-chevron .mui-table-view-cell{padding-right:0;}
+			.mui-table-view-cell{padding:0 0;}
+			.cd{background: #fff;padding:0 !important;margin: 0 0 0 0px !important;}
+			.mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn){margin-right: 0;}
+			.mui-table-view-cell>a:not(.mui-btn){margin:0 0;}
+			.mui-table-view-cell.mui-collapse.mui-active>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse.mui-active>.mui-push-right:after{
+				background: url(../images/img/jt_down.png) no-repeat center center;
+				content: '';
+				width: 20px;
+				height: 20px;
+				background-size: 20px auto;
+			}
+			
+			.mui-navigate-right:after, .mui-push-right:after{
+				background: url(../images/img/jt_right.png) no-repeat center center;
+				content: '';
+				width: 20px;
+				height: 20px;
+				background-size: 20px auto;
+			}
+			.mui-table-view-cell.mui-collapse>.mui-navigate-right:after, .mui-table-view-cell.mui-collapse>.mui-push-right:after{content:''}
+			.mui-table-view-cell.mui-collapse.mui-active{background: #eee;}
+			.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell{padding-left:0px !important;}
+			.mui-table-view-cell.mui-collapse .mui-table-view.mui-table-view-chevron{margin-right: 0px !important;}
+			.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell:after{left:0;}
+			.mui-table-view-cell:after{left:0;}
+			#nsjglb span{text-overflow: ellipsis;white-space:nowrap;display:inline-block;overflow: hidden;vertical-align:bottom;}
+			.mui-table-view-cell.mui-collapse.mui-active{background: #fff;}
+			.mui-table-view-cell:after {height: 0;}
+			.mui-table-view-cell:before {height: 0;}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
+			<form class="mui-input-group" style="height: 30%;width: 100%;margin-top:3%;">
+				<table style="height: 100%;" id="bzjg_ss">
+					<tr>
+						<td style="width:50%;" class="bt">内设机构数量</td>
+						<td style="width:50%;"><input type="text" readonly="readonly" id="sl"></td>
+					</tr>
+					<tr>
+						<td  class="bt">内设机构编制核定数</td>
+						<td><input type="text" readonly="readonly" id="bzs"></td>
+					</tr>
+					<tr>
+						<td  class="bt">内设机构领导正职核定数</td>
+						<td><input type="text" readonly="readonly" id="zz"></td>
+					</tr>
+					<tr>
+						<td  class="bt">内设机构领导副职核定数</td>
+						<td><input type="text" readonly="readonly" id="fz"></td>
+					</tr>
+				</table>
+			</form>
+			<div style="width：100%;height:12%;clear: both;padding-top:3%;">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<td style="width: 11%;">序号</td>
+						<td style="width: 60%;">内设机构名称</td>
+						<td style="width: 10%;"></td>
+					</tr>
+				</table>
+			</div>
+			<div style="width：100%;height:54%;overflow: auto;background: #fff;">
+				<table id="nsjglb"></table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js" ></script>
+		<script>
+			
+			$(function(){
+				
+			})
+			
+			function getnsjglb(){
+				var company_num = plus.storage.getItem('company_num');
+				//查询编制配置信息
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getnsjginfo',{
+					data:{
+						company_num:company_num
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						/** 内设机构数量：sl 编制数：bzs 内设机构领导正职：zz 内设机构领导副职：fz
+						  列表  dwr.getlist 部门编码：gg_bm_id 单位名称：company_name 内设机构名称：gg_bm_mc
+						 */
+						var str = "<ul id='list' class='mui-table-view mui-table-view-chevron'>";
+						var data = eval("("+data+")");
+						document.getElementById("sl").value=(data.sl==undefined ?"":data.sl);
+						document.getElementById("bzs").value=(data.bzs==undefined ?"":data.bzs);
+						document.getElementById("zz").value=(data.zz==undefined ?"":data.zz);
+						document.getElementById("fz").value=(data.fz==undefined ?"":data.fz);
+						$("#nsjglb ul").remove();
+						var data1 = data.list;
+						$.each(data1, function(index,obj) {
+							//console.log(obj.company_name);
+							str+="<li class='mui-table-view-cell mui-collapse fjd'>"+
+										"<a class='nsjgjt' href='#'>"+
+											"<span style='width: 11%;' target='"+obj.gg_bm_id+"'>"+(index+1)+"</span>"+
+											"<span style='width: 60%;' target='"+obj.gg_bm_id+"'>"+(obj.gg_bm_mc == undefined ? "" : obj.gg_bm_mc)+"</span>"+
+											"<span style='width: 10%;color:#12AAC1' class='nsjgxq' target='"+obj.gg_bm_id+"'>"+'详情'+"</span>"+
+											"<span style='width: 10%;' class='jt' id='"+obj.gg_bm_id+"'><img src='../images/img/jt_down.png' style='width: 20px;height: 20px;vertical-align: middle;'></span>"+
+											"<span style='display:none;' id='"+obj.gg_bm_id+"'>"+obj.gg_bm_id+"</span>"+
+										"</a>"+
+									"</li>";
+						});
+						
+						$("#nsjglb").append(str+"</ul>");
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}
+			
+			function getxjnsjg(gg_bm_id,obj){
+				$(obj).parent().parent().find("ul").remove();
+				$("table a").css("background","#fff");
+				$(obj).parent().css("background","#eee");
+				var company_num = plus.storage.getItem('company_num');
+				//查询编制配置信息
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getxjnsjg',{
+					data:{
+						company_num:company_num,
+						gg_bm_id:gg_bm_id
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						if(data == ""){
+							return;
+						}
+						//部门编码：gg_bm_id 单位名称：company_name 内设机构名称：gg_bm_mc
+						var str = "<ul class='mui-table-view mui-table-view-chevron' style='margin:0;padding:0;'>";
+						var data = eval("("+data+")");
+						for(i in data){
+							str+="<li class='mui-table-view-cell'  style=''>"+
+										"<a class='cd' href='#' style=''>"+
+											"<span style='width: 80%;text-align:left;padding-left:23%;'  target='"+data[i].gg_bm_id+"'>"+data[i].gg_bm_mc+"</span>"+
+											"<span style='width: 10%;color:#12AAC1' class='nsjgxq' target='"+data[i].gg_bm_id+"'>"+'详情'+"</span>"+
+											"<span style='width: 10%;' class='jt' target='"+data[i].gg_bm_id+"' id='"+data[i].gg_bm_id+"'><img src='../images/img/jt_down.png' style='width: 20px;height: 20px;vertical-align: middle;'></span>"+
+											"<span style='display:none;' id='"+data[i].gg_bm_id+"'>"+data[i].gg_bm_id+"</span>"+
+										"</a>"+
+									"</li>";
+						}
+						$(obj).parent().parent().append(str+"</ul>");
+						//$("#"+gg_bm_id).parent().append(str+"</ul>");//在当前点击的行下面拼接元素
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//aja
+
+			}
+			
+			function bs(gg_bm_id){
+				$("#nsjglb span").css("background","#fff");
+				$("#"+gg_bm_id).parent().find("span").css("background","#eee");
+			}
+			
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					
+					getnsjglb();//查询信息
+					
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+	
+					mui("#nsjglb").on('tap','.jt',function(){
+					  //获取id
+					  var gg_bm_id = this.getAttribute("id"); //根据id获取对应元素
+     				  getxjnsjg(gg_bm_id,this);
+					}) 
+					
+	
+					mui("#nsjglb").on('tap','.nsjgxq',function(){
+						var company_num = plus.storage.getItem('company_num');
+						var gg_bm_id = this.getAttribute("target");
+						bs(gg_bm_id);
+						mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getnsjgdetail',{
+							data:{
+								company_num:company_num,
+								gg_bm_id:gg_bm_id
+							},
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:60000,//超时时间设置为10秒；
+							crossDomain: true,
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							},
+							beforeSend: function() {
+					        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+						    },
+						    complete: function() {
+						    	plus.nativeUI.closeWaiting();
+						    },
+							success:function(data){
+								//console.log(data)
+								 /** 部门名称：gg_bm_mc 内设机构规格：dept_grade_name 上级机构：supe_dept_name 内设机构编制数配置：curr_stuff 内设机构职能：dept_resp*/
+								if(data == ""){
+									return;
+								}
+								var data = eval("("+data+")");//转换为json对象
+								var gg_bm_mc =(data.gg_bm_mc==undefined ?"":data.gg_bm_mc);
+								var dept_grade_name =(data.dept_grade_name==undefined ?"":data.dept_grade_name);
+								var supe_dept_name =(data.supe_dept_name==undefined ?"":data.supe_dept_name);
+								var curr_stuff =(data.curr_stuff==undefined ?"":data.curr_stuff);
+								var dept_resp =(data.dept_resp==undefined ?"":data.dept_resp);
+							  	mui.openWindow({
+								    id:'nsjgxx',
+								    url:'nsjgxx.html',
+							     	extras:{  
+								        gg_bm_mc:gg_bm_mc,  
+								        dept_grade_name:dept_grade_name,  
+								        supe_dept_name:supe_dept_name,  
+								        curr_stuff:curr_stuff,  
+								        dept_resp:dept_resp  
+								    }  
+							  });
+							},
+							error:function(xhr,type,errorThrown){//异常处理；
+								console.log(xhr + type + errorThrown);
+							}
+						});//aja
+						
+					  //获取id
+					 /* var id = this.getAttribute("id");
+					  //传值给详情页面，通知加载新数据
+					  mui.fire(detail,'getDetail',{id:id});
+					  //打开新闻详情*/
+					
+				   // plus.webview.hide('nsjglb.html');
+				   /*子页面调用父页面,选项卡
+				    var current_view = plus.webview.currentWebview()
+					var parent_view = current_view.opener();
+					parent_view.evalJS("a()")*/
+					}) 
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

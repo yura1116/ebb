@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>编制概况</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<style>
+			 input::-webkit-input-placeholder{
+			 	font-size: 16px;
+	            color:#333333;
+	        }
+	        table{
+	        	width:100%;
+	        	text-align: center;
+	        	table-layout: fixed;
+	        }
+	        
+	        table tr td{color:#333333}
+	        
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                /*height: 45px;*/
+                /*font-size: 14px;*/
+	        }
+	        
+	        table td{
+	        	font-size: 13px;
+	        	height: 25px;
+	        	border: 0;
+	        	/*border-bottom: 1px solid #eee;*/
+	        }
+	        
+	        #xx_tab td{font-size: 11px;}
+	        
+	        #bzgklb td{height: 35px;border:1px solid #eee;font-size: 12px;}
+	        #sy_bzgklb td{height: 35px;border:1px solid #eee;font-size: 12px;}
+	        #xzjdlb td{height: 35px;border:1px solid #eee;font-size: 12px;}
+	        #syjdlb td{height: 35px;border:1px solid #eee;font-size: 12px;}
+	        #xz_tab td{font-size:10px;}
+	        #sy_tab td{font-size:10px;}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
+			<div style="width：100%;height:8%;margin-top:3%;background: #fff;">
+				<input id="cdzw" type="hidden">
+				<table style="height: 100%;width:100%;border: 0;" id="xx_tab">
+					<tr>
+						<td style="width: 20%;border: 0;" id="xzbz_xx" onclick="bzck('xzbz_xx')">行政政法编制</td>
+						<td style="width: 20%;border: 0;" id="sybz_xx" onclick="bzck('sybz_xx')">事业编制</td>
+						<td style="width: 20%;border: 0;" class="fpgk" id="xzjd_xx" onclick="bzck('xzjd_xx')">行政分配概况</td>
+						<td style="width: 20%;border: 0;" class="fpgk" id="syjd_xx" onclick="bzck('syjd_xx')">事业分配概况</td>
+						<td style="width: 20%;border: 0;" id="dqlb"></td>
+					</tr>
+				</table>
+			</div>
+			<div  style="width：100%;height:89%;border:1px solid #eee;">
+				<div style="width:100%;height:30%;background: #fff;margin-top: 3%;display:none;" id="xzbz_sj" class="">
+					<table style="width: 100%;height:100%;" id="xz_tab">
+						<tr>
+							<td style="text-align: right;">行政编制</td>
+							<td></td>
+							<td style="text-align: right;">待分配数</td>
+							<td></td>
+							<td style="text-align: right;">已分配数</td>
+							<td id="yfps_xzbz" style="text-align: left;padding-left:10px;"></td>
+							<td style="text-align: right;">计划卡数</td>
+							<td id="yxjhs_xzbz"  style="text-align: left;padding-left:10px;"></td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #eee;width:16%;text-align: right;">实配总数</td>
+							<td style="border-bottom: 1px solid #eee;width:9%;" id="spzs_xzbz"></td>
+							<td style="border-bottom: 1px solid #eee;width:16%;text-align: right;">单列总数</td>
+							<td style="border-bottom: 1px solid #eee;width:9%;" id="dlzs_xzbz"></td>
+							<td style="border-bottom: 1px solid #eee;width:16%;text-align: right;">空编总数</td>
+							<td style="border-bottom: 1px solid #eee;width:9%;" id="kbzs_xzbz"></td>
+							<td style="border-bottom: 1px solid #eee;width:16%;text-align: right;">行政附属</td>
+							<td style="border-bottom: 1px solid #eee;width:9%;" id="xzfssps"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;">政法总数</td>
+							<td></td>
+							<td style="text-align: right;">待分配数</td>
+							<td></td>
+							<td style="text-align: right;">已分配数</td>
+							<td style="" id="yfps_zfzx" ></td>
+							<td style="text-align: right;">计划卡数</td>
+							<td id="yxjhs_zfzx"  style="text-align: left;padding-left:10px;"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;border-bottom: 1px solid #eee;">实配总数</td>
+							<td id="spzs_zfzx" colspan="3" style="border-bottom: 1px solid #eee;"></td>
+							<td style="text-align: right;border-bottom: 1px solid #eee;">空编总数</td>
+							<td style="border-bottom: 1px solid #eee;" id="kbzs_zfzx" colspan="3"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;">参公分配</td>
+							<td id="yfps_cgbz"></td>
+							<td style="text-align: right;">参公实配</td>
+							<td id="spzs_cgbz"></td>
+							<td style="text-align: right;">参公空编</td>
+							<td id="kbzs_cgbz" style="text-align: left;padding-left:10px;"></td>
+							<td style="text-align: right;">计划卡数</td>
+							<td id="yxjhs_cgbz"  style="text-align: left;padding-left:10px;"></td>
+						</tr>
+					</table>
+				</div>
+				<div style="width：100%;height:34%;background: #fff;margin-top: 3%;display:none;" id="sybz_sj" class="">
+					<table style="width: 100%;height:100%;" id="sy_tab">
+						<tr>
+							<td style="width: 18%;text-align: right;">编制总数</td>
+							<td style="width: 14%;"></td>
+							<td style="width: 18%;text-align: right;">待分配数</td>
+							<td style="width: 14;"></td>
+							<td style="width: 18%;text-align: right;">已分配数</td>
+							<td style="width: 14%;" id="yfps"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;border-bottom: 1px solid #eee;">实配总数</td>
+							<td id="spzs" style="border-bottom: 1px solid #eee;"></td>
+							<td style="text-align: right;border-bottom: 1px solid #eee;">空编总数</td>
+							<td colspan="3" style="text-align: left;padding-left:20px;border-bottom: 1px solid #eee;" id="kbzs"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;">参公分配</td>
+							<td id="cghds"></td>
+							<td style="text-align: right;">参公实配</td>
+							<td id="cgsps"></td>
+							<td style="text-align: right;">参公空编</td>
+							<td id="cgkbs"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;">全额分配</td>
+							<td id="qehds"></td>
+							<td style="text-align: right;">全额实配</td>
+							<td id="qesps"></td>
+							<td style="text-align: right;">全额空编</td>
+							<td id="qekbs"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;">自收自支分配</td>
+							<td id="zszzhds"></td>
+							<td style="text-align: right;">自收自支实配</td>
+							<td id="zszzsps"></td>
+							<td style="text-align: right;">自收自支空编</td>
+							<td id="zszzkbs"></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;">差额分配</td>
+							<td id="cehds"></td>
+							<td style="text-align: right;">差额实配</td>
+							<td id="cesps"></td>
+							<td style="text-align: right;">差额空编</td>
+							<td id="cekbs"></td>
+						</tr>
+					</table>
+				</div>
+				<div style="width:100%;height:15%;clear: both;padding-top:3%;" class="xzbz">
+					<table class="bt_tab" style="height: 100%;"> 
+						<tr>
+							<td style="width: 16%;">机构分类</td>
+							<td style="width: 20%;">机构名称</td>
+							<td style="width: 16%;">编制类别</td>
+							<td style="width: 9%;">核定数</td>
+							<td style="width: 9%;">实配数</td>
+							<td style="width: 9%;">单列数</td>
+							<td style="width: 9%;">空编数</td>
+							<td style="width: 12%;">有效计划数</td>
+						</tr>
+					</table>
+				</div>
+				<div style="width:100%;height:10%;clear: both;padding-top:3%;" class="sybz">
+					<table class="bt_tab" style="height: 100%;"> 
+						<tr>
+							<td style="width: 16%;">机构分类</td>
+							<td style="width: 24%;">主管部门</td>
+							<td style="width: 16%;">编制类别</td>
+							<td style="width: 13%;">核定数</td>
+							<td style="width: 13%;">实配数</td>
+							<td style="width: 13%;">空编数</td>
+						</tr>
+					</table>
+				</div>
+				<div style="width:100%;height:25%;clear: both;padding-top:3%;" class="xzjd">
+					<table class="bt_tab" style="height: 100%;"> 
+						<tr>
+							<td rowspan="3" style="border:1px solid #cdcdcd;width:28%;">地区</td>
+							<td colspan="6" style="border:1px solid #cdcdcd;">行政</td>
+						</tr> 
+						<tr>
+							<td rowspan="2" style="border:1px solid #cdcdcd;width:12%;">行政<br>编制</td>
+							<td colspan="4">政法专项</td>
+							<td rowspan="2" style="border:1px solid #cdcdcd;width:12%;">参公</td>
+						</tr>
+						<tr>
+							<td style="border:1px solid #cdcdcd;width:12%;">公<br>安</td>
+							<td style="border:1px solid #cdcdcd;width:12%;">检<br>察</td>
+							<td style="border:1px solid #cdcdcd;width:12%;">法<br>院</td>
+							<td style="border:1px solid #cdcdcd;width:12%;">司<br>法</td>
+						</tr>
+					</table>
+				</div>
+				<div style="width:100%;height:20%;clear: both;padding-top:3%;" class="syjd">
+					<table class="bt_tab" style="height: 100%;"> 
+						<tr>
+							<td rowspan="2" style="border:1px solid #cdcdcd;width:40%;">地区</td>
+							<td colspan="4" style="border:1px solid #cdcdcd;">事业</td>
+						</tr> 
+						<tr>
+							<td style="border:1px solid #cdcdcd;width:15%;">参公</td>
+							<td style="border:1px solid #cdcdcd;width:15%;">全拨</td>
+							<td style="border:1px solid #cdcdcd;width:15%;">差拨</td>
+							<td style="border:1px solid #cdcdcd;width:15%;">自收<br>自支</td>
+						</tr>
+					</table>
+				</div>
+				<div style="width:100%;height:85%;overflow: auto;background: #fff;" id="xzbz_tab" class="xzbz">
+					<table class="bt_body" id="bzgklb"></table>
+				</div>
+				<div style="width:100%;height:90%;overflow: auto;background: #fff;" id="sybz_tab" class="sybz">
+					<table class="bt_body" id="sy_bzgklb"></table>
+				</div>
+				<div style="width:100%;height:75%;overflow: auto;background: #fff;" class="xzjd">
+					<table class="bt_body" id="xzjdlb"></table>
+				</div>
+				<div style="width:100%;height:80%;overflow: auto;background: #fff;" class="syjd">
+					<table class="bt_body" id="syjdlb"></table>
+				</div>
+				<!--<div style="width:100%;height: 10%;text-align: center;">
+					<table style="width:100%;height: 100%;">
+						<tr>
+							<td style="text-align: right;padding-right: 10px;"><input type="button" onclick="showsj()" style="border:1px solid #12AAC1;background: #12AAC1;border-radius: 15px;color: #fff;width:55%;font-size: 13px;text-align: center;" value="显示数据"></td>
+							<td style="text-align: left;padding-left: 10px;"><input type="button" onclick="ycsj()" style="border:1px solid #12AAC1;background: #12AAC1;border-radius: 15px;color: #fff;width:55%;font-size: 13px;text-align: center;" value="隐藏数据"></td>
+						</tr>
+					</table>-->
+				</div>-->
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
+		<script>
+			
+			$(function(){
+				
+			
+			})
+			
+			/*function showsj(){//显示数据
+				if($("#cdzw").val() == "xzbz_xx"){
+					$("#xzbz_tab").css("height","42%");
+					$("#xzbz_sj").show();
+				}else if($("#cdzw").val() == "sybz_xx"){
+					$("#sybz_tab").css("height","44%");
+					$("#sybz_sj").show();
+				}
+			}*/
+			
+			/*function ycsj(){//隐藏数据
+				if($("#cdzw").val() == "xzbz_xx"){
+					$("#xzbz_tab").css("height","75%");
+					$("#xzbz_sj").hide();
+				}else if($("#cdzw").val() == "sybz_xx"){
+					$("#sybz_tab").css("height","80%");
+					$("#sybz_sj").hide();
+				}
+			}*/
+			
+			var sel_xx = "";
+			function bzck(obj){
+				var district = plus.storage.getItem('district');
+				var username = plus.storage.getItem('username');
+				if(obj == "sybz_xx"){//事业
+					$(".xzbz").hide();
+					$(".sybz").show();
+					$(".syjd").hide();
+					$(".xzjd").hide();
+					getsybzgk(district,username);
+				}else if(obj =="xzbz_xx"){//行政
+					$(".xzbz").show();
+					$(".sybz").hide();
+					$(".syjd").hide();
+					$(".xzjd").hide();
+					getxzbzgk(district,username);
+				}else if(obj == "xzjd_xx"){
+					$(".xzbz").hide();
+					$(".sybz").hide();
+					$(".syjd").hide();
+					$(".xzjd").show();
+					getxzjdgk(district,username);
+				}else{
+					$(".xzbz").hide();
+					$(".sybz").hide();
+					$(".xzjd").hide();
+					$(".syjd").show();
+					getsyjdgk(district,username);
+				}
+				sel_xx = obj;
+				$("#xx_tab").find("td").css("color","#000");
+				$("#"+obj).css("color","#12AAC1");
+				$("#cdzw").val(obj);
+				//ycsj();
+			}
+			
+			function getdqxx(district){//查询地区选项
+				if(district.substr(district.length-2) != "00"){
+					$(".fpgk").hide();
+				}
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getdqlist',{
+					data:{
+						district:district
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						if(data == ""){
+							return;
+						}
+						//   地区代码：district 地区名称：district_name 
+						var str = "<span class='mui-badge1' style='padding:0px; width:65%;'>"+
+							"<select class='mui-h5 dqsel'  style='margin:0 auto; color:#000;height:90%;font-size:11px;'>";
+							"<option  value='' class=''>"+'请选择地区'+"</option>";
+						var data = eval("("+data+")");
+						$("#dqlb").html("");
+						for(i in data){
+							str+="<option  value='"+data[i].district+"' class=''>"+data[i].district_name+"</option>";
+						}
+						$("#dqlb").html(str+"</span>");
+
+						$(".mui-badge1 option[value='"+district+"']").attr("selected","selected"); 
+						
+						$("select").change(function(){
+							changedq($(this).val())
+						})
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//ajax
+			}//getdqxx
+			
+			function getxzbzgk(district,username){//行政编制数据查询
+				var sel_dq = $(".dqsel").val();
+				if(sel_dq == undefined){
+					sel_dq = district;
+				}
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getbzgk_jg',{
+					data:{
+						sel_dq:sel_dq,
+						username:username
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						var data = eval("("+data+")");//转换为json对象
+						document.getElementById("yfps_xzbz").innerHTML=(data.yfps_xzbz==undefined ?"":data.yfps_xzbz);
+						document.getElementById("yxjhs_xzbz").innerHTML=(data.yxjhs_xzbz==undefined ?"":data.yxjhs_xzbz);
+						document.getElementById("spzs_xzbz").innerHTML=(data.spzs_xzbz==undefined ?"":data.spzs_xzbz);
+						document.getElementById("dlzs_xzbz").innerHTML=(data.dlzs_xzbz==undefined ?"":data.dlzs_xzbz);
+						document.getElementById("kbzs_xzbz").innerHTML=(data.kbzs_xzbz==undefined ?"":data.kbzs_xzbz);
+						document.getElementById("xzfssps").innerHTML=(data.xzfssps==undefined ?"":data.xzfssps);
+						document.getElementById("yfps_zfzx").innerHTML=(data.yfps_zfzx==undefined ?"":data.yfps_zfzx);
+						document.getElementById("yxjhs_zfzx").innerHTML=(data.yxjhs_zfzx==undefined ?"":data.yxjhs_zfzx);
+						document.getElementById("spzs_zfzx").innerHTML=(data.spzs_zfzx==undefined ?"":data.spzs_zfzx);
+						document.getElementById("kbzs_zfzx").innerHTML=(data.kbzs_zfzx==undefined ?"":data.kbzs_zfzx);
+						document.getElementById("yfps_cgbz").innerHTML=(data.yfps_cgbz==undefined ?"":data.yfps_cgbz);
+						document.getElementById("spzs_cgbz").innerHTML=(data.spzs_cgbz==undefined ?"":data.spzs_cgbz);
+						document.getElementById("kbzs_cgbz").innerHTML=(data.kbzs_cgbz==undefined ?"":data.kbzs_cgbz);
+						document.getElementById("yxjhs_cgbz").innerHTML=(data.yxjhs_cgbz==undefined ?"":data.yxjhs_cgbz);
+						
+						var str = "";
+						$("#bzgklb tr").remove();
+						var data1 = data.list;
+						for(i in data1){
+							str+="<tr id='"+i+"'>"+
+							"<td style='width: 16%;'>"+(data1[i].vc3_name == undefined ? "" : data1[i].vc3_name)+"</td>"+
+							"<td style='width: 20%;'>"+(data1[i].company_name == undefined ? "" : data1[i].company_name)+"</td>"+
+							"<td style='width: 16%;'>"+(data1[i].bzlb == undefined ? "" : data1[i].bzlb)+"</td>"+
+							"<td style='width: 9%;'>"+(data1[i].hds == undefined ? "" : data1[i].hds)+"</td>"+
+							"<td style='width: 9%;'>"+(data1[i].sps == undefined ? "" : data1[i].sps)+"</td>"+
+							"<td style='width: 9%;'>"+(data1[i].dls == undefined ? "" : data1[i].dls)+"</td>"+
+							"<td style='width: 9%;'>"+(data1[i].kbs == undefined ? "" : data1[i].kbs)+"</td>"+
+							"<td style='width: 12%;'>"+(data1[i].yxjhs == undefined ? "" : data1[i].yxjhs)+"</td>"+
+							"</tr>";
+						}
+						$("#bzgklb").append(str);
+						table_rowspan("bzgklb")
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr+type+errorThrown);
+					}
+				});
+			}
+			
+			function getsybzgk(district,username){//事业编制数据查询
+				var sel_dq = $(".dqsel").val();
+				if(sel_dq == undefined){
+					sel_dq = district;
+				}
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getbzgk_sy',{
+					data:{
+						sel_dq:sel_dq,
+						username:username
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data) 
+						var data = eval("("+data+")");//转换为json对象
+						document.getElementById("yfps").innerHTML=(data.yfps==undefined ?"":data.yfps);
+						document.getElementById("spzs").innerHTML=(data.spzs==undefined ?"":data.spzs);
+						document.getElementById("kbzs").innerHTML=(data.kbzs==undefined ?"":data.kbzs);
+						document.getElementById("cghds").innerHTML=(data.cghds==undefined ?"":data.cghds);
+						document.getElementById("cgsps").innerHTML=(data.cgsps==undefined ?"":data.cgsps);
+						document.getElementById("cgkbs").innerHTML=(data.cgkbs==undefined ?"":data.cgkbs);
+						document.getElementById("qehds").innerHTML=(data.qehds==undefined ?"":data.qehds);
+						document.getElementById("qesps").innerHTML=(data.qesps==undefined ?"":data.qesps);
+						document.getElementById("qekbs").innerHTML=(data.qekbs==undefined ?"":data.qekbs);
+						document.getElementById("cehds").innerHTML=(data.cehds==undefined ?"":data.cehds);
+						document.getElementById("cesps").innerHTML=(data.cesps==undefined ?"":data.cesps);
+						document.getElementById("cekbs").innerHTML=(data.cekbs==undefined ?"":data.cekbs);
+						document.getElementById("zszzhds").innerHTML=(data.zszzhds==undefined ?"":data.zszzhds);
+						document.getElementById("zszzsps").innerHTML=(data.zszzsps==undefined ?"":data.zszzsps);
+						document.getElementById("zszzkbs").innerHTML=(data.zszzkbs==undefined ?"":data.zszzkbs);
+						var str = "";
+						$("#sy_bzgklb tr").remove();
+						var data1 = data.list;
+						for(i in data1){
+							str+="<tr id='"+i+"'>"+
+							"<td style='width: 16%;'>"+(data1[i].vc3_name == undefined ? "" : data1[i].vc3_name)+"</td>"+
+							"<td style='width: 24%;'>"+(data1[i].zgj_name == undefined ? "" : data1[i].zgj_name)+"</td>"+
+							"<td style='width: 16%;'>"+(data1[i].bzlb == undefined ? "" : data1[i].bzlb)+"</td>"+
+							"<td style='width: 13%;'>"+(data1[i].hds == undefined ? "" : data1[i].hds)+"</td>"+
+							"<td style='width: 13%;'>"+(data1[i].sps == undefined ? "" : data1[i].sps)+"</td>"+
+							"<td style='width: 13%;'>"+(data1[i].kbs == undefined ? "" : data1[i].kbs)+"</td>"+
+							"</tr>";
+						}
+						$("#sy_bzgklb").append(str);
+						table_rowspan("sy_bzgklb")
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr+type+errorThrown);
+					}
+				});
+			}
+			
+			function getxzjdgk(district,username){//编制分配概况查询
+				var sel_dq = $(".dqsel").val();
+				if(sel_dq == undefined){
+					sel_dq = district;
+				}
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getbzgk_dq',{
+					data:{
+						sel_dq:sel_dq,
+						username:username
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data) 
+						var data = eval("("+data+")");//转换为json对象
+						var str = "";
+						$("#xzjdlb tr").remove();
+						for(i in data){
+							str+="<tr id='"+i+"'>"+
+							"<td style='width: 14%;'>"+(data[i].district_name == undefined ? "" : data[i].district_name)+"</td>"+
+							"<td style='width: 14%;'>"+(data[i].name == undefined ? "" :  data[i].name)+"</td>"+
+							"<td style='width: 12%;'>"+(data[i].xzbzs == undefined ? "" : data[i].xzbzs)+"</td>"+
+							"<td style='width: 12%;'>"+(data[i].gabzs == undefined ? "" : data[i].gabzs)+"</td>"+
+							"<td style='width: 12%;'>"+(data[i].jcbzs == undefined ? "" : data[i].jcbzs)+"</td>"+
+							"<td style='width: 12%;'>"+(data[i].fybzs == undefined ? "" : data[i].fybzs)+"</td>"+
+							"<td style='width: 12%;'>"+(data[i].sfbzs == undefined ? "" : data[i].sfbzs)+"</td>"+
+							"<td style='width: 12%;'>"+(data[i].cgbzs == undefined ? "" : data[i].cgbzs)+"</td>"+
+							"</tr>";
+						}
+						$("#xzjdlb").append(str);
+						table_rowspan("xzjdlb")
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr+type+errorThrown);
+					}
+				});
+			}
+			
+			function getsyjdgk(district,username){//事业编制概况查询
+				var sel_dq = $(".dqsel").val();
+				if(sel_dq == undefined){
+					sel_dq = district;
+				}
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getbzgk_dq_sy',{
+					data:{
+						sel_dq:sel_dq,
+						username:username
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data) 
+						var data = eval("("+data+")");//转换为json对象
+						var str = "";
+						$("#syjdlb tr").remove();
+						for(i in data){
+							str+="<tr id='"+i+"'>"+
+							"<td style='width: 20%;'>"+(data[i].district_name == undefined ? "" : data[i].district_name)+"</td>"+
+							"<td style='width: 20%;'>"+(data[i].name == undefined ? "" :  data[i].name)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].cg == undefined ? "" : data[i].cg)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].qe == undefined ? "" : data[i].qe)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].ce == undefined ? "" : data[i].ce)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].zszz == undefined ? "" : data[i].zszz)+"</td>"+
+							"</tr>";
+						}
+						$("#syjdlb").append(str);
+						table_rowspan("syjdlb")
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(xhr+type+errorThrown);
+					}
+				});
+			}
+			
+			function changedq(district){//地区改变刷新数据
+				var username = plus.storage.getItem('username');
+				if(sel_xx == "xzbz_xx"){//行政编制
+					getxzbzgk(district,username);
+				}else{//事业编制
+					getsybzgk(district,username);
+				}
+			}
+			
+			function table_rowspan(_w_table_id) {
+			    var tab = document.getElementById(_w_table_id);
+			    var maxCol = 2, val, count, start;
+			    var ys = "";
+			 
+			    for (var col = maxCol - 1; col >= 0; col--) {
+			        count = 1;
+			        val = "";
+			        for (var i = 0; i < tab.rows.length; i++) {
+			            if (val == tab.rows[i].cells[col].innerHTML) {
+			                count++;
+			            } else {
+			                if (count > 1) {
+			                    //合并 
+			                    start = i - count;
+			                    if (ys == "#00FFFF") {
+			                        ys = "border";
+			                    } else {
+			                        ys = "#00FFFF";
+			                    }
+			 
+			                    tab.rows[start].cells[col].rowSpan = count;
+			                    //tab.rows[start].cells[col].style.backgroundColor = ys; //改变颜色 
+			                    for (var j = start + 1; j < i; j++) { // 
+			                        tab.rows[j].cells[col].style.display = "none";
+			                        tab.rows[j].removeChild(tab.rows[j].cells[col]);
+			                    }
+			                    count = 1;
+			                }
+			                val = tab.rows[i].cells[col].innerHTML;
+			            }
+			        }
+			 
+			        if (count > 1) { //合并，最后几行相同的情况下 
+			            start = i - count;
+			            tab.rows[start].cells[col].rowSpan = count;
+			 
+			            for (var j = start + 1; j < i; j++) {
+			                tab.rows[j].removeChild(tab.rows[j].cells[col]);
+			            }
+			        }
+			    }
+			}
+			
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var district = plus.storage.getItem('district');
+					var username = plus.storage.getItem('username');
+					
+					getdqxx(district);//查询地区选项
+					//getbzgk(district,username);
+					bzck('xzbz_xx');//默认查询行政编制数据
+					
+					window.addEventListener('openxzsygk',function(event){
+					 	//获得事件参数
+						var id = event.detail.id;
+						if(id == "xz"){
+							bzck('xzjd_xx');
+						}else{
+							bzck('syjd_xx'); 
+						}
+					});
+					
+				});
+			}(mui, document));
+			
+		</script>
+	</body>
+
+</html>

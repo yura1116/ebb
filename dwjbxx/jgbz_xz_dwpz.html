@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>单位信息-主页-单位配置</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/jquery-1.9.1.min.js"></script>
+
+		<style>
+			.mui-active{color:#12AAC1 !important}
+			a{overflow: inherit !important;}
+			.mui-bar-tab .mui-tab-item.mui-active{border-bottom: 1px solid #12AAC1;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-bar-tab .mui-tab-item{height:9%;}
+			.mui-bar-nav.mui-bar .mui-icon{margin:0;padding:0;}
+			.mui-bar .mui-icon{margin:0;padding:0;}
+			.mui-pull-left{float: none;color:#fff;}
+			.mui-tab-label{font-size: 16px;}
+			.mui-bar.mui-bar-nav{background: #12AAC1 !important;height: 60px !important;padding:0 !important;}
+			
+			*{background: #eee;}
+			table{
+	        	width:100%;
+	        	text-align: center;
+	        	table-layout: fixed;
+	        }
+	        table tr td{color:#333333}
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                font-size: 15px;
+	        }
+			.bzpzlb td{font-size: 14px;height: 45px;background: #fff;border-bottom:1px solid #eee}
+		</style>
+	</head>
+
+	<body>
+        <header class="mui-bar mui-bar-nav">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;color: #fff;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;color: #fff;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;color: #fff;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+        <div class="mui-content" style="width:100%;height: 100%;position: absolute;">
+			<div style="width：100%;height:10%;clear: both;margin-top: 3%;">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<!--<td style="width:15%;">序号</td>-->
+						<td style="width:40%;">编制类别</td>
+						<td style="width:15%;">配置数</td>
+						<td style="width:15%;">实配数</td>
+						<td style="width:20%;">有效计划数</td>
+						<!--<td style="width:15%;">空缺数</td>-->
+					</tr>
+				</table>
+			</div>
+			<div style="width：100%;height:83%;overflow: auto;">
+				<table class="bzpzlb"></table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			
+			function getbzpz(){
+				var company_num = plus.storage.getItem('company_num');
+				//查询编制配置信息
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_list_bzhds_xz_xsdwwjg',{
+					data:{
+						company_num:company_num
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						/** 编制类别代码：bzlb_code 编制类别名称：bzlb_name 配置数：hds 实配数：sps*/
+						var str = "";
+						var data = eval("("+data+")");
+						$(".bzpzlb tr").remove();
+						for(i in data){
+							if(data[i].hds == undefined){
+								data[i].hds = "";
+							}
+							if(data[i].sps == undefined){
+								data[i].sps = "";
+							}
+							if(data[i].yxjhs == undefined){
+								data[i].yxjhs = "";
+							}
+							var a = data[i].hds-data[i].sps-data[i].yxjhs;
+							//console.log(a)
+							str+="<tr id='"+i+"'>"+
+							/*"<td class='index' style='width: 15%;'>"+(i*1+1)+"</td>"+*/
+							"<td style='width: 40%;'>"+(data[i].bzlb_name == undefined ? "" : data[i].bzlb_name)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].hds == undefined ? "" : data[i].hds)+"</td>"+
+							"<td style='width: 15%;'>"+(data[i].sps == undefined ? "" : data[i].sps)+"</td>"+
+							"<td style='width: 20%;'>"+(data[i].yxjhs == undefined ? "" : data[i].yxjhs)+"</td>"+
+							/*"<td style='width: 15%;'>"+a+"</td>"+*/
+							"<td style='display:none;'>"+data[i].bzlb_code+"</td>"+
+							"</tr>";
+						}
+						$(".bzpzlb").append(str);
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//aja
+			}
+			
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					getbzpz();//查询编制配置信息
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html'
+						});
+					})
+					
+					document.getElementById('exit').addEventListener('tap', function() {
+					var btn = ["确定","再看看"];
+					mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+					if(e.index==0){
+					  //mui.currentWebview.close();//退出当前页面
+					  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+						if (mui.os.ios){
+						    const threadClass = plus.ios.importClass("NSThread");
+						    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+						    plus.ios.invoke(mainThread, "exit");
+						}else if (mui.os.android){
+						    plus.runtime.quit();
+						}
+
+					}
+					});
+				})
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

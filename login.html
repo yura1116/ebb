@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<style>
+			::-webkit-input-placeholder { /* WebKit browsers */
+			    color: #FFFFFF;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			    color: #FFFFFF;
+			}
+			 ::-moz-placeholder { /* Mozilla Firefox 19+ */
+			    color: #FFFFFF;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			    color: #FFFFFF;
+			}
+			*{color: #fff;font-size:16px;}
+			
+			.mui-content{
+				background: url(images/img/bg4.png) no-repeat;
+				width: 100%;
+				height:100%;
+				position: absolute;
+				background-size: 100%;
+				background-position: center center;
+			    background-size: cover;
+			    background-attachment:fixed;
+			    min-height:100%;
+			    overflow: hidden;
+			}
+			
+			.captcha {width:46%;display:inline-block;float:left;}
+			.captcha-img {display:inline-block;width:46%;float:left;margin-left: 3px;}
+			.captcha-img img {height:34px;border:1px solid #e6e6e6;height:36px;width:100%;float:left;}
+			#canvas {float: right;display: inline-block;border: 1px solid #D2D2D2!important;border-radius: 5px;cursor: pointer;width:100%;}
+		</style>
+
+	</head>
+
+	<body style="height:100%;">
+		<div class="mui-content">
+			<form class="" style="width:80%;margin:0 10%;position: relative;top: 50%;">
+				<div style="border-bottom:1px solid #E3E3E3;width: 100%;height: 35pt;">
+					账&nbsp;号：<input id='account' type="text" style="border:0px;background:none;width:60%;height: 25pt;">
+				</div> 
+				<div style="border-bottom:1px solid #E3E3E3;width: 100%;margin-top:5%;height: 35pt;">
+					密&nbsp;码：<input id='pwd' type="password" style="border:0px;background:none;width:60%;" value="Cz111111@">
+				</div>  
+				<div class="layui-form-item" style="border-bottom:1px solid #E3E3E3;width: 100%;margin-top:5%;height: 35pt;">
+	              	<input style="width:50%;background: none;border:0px;" type="text" name="captcha" id="captcha" placeholder="验  证  码" autocomplete="off" class="layui-input verification captcha" value="">
+					<div class="captcha-img">
+	                    <canvas id="canvas" class="layui-input" style="padding: 0 5 0 5;height:40px;background:#fff;"></canvas>
+	                </div>
+				</div>
+			</form>
+			<div class="mui-content-padded" align="center"  style="position: relative;top:59%;">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" style="padding:3% 0;width:80%;background: #12AAC1;border:1px solid #12AAC1;border-radius: 25px;font-size: 20px;">登 录</button>
+			</div>
+		</div>
+		
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/common.js"></script>
+		<script>
+			
+			var verification_code = [];
+			draw(verification_code);
+			$("#canvas").on('click',function(){
+				draw(verification_code);
+			});
+			
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					
+					var yhm = plus.storage.getItem('username');
+					document.getElementById("account").value = yhm;
+					var accountBox = doc.getElementById('account');
+					var passwordBox = doc.getElementById('pwd');
+					var captchaBox = doc.getElementById('captcha');
+					var loginButton = doc.getElementById('login');
+					loginButton.addEventListener('tap',function(){
+						if(accountBox.value == ''){
+		                    mui.toast('账号不能为空');
+		                    return;
+		                }
+						if(passwordBox.value == ''){
+		                    mui.toast('密码不能为空');
+		                    return;
+		                }
+						/*var verificationCode = verification_code.join("");
+						if(captchaBox.value.toUpperCase() != verificationCode) {
+							alert('验证码输入错误！');
+							captchaBox.value = "";
+							doc.getElementById('canvas').click();
+							return false;
+						}*/
+						mui.ajax(tyUrl+'moveOfficeController.ehtm?method=login',{
+							data:{
+								username:accountBox.value,
+								pwd:passwordBox.value,
+								phoneid:plus.device.uuid,
+							},
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:60000,//超时时间设置为10秒；
+							crossDomain: true,
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							},
+							success:function(data){
+								//服务器返回响应，根据响应结果，分析是否登录成功；
+								if(data == '用户名或密码错误！' || data == '您登录的设备未经授权，不允许登录！'|| data == '您未被授权使用APP，请联系管理进行授权！') {
+									mui.toast(data);
+								}else if(data == '请使用强密码，请登录电脑端V3系统，修改成强密码后，再登录该APP！'){
+									mui.toast(data);
+								}else{
+									var data = JSON.parse(data);
+									//  {"username":"zz001","jc":"组织","district":"320600"}
+									plus.storage.setItem('username', data.username);
+									plus.storage.setItem('jc', data.jc);
+									plus.storage.setItem('district', data.district);
+									mui.openWindow({  
+									    url:'main.html',  
+									    id:'main.html',  
+									    extras:{  
+									        username:data.username,  
+									        jc:data.jc,  
+									        district:data.district  
+									    }  
+									}); 
+									
+									/**父页面调用子页面方法
+									var sub_webview = plus.webview.getWebviewById("main_page/search.html");
+									sub_webview.evalJS("cxdwlb('')")
+									*/
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								//异常处理；
+								console.log(type);
+								if(type == 'timeout') {
+		                            mui.toast("请求超时：请检查网络")
+		                        } else {
+		                            mui.toast('请求失败：' + type + '\n err:' + errorThrown);
+		                        }
+							}
+						});
+					})
+				});
+				
+				/*form.on('submit(sign)', function (data) {
+					data = data.field;
+					var verificationCode = verification_code.join("");
+					if(data.captcha.toUpperCase() != verificationCode) {
+						layer.tips('验证码输入错误！','#captcha',{tips: 4});
+						$("#captcha").val("");
+						$("#canvas").click();
+						return false;
+					}else{
+						//signIn();
+					}
+				});*/
+				
+			}(mui, document));
+			
+			
+			function signIn(){
+				//alert("验证通过，提交！");
+				//window.location.href='firstPage.html';
+				var passWord = $("#pwd").val();
+				var encrypt = new JSEncrypt();
+			    encrypt.setPublicKey("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnrTy/2WvIIXT4etWEy5armtpbtoRxpaGgC+yOv5eeelmQX3Rj5L866DAo3Su1EYITQwrZIStVTGODnveRMIudSdb9Y1R9P0x6Kt0U0iA0+0DkKC7nbCUDttqIqtUflNSjYMTxy9dgt29sR5AXZKjh/Onp29vw4KniZQqdqLklj5Eq4VD1R4o27j2rqZtrzL4sdtDzjQBZ0fMdPXF3AJ3Tyf1Blg1aRmwffh4LSlywL5/maaozZpzA3u+4IJOL2UAR6Ee3nQtG8wB//L38TzfkeLaqBkcWHH6hYD9AWeE9S966SG3yZJjCSvlI8RwWY0T7yQDoBcJnUIicspMezHpKwIDAQAB");
+			    var passwordRSA = encrypt.encrypt(passWord);
+			    $("#pwd").val(passwordRSA);
+				document.all.loginForm.submit();
+			}
+			function draw(verification_code) {
+				var canvas_width = $('#canvas').width();
+				var canvas_height = $('#canvas').height();
+				var canvas = document.getElementById("canvas");
+				var context = canvas.getContext("2d");
+				canvas.width = canvas_width;
+				canvas.height = canvas_height;
+				
+				var randomCode = "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
+				var randomCodeStr = randomCode.split(",");
+				var randomCodeLength = randomCodeStr.length;
+				for (var i = 0; i <= 3; i++) { //绘制数字
+					var j = Math.floor(Math.random() * randomCodeLength);      
+					var rotate = Math.random() * 50 * Math.PI / 180;        
+					var content = randomCodeStr[j];       
+					verification_code[i] = content.toUpperCase();            
+					var x = 10 + i * 20;       
+					var y = 20 + Math.random() * 8;    
+					context.font = "bold 23px 微软雅黑";             
+					context.translate(x, y);            
+					context.rotate(rotate);             
+					context.fillStyle = randomColor();            
+					context.fillText(content, 0, 0);             
+					context.rotate(-rotate);            
+					context.translate(-x, -y);
+				}
+				for (var i = 0; i <= 5; i++) { //绘制线条            
+					context.strokeStyle = randomColor();           
+					context.beginPath();            
+					context.moveTo(Math.random() * canvas_width, Math.random() * canvas_height);            
+					context.lineTo(Math.random() * canvas_width, Math.random() * canvas_height);            
+					context.stroke();        
+				}        
+				for (var i = 0; i <= 60; i++) { //绘制小点            
+					context.strokeStyle = randomColor();            
+					context.beginPath();            
+					var x = Math.random() * canvas_width;            
+					var y = Math.random() * canvas_height;            
+					context.moveTo(x, y);            
+					context.lineTo(x + 1, y + 1);            
+					context.stroke();        
+				}
+			}
+			
+			function randomColor() {//得到随机的颜色值        
+				var r = Math.floor(Math.random() * 256);        
+				var g = Math.floor(Math.random() * 256);        
+				var b = Math.floor(Math.random() * 256);        
+				return "rgb(" + r + "," + g + "," + b + ")";    
+			}
+		</script>
+	</body>
+
+</html>

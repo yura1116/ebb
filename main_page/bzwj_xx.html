@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>编制文件说明信息</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
+		<style>
+	        *{background: #eee;}
+			a{overflow: inherit !important;}
+			table tr td{background: #fff;border:1px solid #eee;text-align: center;font-size: 14px;height: 45px;}
+			.bt_h{color:#999999;border-right: none;text-align: right;padding-right: 10px;}
+			.wb_h{border-left: none;text-align: left;}
+			input{width:100%;padding:0 15px !important;margin:0 !important;border:0 !important;font-size: 14px;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-pull-left{float: none;color:#fff;}
+			.mui-bar-nav.mui-bar .mui-icon{margin:0;padding:0;}
+			 ::-webkit-input-placeholder { /* WebKit browsers */
+			    color: #000;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			    color: #000;
+			}
+			 ::-moz-placeholder { /* Mozilla Firefox 19+ */
+			    color: #000;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			    color: #000;
+			}
+	        
+	        input{width:100%;padding:0 5px !important;margin:0 !important;border:0 !important;font-size: 14px;}
+			 ::-webkit-input-placeholder { /* WebKit browsers */
+			    color: #000;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			    color: #000;
+			}
+			 ::-moz-placeholder { /* Mozilla Firefox 19+ */
+			    color: #000;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			    color: #000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #12AAC1;height: 60px;padding:0;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+        <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:60px;padding: 0;background: #eee;">
+        	<div style="width:80%;height:8%;margin-top:3%;">
+				<div style="width:5%;height:100%;float: left;margin-left: 12%;padding:8px 0;"><div style="height:100%;width:2px;background: #12AAC1;"></div></div>
+				<div style="width:35%;height:100%;float: left;font-size: 15px;color: #12AAC1;">
+					<table style="height: 100%;width:100%;">
+						<tr>
+							<td style="color: #12AAC1;background: #eee;text-align: left;font-size: 15px;height:40px;">
+							<h4 style="font-weight: normal;" id="wjsm">文件说明</h4>
+							</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+			<form class="" style="margin-top:3%;width:100%;">
+				<table style="width:100%;" class="tab">
+					<tr>           
+						<td class="bt_h" style="width:40%;">文件名称</td>
+						<td style="width:60%;" class="wb_h"><input id='bzwj_mc' type="text" readonly="readonly"></td>
+					</tr>
+					<tr>     
+						<td class="bt_h">文    号</td>
+						<td class="wb_h">
+							<input id='bzwj_bh' type="text" style="width:55%;" readonly="readonly">
+							<button class="yuedu" style="background: #12AAC1;border:1px solid #12AAC1;border-radius: 25px;color: #fff;width: 40%;height:30px;margin:5px 0;padding:0;font-size: 15px;">文件阅读</button></td>
+						</td>
+					</tr>
+					<tr>
+						<td class="bt_h">发文时间</td>
+						<td class="wb_h"><input id='fwsj' type="text" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">发文单位</td>
+						<td class="wb_h"><input id='fwdw' type="text" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">地    区</td>
+						<td class="wb_h"><input id='district_name' type="text" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">备    注</td>
+						<td class="wb_h"><input id='bz' type="text" readonly="readonly"></td>
+					</tr>
+					<tr style="display: none;">
+						<td><input id='wym' type="text" readonly="readonly"></td>
+						<td><input id='uploadname' type="text" readonly="readonly"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<script>
+			
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+	
+					var bzwj_id = plus.storage.getItem('bzwj_id');
+					var wj_str = "";
+					//查询编制文件详情
+					mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getbzwjdetail',{
+						data:{
+							id:bzwj_id
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:60000,//超时时间设置为10秒；
+						crossDomain: true,
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+						beforeSend: function() {
+				        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+					    },
+					    complete: function() {
+					    	plus.nativeUI.closeWaiting();
+					    },
+						success:function(data){
+							console.log(data)
+							wj_str = data;
+							 //  唯一码：id  编制文件名称：bzwj_mc 文号：bzwj_bh  发文时间：fwsj 发文单位：fwdw 地区：district_name 备注：bz PDF路径：uploadname（未上传、路径）
+							var data = eval("("+data+")");//转换为json对象
+							document.getElementById("wym").value=(data.id==undefined ?"":data.id);
+							document.getElementById("bzwj_mc").value=(data.bzwj_mc==undefined ?"":data.bzwj_mc);
+							document.getElementById("bzwj_bh").value=(data.bzwj_bh==undefined ?"":data.bzwj_bh);
+							document.getElementById("fwsj").value=(data.fwsj==undefined ?"":data.fwsj);
+							document.getElementById("fwdw").value=(data.fwdw==undefined ?"":data.fwdw);
+							document.getElementById("district_name").value=(data.district_name==undefined ?"":data.district_name);
+							document.getElementById("bz").value=(data.bz==undefined ?"":data.bz);
+							document.getElementById("uploadname").value=(data.uploadname==undefined ?"":data.uploadname);
+	
+						},
+						error:function(xhr,type,errorThrown){//异常处理；
+							console.log(xhr + type + errorThrown);
+						}
+					});//ajax
+					
+					/*$("#wjsm").click(function(){
+						alert(wj_str)
+					})*/
+					
+					mui(".mui-content").on('tap','#wjsm',function(){
+					  alert(wj_str)
+					}) 
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html'
+						});
+					})
+					
+	                //退出系统
+					document.getElementById('exit').addEventListener('tap', function() {
+						var btn = ["确定","再看看"];
+						mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+						if(e.index==0){
+						  //mui.currentWebview.close();//退出当前页面
+						  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+							if (mui.os.ios){
+							    const threadClass = plus.ios.importClass("NSThread");
+							    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+							    plus.ios.invoke(mainThread, "exit");
+							}else if (mui.os.android){
+							    plus.runtime.quit();
+							}
+						}
+						});
+					})//exit
+					
+					mui(".tab").on('tap','.yuedu',function(){
+						var uploadname = document.getElementById("uploadname").value;
+						uploadname=encodeURI(uploadname);//路径中文转码
+						console.log(uploadname)
+						plus.storage.setItem('uploadname', uploadname);
+						 mui.openWindow({
+						    id:'bzwj_pdf.html',
+						    url:'bzwj_pdf.html'
+						  });
+					})//exit
+
+				}) 
+			}(mui, document));
+			
+		</script>
+	</body>
+
+</html>

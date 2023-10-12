@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>编制情况汇总表</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<style>
+			*{background: #eee;}
+			table{
+	        	width:100%;
+	        	text-align: center;
+	        }
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                font-size: 15px;
+	        }
+			#zgjbzlb td{font-size: 14px;height: 45px;background: #fff;border-bottom:1px solid #eee;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-pull-left{float: none;color:#fff;}
+			.mui-bar-nav.mui-bar .mui-icon{margin:0;padding:0;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #12AAC1;height: 60px;padding:0;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+        <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:60px;padding: 0;background: #eee;">
+			<div style="width:100%;height:10%;margin-top: 3%;">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<td style="width:26%;">部门名称</td>
+						<td style="width:30%;" colspan="2">编制类别</td>
+						<td style="width:21%;">核定数</td>
+						<td style="width:21%;">实配数</td>
+					</tr>
+				</table>
+			</div>
+			<div style="width：100%;height:85%;overflow: auto;">
+				<table id="zgjbzlb" ></table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			$(function(){
+				
+			})
+			
+			function gethzbqk(){
+				var district = plus.storage.getItem('district');
+				var zgjnum = plus.storage.getItem('zgjnum');
+				//查询编制配置信息
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_list_getzgjbzqk',{
+					data:{
+						district:district,
+						sel_zgjnum:zgjnum
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						/*console.log(data)*/
+						if(data == ""){
+							return;
+						}
+						var str = "";
+						var data = eval("("+data+")");
+						//"company_num":"320623201203","company_name":"XXX市卫生局","hds_xzbz":"100","sps_xzbz":"0","hds_sybz":"0","sps_sybz":"0","hds_cgbz":"200","sps_cgbz":"0"
+						$("#zgjbzlb tr").remove();
+						for(i in data){
+							str+="<tr>"+
+							"<td style='width: 26%;border:1px solid #eee;' rowspan='3'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
+							"<td style='border:1px solid #eee;' colspan='2'>行政编制</td>"+
+							"<td style='width: 21%;border:1px solid #eee;'>"+(data[i].hds_xzbz == undefined ? "" : data[i].hds_xzbz)+"</td>"+
+							"<td style='width: 21%;border:1px solid #eee;'>"+(data[i].sps_xzbz == undefined ? "" : data[i].sps_xzbz)+"</td>"+
+							"</tr>"+
+							"<tr>"+
+							"<td style='border:1px solid #eee;border-bottom:none;' colspan='2'>事业编制</td>"+
+							"<td style='border:1px solid #eee;'>"+(data[i].hds_sybz == undefined ? "" : data[i].hds_sybz)+"</td>"+
+							"<td style='border:1px solid #eee;'>"+(data[i].sps_xzbz == undefined ? "" : data[i].sps_sybz)+"</td>"+
+							"</tr>"+
+							"<tr>"+
+							"<td style='width: 8%;border:1px solid #eee;border-top:none;'></td>"+
+							"<td style='width: 22%;border:1px solid #eee;'>其中：参公</td>"+
+							"<td style='border:1px solid #eee;'>"+(data[i].hds_cgbz == undefined ? "" : data[i].hds_cgbz)+"</td>"+
+							"<td style=';border:1px solid #eee;'>"+(data[i].sps_xzbz == undefined ? "" : data[i].sps_cgbz)+"</td>"+
+							"</tr>";
+						}//
+						
+						$("#zgjbzlb").append(str);
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//aja
+			}
+			
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					
+					gethzbqk();//查询编制配置信息
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html',
+						});
+					})
+					
+					//退出系统
+					document.getElementById('exit').addEventListener('tap', function() {
+						var btn = ["确定","再看看"];
+						mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+						if(e.index==0){
+						  //mui.currentWebview.close();//退出当前页面
+						  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+							if (mui.os.ios){
+							    const threadClass = plus.ios.importClass("NSThread");
+							    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+							    plus.ios.invoke(mainThread, "exit");
+							}else if (mui.os.android){
+							    plus.runtime.quit();
+							}
+						}
+						});
+					})//exit
+					
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+					
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>内设机构信息</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			*{background: #eee;}
+			a{overflow: inherit !important;}
+			table tr td{background: #fff;border:1px solid #eee;text-align: center;font-size: 14px;height: 40pt;}
+			.bt_h{color:#999999;border-right: none;text-align: right;padding-right: 10px;}
+			.wb_h{border-left: none;}
+			input{width:100%;padding:0 15px !important;margin:0 !important;border:0 !important;font-size: 14px;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-pull-left{float: none;color:#fff;}
+			.mui-bar-nav.mui-bar .mui-icon{margin:0;padding:0;}
+			 ::-webkit-input-placeholder { /* WebKit browsers */
+			    color: #000;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			    color: #000;
+			}
+			 ::-moz-placeholder { /* Mozilla Firefox 19+ */
+			    color: #000;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			    color: #000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #12AAC1;height: 60px;padding:0;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+        <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:60px;padding: 0;">
+			<form class="" style="margin-top:3%;width:100%;">
+				<table style="width:100%;">
+					<tr>
+						<td class="bt_h" style="width:45%;">内设机构名称</td>
+						<td style="width:55%;" class="wb_h"><input id='gg_bm_mc' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">内设机构规格</td>
+						<td class="wb_h"><input id='dept_grade_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">上级机构</td>
+						<td class="wb_h"><input id='supe_dept_name' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">内设机构编制数配置</td>
+						<td class="wb_h"><input id='curr_stuff' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<td class="bt_h">内设机构职能</td>
+						<td class="wb_h"><input id='dept_resp' type="text" placeholder="" readonly="readonly"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+					
+					var self = plus.webview.currentWebview();  
+					var gg_bm_mc = self.gg_bm_mc;  
+					var dept_grade_name = self.dept_grade_name;  
+					var supe_dept_name = self.supe_dept_name; 
+					var curr_stuff = self.curr_stuff; 
+					var dept_resp = self.dept_resp; 
+					
+					document.getElementById("gg_bm_mc").value=gg_bm_mc;
+					document.getElementById("dept_grade_name").value=dept_grade_name;
+					document.getElementById("supe_dept_name").value=supe_dept_name;
+					document.getElementById("curr_stuff").value=curr_stuff;
+					document.getElementById("dept_resp").value=dept_resp;
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html'
+						});
+					})
+					
+					//退出系统
+					document.getElementById('exit').addEventListener('tap', function() {
+						var btn = ["确定","再看看"];
+						mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+						if(e.index==0){
+						  //mui.currentWebview.close();//退出当前页面
+						  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+							if (mui.os.ios){
+							    const threadClass = plus.ios.importClass("NSThread");
+							    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+							    plus.ios.invoke(mainThread, "exit");
+							}else if (mui.os.android){
+							    plus.runtime.quit();
+							}
+	
+						}
+						});
+					})
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

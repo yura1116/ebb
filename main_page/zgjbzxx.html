@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主管局及下属单位编制信息</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<style>
+			*{background: #eee;}
+			table{
+	        	width:100%;
+	        	text-align: center;
+	        	table-layout: fixed;
+	        }
+	        .bt_tab td{
+	        	background: #DEDEDE;
+                font-size: 15px;
+	        }
+			#zgjbzlb td{font-size: 14px;height: 45px;background: #fff;border-bottom:1px solid #eee;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-pull-left{float: none;color:#fff;}
+			.mui-bar-nav.mui-bar .mui-icon{margin:0;padding:0;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #12AAC1;height: 60px;padding:0;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"><span style="font-size: 12pt;background: #12AAC1;margin-left: -3px;">返回</span></a></td>
+        			<td style="width:60%;font-size: 18pt;padding-left: 9%;" id="title">掌上编办</td>
+        			<td style="width:12%;font-size: 12pt;text-align: left;" id="gosy">首页</td>
+        			<td style="width:12%;font-size: 12pt;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+		<input type="button" onclick="show_hzb()" style="position: absolute;top:70px;border:1px solid #12AAC1;background: #12AAC1;border-radius: 25px;color: #fff;width:80px;" value="汇总表">
+        <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:110px;padding: 0;background: #eee;">
+			<div style="width:100%;height:10%;;">
+				<table class="bt_tab" style="height: 100%;"> 
+					<tr>
+						<td style="width:13%;">单位性质</td>
+						<td style="width:18%;">名称</td>
+						<td style="width:19%;">编制性质</td>
+						<td colspan="2" style="width:18%;">编制数</td>
+						<td style="width:10%;">空编数</td>
+						<td style="width:10%;">有效<br>计划数</td>
+						<td style="width:10%;">苏北<br>五市<br>情况</td>
+					</tr>
+				</table>
+			</div>
+			<div style="width：100%;height:85%;overflow: auto;">
+				<table id="zgjbzlb"></table>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/common.js"></script>
+		<script>
+			$(function(){
+				
+			})
+			
+			function table_rowspan(_w_table_id) {
+			    var tab = document.getElementById(_w_table_id);
+			    var maxCol = 2, val, count, start;
+			    var ys = "";
+			    for (var col = maxCol - 1; col >= 0; col--) {
+			        count = 1;
+			        val = "";
+			        for (var i = 0; i < tab.rows.length; i++) {
+			            if (val == tab.rows[i].cells[col].innerHTML) {
+			                count++;
+			            } else {
+			                if (count > 1) {
+			                    //合并 
+			                    start = i - count;
+			                    if (ys == "#00FFFF") {
+			                        ys = "#EEEE00";
+			                    } else {
+			                        ys = "#00FFFF";
+			                    }
+			                    tab.rows[start].cells[col].rowSpan = count;
+			                    for (var j = start + 1; j < i; j++) { // 
+			                        tab.rows[j].cells[col].style.display = "none";
+			                        tab.rows[j].removeChild(tab.rows[j].cells[col]);
+			                    }
+			                    count = 1;
+			                }
+			                val = tab.rows[i].cells[col].innerHTML;
+			                
+			            }
+			        }
+			        if (count > 1) { //合并，最后几行相同的情况下 
+			            start = i - count;
+			            tab.rows[start].cells[col].rowSpan = count;
+			            for (var j = start + 1; j < i; j++) {
+			                tab.rows[j].removeChild(tab.rows[j].cells[col]);
+			            }
+			        }
+			    }
+			}
+			
+			function getbzpzxx(){
+				var zgjnum = plus.storage.getItem('zgjnum');
+				var username = plus.storage.getItem('username');
+				//查询编制配置信息
+				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getbzxx_zgjxsdw',{
+					data:{
+						username:username,
+						sel_zgjnum:zgjnum
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:60000,//超时时间设置为10秒；
+					crossDomain: true,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					beforeSend: function() {
+			        	plus.nativeUI.showWaiting("正在加载中，请稍候..."); 
+				    },
+				    complete: function() {
+				    	plus.nativeUI.closeWaiting();
+				    },
+					success:function(data){
+						//console.log(data)
+						if(data == ""){
+							return;
+						}
+						/** 编制类别代码：bzlb_code 编制类别名称：bzlb_name 配置数：hds 实配数：sps*/
+						var str = "";
+						var data = eval("("+data+")");
+						$("#zgjbzlb tr").remove();
+						for(i in data){
+							if(data[i].hds == undefined){
+								data[i].hds = "";
+							}
+							if(data[i].sps == undefined){
+								data[i].sps = "";
+							}
+							var a = data[i].hds-data[i].sps;
+							if(a == "0"){
+								a = "";
+							}
+							str+="<tr id='"+i+"' target='"+data[i].company_num+"'>"+
+							"<td style='width: 13%;border:1px solid #eee;' class='dwxxdj' target='"+data[i].company_num+"'>"+(data[i].dwxz_name == undefined ? "" : data[i].dwxz_name)+"</td>"+
+							"<td style='width: 18%;border:1px solid #eee;' class='dwxxdj' target='"+data[i].company_num+"'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
+							"<td style='width: 19%;border:1px solid #eee;' class='dwxxdj' target='"+data[i].company_num+"'>"+(data[i].bzxz == undefined ? "" : data[i].bzxz)+"</td>"+
+							"<td style='width: 10%;border:1px solid #eee;' class='dwxxdj' target='"+data[i].company_num+"'>"+"<div style='height:49%;background:#fff;'>核定数</div>"+"<div style='border-top:1px solid #eee;height:1%;'></div>"+"<div style='height:49%;background:#fff;'>实配数</div>"+"</td>"+
+							"<td style='width: 8%;border:1px solid #eee;' class='dwxxdj' target='"+data[i].company_num+"'>"+"<div style='height:49%;background:#fff;'>"+(data[i].hds == undefined  || data[i].hds == "0" ? "" : data[i].hds)+"</div>"+"<div style='border-top:1px solid #eee;height:1%;'></div>"+"<div style='height:49%;background:#fff;'>"+(data[i].sps == undefined  || data[i].sps == "0" ? "" : data[i].sps)+"</td>"+
+							"<td style='width: 10%;border:1px solid #eee;' class='dwxxdj' target='"+data[i].company_num+"'>"+a+"</td>"+
+							"<td style='width: 10%;border:1px solid #eee;'  class='dwxxdj' target='"+data[i].company_num+"'>"+(data[i].yxjhs == undefined || data[i].yxjhs == "0" ? "" : data[i].yxjhs)+"</td>"+
+							"<td style='width: 10%;border:1px solid #eee;' class='sbwsqk' data-sbwsqk='"+data[i].sbwsqk+"'  data-company_num='"+data[i].company_num+"'>"+(data[i].sbwsqk == undefined || data[i].yxjhs == "" ? "" : data[i].sbwsqk)+"</td>"+
+							"<td style='display:none;'>"+data[i].company_num+"</td>"+
+							"</tr>";
+						}//
+						$("#zgjbzlb").append(str);
+						table_rowspan("zgjbzlb")
+					},
+					error:function(xhr,type,errorThrown){//异常处理；
+						console.log(xhr + type + errorThrown);
+					}
+				});//aja
+			}
+			
+			function show_hzb(){
+				var district = plus.storage.getItem('district');
+				//plus.storage.setItem('company_num', company_num);
+				var zgjnum = plus.storage.getItem('zgjnum');
+				plus.storage.setItem('zgjnum', zgjnum);
+				mui.openWindow({
+				   id:'bzqkhzb',
+				   url: 'bzqkhzb.html'
+				});
+			}
+			
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					
+					getbzpzxx();//查询编制配置信息
+					
+					mui("#zgjbzlb").on('tap','.dwxxdj',function(){
+						var company_num = this.getAttribute("target");
+						//bs(company_num);
+						plus.storage.setItem('company_num', company_num);
+						mui.openWindow({
+						   id:'dwjbxx',
+						   url: '../dwjbxx/main.html'
+						});
+					})
+					
+					mui("#zgjbzlb").on('tap','.sbwsqk',function(){
+						var sbwsqk = this.getAttribute("data-sbwsqk");
+						var company_num = this.getAttribute("data-company_num");
+						if(sbwsqk == "有"){
+							plus.storage.setItem('company_num', company_num);
+							mui.openWindow({
+							   id:'sbwsqk',
+							   url: 'sbwsqk.html'
+							});
+						}
+					})
+					
+					//返回首页
+					document.getElementById('gosy').addEventListener('tap', function() {
+						mui.currentWebview.close(); //关闭当前页面
+						mui.openWindow({
+						   id:'main.html',
+						   url: 'main.html',
+						});
+					})
+					
+					//退出系统
+					document.getElementById('exit').addEventListener('tap', function() {
+						var btn = ["确定","再看看"];
+						mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+						if(e.index==0){
+						  //mui.currentWebview.close();//退出当前页面
+						  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+							if (mui.os.ios){
+							    const threadClass = plus.ios.importClass("NSThread");
+							    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+							    plus.ios.invoke(mainThread, "exit");
+							}else if (mui.os.android){
+							    plus.runtime.quit();
+							}
+						}
+						});
+					})//exit
+					
+					var height = document.documentElement.clientHeight || document.body.clientHeight;
+	                window.onresize = function() {
+	                    var heightView = document.documentElement.clientHeight || document.body.clientHeight;
+	                    if(heightView < height) {
+	                        plus.webview.currentWebview().setStyle({
+	                            height: height
+	                        });
+	                    }
+	                }
+					
+				});
+				
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
