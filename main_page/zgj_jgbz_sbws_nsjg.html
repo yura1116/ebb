@@ -58,29 +58,29 @@
 					<tr>
 						<td rowspan="3" id="company_name"></td>
 						<td colspan="2">行政</td>
-						<td id="hds_xz" class="jgbz_tr"></td>
-						<td id="sps_xz" class="jgbz_tr"></td>
+						<td id="hds_xz" class="jgbz_tr" target="xz"></td>
+						<td id="sps_xz" class="jgbz_tr" target="xz"></td>
 						<td id="yxjhs_xz"></td>
 						<td id="kbs_xz"></td>
-						<td id="bw_xz" class="jgbz_tr"></td>
+						<td id="bw_xz" class="jgbz_tr" target="xz"></td>
 					</tr>
 					<tr>
 						<td style="border:1px solid #fff"></td>
 						<td>事业</td>
-						<td id="hds_sy" class="jgbz_tr"></td>
-						<td id="sps_sy"></td>
+						<td id="hds_sy" class="jgbz_tr" target="sycg"></td>
+						<td id="sps_sy" class="jgbz_tr" target="sycg"></td>
 						<td id="yxjhs_sy"></td>
 						<td id="kbs_sy"></td>
-						<td id="bw_sy"></td>
+						<td id="bw_sy" class="jgbz_tr" target="sycg"></td>
 					</tr>
 					<tr>
 						<td style="width:3%;"></td>
 						<td style="width:13%;">&nbsp;&nbsp;其中:<br>参公</td>
-						<td id="hds_cg"></td>
-						<td id="sps_cg"></td>
+						<td id="hds_cg" class="jgbz_tr" target="sycg"></td>
+						<td id="sps_cg" class="jgbz_tr" target="sycg"></td>
 						<td id="yxjhs_cg"></td>
 						<td id="kbs_cg"></td>
-						<td id="bw_cg"></td>
+						<td id="bw_cg" class="jgbz_tr" target="sycg"></td>
 					</tr>
 				</table>
 			</div>
@@ -277,27 +277,70 @@
 				return xjdw;
 			}
 			
-			function goto_xj_page(dwcount,flag,zgjnum){//点击数字 跳转页面
+			function goto_xj_page(dwcount,flag,zgjnum,target){//点击数字 跳转页面
 				if(dwcount > 0){//有下级单位
-									
+					if(target == "xz"){
+						mui.openWindow({
+							id:'zgj_jgbz_xsxzdw',
+						    url:'zgj_jgbz_xsxzdw.html'
+						}); 			
+					}else{
+						mui.openWindow({
+							id:'zgj_jgbz_xssycgdw',
+						    url:'zgj_jgbz_xssycgdw.html'
+						}); 
+					}
 				}else{//没有下级单位
-					if(flag == "hds_xz"){
+					if(flag == "hds_xz" || flag == "hds_sy" || flag == "hds_cg"){
 						plus.storage.setItem('company_num', zgjnum);
+						var url = "";
+						if(flag == "hds_xz"){
+							url = "moveOfficeController.ehtm?method=get_list_bzhds_xz_xsdwwjg";
+						}else if(flag == "hds_sy"){
+							url = "moveOfficeController.ehtm?method=get_list_bzhds_sy_xsdwwjg";
+						}else if(flag == "hds_cg"){
+							url = "moveOfficeController.ehtm?method=get_list_bzhds_cg_xsdwwjg";
+						}
 						mui.openWindow({
-						   id:'jgbz_xz_dwpz',
-						   url:'../dwjbxx/jgbz_xz_dwpz.html'
+							id:'jgbz_xz_dwpz',
+						    url:'../dwjbxx/jgbz_xz_dwpz.html',
+					    	extras:{  
+						        cx_url:url,  
+						    }  
 						}); 
-					}else if(flag == "sps_xz"){
+					}else if(flag == "sps_xz" || flag == "sps_sy" || flag == "sps_cg"){
 						plus.storage.setItem('company_num', zgjnum);
+						var url = "";
+						if(flag == "sps_xz"){
+							url = "moveOfficeController.ehtm?method=get_list_bzsps_xz_xsdwwjg";
+						}else if(flag == "sps_sy"){
+							url = "moveOfficeController.ehtm?method=get_list_bzsps_sy_xsdwwjg";
+						}else if(flag == "sps_cg"){
+							url = "moveOfficeController.ehtm?method=get_list_bzsps_cg_xsdwwjg";
+						}
 						mui.openWindow({
-						   id:'jgbz_xz_rylb',
-						   url:'../dwjbxx/jgbz_xz_rylb.html'
+							id:'jgbz_xz_rylb',
+							url:'../dwjbxx/jgbz_xz_rylb.html',
+					    	extras:{  
+						        cx_url:url,  
+						    }  
 						}); 
-					}else if(flag == "bw_xz"){
+					}else if(flag == "bw_xz" || flag == "bw_sy" || flag == "bw_cg"){
 						plus.storage.setItem('company_num', zgjnum);
+						var url = "";
+						if(flag == "bw_xz"){
+							url = "moveOfficeController.ehtm?method=get_list_bwry_xz_xsdwwjg";
+						}else if(flag == "bw_sy"){
+							url = "moveOfficeController.ehtm?method=get_list_bwry_sy_xsdwwjg";
+						}else if(flag == "bw_cg"){
+							url = "moveOfficeController.ehtm?method=get_list_bwry_cg_xsdwwjg";
+						}
 						mui.openWindow({
-						   id:'jgbz_xz_bwry',
-						   url:'../dwjbxx/jgbz_xz_bwry.html'
+							id:'jgbz_xz_bwry',
+							url:'../dwjbxx/jgbz_xz_bwry.html',
+					    	extras:{  
+						        cx_url:url,  
+						    }  
 						}); 
 					}
 				}
@@ -310,44 +353,12 @@
 					getbzpzxx();//查询编制配置信息
 					
 					mui("#zgjbzlb").on('tap','.jgbz_tr',function(){//行政核定
+						var target = this.getAttribute("target");
 						var flag = this.getAttribute("id");
 						var zgjnum = plus.storage.getItem('zgjnum');
 						var dwcount = getjgdwcount();
-						goto_xj_page(dwcount,flag,zgjnum);
+						goto_xj_page(dwcount,flag,zgjnum,target);
 					})
-					
-					/*mui("#zgjbzlb").on('tap','#sps_xz',function(){//行政实配
-						var zgjnum = plus.storage.getItem('zgjnum');
-						var dwcount = getjgdwcount();
-						goto_xj_page(dwcount,"sps_xz",zgjnum);
-					})
-					
-					mui("#zgjbzlb").on('tap','#bw_xz',function(){//行政编外
-						var zgjnum = plus.storage.getItem('zgjnum');
-						var dwcount = getjgdwcount();
-						goto_xj_page(dwcount,"bw_xz",zgjnum);
-					})*/
-					
-					/*mui("#zgjbzlb").on('tap','.dwxxdj',function(){
-						var company_num = this.getAttribute("target");
-						//bs(company_num);
-						plus.storage.setItem('company_num', company_num);
-						mui.openWindow({
-						   id:'dwjbxx',
-						   url: '../dwjbxx/main.html'
-						});
-					})*/
-					/*mui("#zgjbzlb").on('tap','.sbwsqk',function(){//苏北五市详情
-						var sbwsqk = this.getAttribute("data-sbwsqk");
-						var company_num = this.getAttribute("data-company_num");
-						if(sbwsqk == "有"){
-							plus.storage.setItem('company_num', company_num);
-							mui.openWindow({
-							   id:'sbwsqk',
-							   url: 'sbwsqk.html'
-							});
-						}
-					})*/
 					
 					//返回首页
 					document.getElementById('gosy').addEventListener('tap', function() {

@@ -137,12 +137,29 @@
 			"dwjbxx/dwpz_bzpz.html",
 			"dwjbxx/jgbz_xz_dwpz.html",
 			"dwjbxx/jgbz_xz_rylb.html",
-			"dwjbxx/jgbz_xz_bwry.html"
+			"dwjbxx/jgbz_xz_bwry.html",
+			"main_page/zgj_jgbz_xsdw.html",
+			"main_page/zgj_jgbz_xsxzdw.html",
+			"main_page/zgj_jgbz_xssycgdw.html"
 		]
 	},
 	"dwjbxx/jgbz_xz_rylb.html": {
 		"refer": [
 			"dwjbxx/ryxx.html"
+		]
+	},
+	"main_page/zgj_jgbz_xsxzdw.html": {
+		"refer": [
+			"dwjbxx/jgbz_xz_dwpz.html",
+			"dwjbxx/jgbz_xz_rylb.html",
+			"dwjbxx/jgbz_xz_bwry.html"
+		]
+	},
+	"main_page/zgj_jgbz_xssycgdw.html": {
+		"refer": [
+			"dwjbxx/jgbz_xz_dwpz.html",
+			"dwjbxx/jgbz_xz_rylb.html",
+			"dwjbxx/jgbz_xz_bwry.html"
 		]
 	}
 }

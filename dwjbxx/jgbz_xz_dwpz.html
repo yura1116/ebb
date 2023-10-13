@@ -69,12 +69,13 @@
 		<script src="../js/common.js"></script>
 		<script>
 			
-			function getbzpz(){
+			function getbzpz(con_url,sfcg){
 				var company_num = plus.storage.getItem('company_num');
 				//查询编制配置信息
-				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_list_bzhds_xz_xsdwwjg',{
+				mui.ajax(tyUrl+con_url,{
 					data:{
-						company_num:company_num
+						company_num:company_num,
+						sfcg:sfcg
 					},
 					dataType:'json',//服务器返回json格式数据
 					type:'post',//HTTP请求类型
@@ -131,7 +132,11 @@
 			(function($, doc) {
 				mui.init({ });
 				$.plusReady(function() {
-					getbzpz();//查询编制配置信息
+					var currentwindow = plus.webview.currentWebview();  
+					var con_url = currentwindow.cx_url;  
+					var sfcg = currentwindow.sfcg;  
+					//console.log(con_url)
+					getbzpz(con_url,sfcg);//查询编制配置信息
 					
 					//返回首页
 					document.getElementById('gosy').addEventListener('tap', function() {

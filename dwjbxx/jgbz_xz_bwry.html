@@ -90,14 +90,14 @@
 		<script src="../js/common.js"></script>
 		<script src="../js/jquery-1.9.1.min.js"></script>
 		<script>
-			function cxrylb(){
+			function cxrylb(con_url){
 				var sel_name = $("#xm").val();
 //				if(sel_name == ""){
 //					mui.toast('人员姓名不能为空');
 //					return;
 //				}
 				var company_num = plus.storage.getItem('company_num');
-				mui.ajax(tyUrl+'moveOfficeController.ehtm?method=get_list_bwry_xz_xsdwwjg',{
+				mui.ajax(tyUrl+con_url,{
 					data:{
 						company_num:company_num,
 						sel_name:sel_name
@@ -115,7 +115,7 @@
 				    	plus.nativeUI.closeWaiting();
 				    },
 					success:function(data){
-						console.log(data)
+						//console.log(data)
 						// /** 单位代码：company_num 人员代码：worker_code 姓名：worker_name 性别：sex 编制类别：blood_type_name 岗位等级/职务层次：jb_name
 						var str = "";
 						var data = eval("("+data+")");
@@ -148,8 +148,10 @@
 			(function($, doc) {
 				mui.init({ });
 				$.plusReady(function() {
-					
-					cxrylb();//第一次加载查询人员列表
+					var currentwindow = plus.webview.currentWebview();  
+					var con_url = currentwindow.cx_url;  
+					//console.log(con_url)
+					cxrylb(con_url);//第一次加载查询人员列表
 					
 					//返回首页
 					document.getElementById('gosy').addEventListener('tap', function() {

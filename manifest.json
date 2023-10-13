@@ -376,7 +376,10 @@
 					"dwjbxx/dwpz_bzpz.html",
 					"dwjbxx/jgbz_xz_dwpz.html",
 					"dwjbxx/jgbz_xz_rylb.html",
-					"dwjbxx/jgbz_xz_bwry.html"
+					"dwjbxx/jgbz_xz_bwry.html",
+					"main_page/zgj_jgbz_xsdw.html",
+					"main_page/zgj_jgbz_xsxzdw.html",
+					"main_page/zgj_jgbz_xssycgdw.html"
 				],
 				"priority": 0
 			},
@@ -384,6 +387,24 @@
 				"resources": [],
 				"refer": [
 					"dwjbxx/ryxx.html"
+				],
+				"priority": 0
+			},
+			"main_page/zgj_jgbz_xsxzdw.html": {
+				"resources": [],
+				"refer": [
+					"dwjbxx/jgbz_xz_dwpz.html",
+					"dwjbxx/jgbz_xz_rylb.html",
+					"dwjbxx/jgbz_xz_bwry.html"
+				],
+				"priority": 0
+			},
+			"main_page/zgj_jgbz_xssycgdw.html": {
+				"resources": [],
+				"refer": [
+					"dwjbxx/jgbz_xz_dwpz.html",
+					"dwjbxx/jgbz_xz_rylb.html",
+					"dwjbxx/jgbz_xz_bwry.html"
 				],
 				"priority": 0
 			}
