@@ -50,7 +50,7 @@
 					账&nbsp;号：<input id='account' type="text" style="border:0px;background:none;width:60%;height: 25pt;">
 				</div> 
 				<div style="border-bottom:1px solid #E3E3E3;width: 100%;margin-top:5%;height: 35pt;">
-					密&nbsp;码：<input id='pwd' type="password" style="border:0px;background:none;width:60%;" value="Cz111111@">
+					密&nbsp;码：<input id='pwd' type="password" style="border:0px;background:none;width:60%;" value="">
 				</div>  
 				<div class="layui-form-item" style="border-bottom:1px solid #E3E3E3;width: 100%;margin-top:5%;height: 35pt;">
 	              	<input style="width:50%;background: none;border:0px;" type="text" name="captcha" id="captcha" placeholder="验  证  码" autocomplete="off" class="layui-input verification captcha" value="">
@@ -96,13 +96,13 @@
 		                    mui.toast('密码不能为空');
 		                    return;
 		                }
-						/*var verificationCode = verification_code.join("");
+						var verificationCode = verification_code.join("");
 						if(captchaBox.value.toUpperCase() != verificationCode) {
 							alert('验证码输入错误！');
 							captchaBox.value = "";
 							doc.getElementById('canvas').click();
 							return false;
-						}*/
+						}
 						mui.ajax(tyUrl+'moveOfficeController.ehtm?method=login',{
 							data:{
 								username:accountBox.value,
