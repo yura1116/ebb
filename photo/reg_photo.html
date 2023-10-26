@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>Hello H5+</title>
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+		<script type="text/javascript" src="../js/mui_common.js"></script>
+		<script src="../js/common.js"></script>
+		<style type="text/css">
+			*{background: #fff;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.aname {
+				font-size: 16px;
+			}
+		
+			.ainf {
+				font-size: 12px;
+			}
+		
+			.iplay {
+				display: block;
+				background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABYCAYAAAADWlKCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwOS8xMi8xM5w+I3MAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAAD9UlEQVR4nO2b3XETMRRGDwzvoYOkg5hRAVkqiKmAdIA7wHSQVECoALsC1gXciV0BTge4gvCwgnHk9d/+WF8m97ztxrlXs8fS1Urym6enJxwd3uZugPMcFyKGCxHDhYjhQsRwIWK4EDFciBguRAwXIoYLEcOFiOFCxHAhYrgQMVyIGC5EDBcihgsRw4WI4ULEcCFiuBAx3uVuwDGY2XtgCBTAALjc8tEFMAdKYBJC+HOK9nXBm5dwUM7MCmAEXDcMMQVuQwhlV23qC2khZjYAboGrjkLOgFEIYd5RvM6RrSFmdgs80J0MYqyHGFsSuR4S60TJ9vrwCEziZ+YhhGXy/xdU9aWgqjfnW+IsgEKtvkgJiUPUPfUyZsD42DoQ68+Y+p62AG6UhjAZITt6xopq3L9vGf+Gqh6dJX+S6ilKNaRkU8YCGLSVARBjDGLMdS5jbgkkhMQiWyejSGtEG2KsghopKoU++5AV68ZDcrvXYWTH8Pghdz1R6CHpN3MFDPsc02PsYcy1qy0nJ6uQOANKZz+jfcOUmd3H6W1jYo5RcvsqtikbuXtI+kBmBxbwz8DczMZtksdcsz1tOinZhMRxPF2bGh8R4gz4amZLMxu2aEqa8zq2LQs5e0j6EB8bLv6dAz/NrGwyjMWcj3vadjJyCimS60nLeFfAbzO7bfANT3MXLdvSmJxCBsl12VHcL8AyvpkfSpo7bdvJyCkkfQfocv5/Bnw3s/mBs6Y097aFzd7JPcv6T5dv5GtcAr/2TZN7yt0IGSE908k0+RS8FiEvhhd1yKEFUw5YAVBApoe0XQrZwgL4GEIY7pLRU+5G5OwhC57PZgbAsqPYK6rdxUMXC9Npbro8fzJy9pB0qll0FPcOuDhCRl3ubEvwOYWUyXXb5YoZ1X7GqMHSfZq7bNmWxuQUki5XnDdc+n4EPoUQiiabSzFnejKl7TJOY7IJid/iaXJ7fESIFfCNas+9zQNMc05zHnjIPctKx/mrA9egflCJGLd5eDFXukGWdddQYU+95PlDWVE97GXPeS+oivf6saBZCKHoM+8+cvcQ2NyhOwMmfW4SxdgTNs9oZd0tBAEhsRDfJbcvgbIPKTtOnNzlPnECAkPWP8xsTv3ZrJ1v2UfmuKDqGRt5QgjZ9kDWyd5D1iioP1U4P3KzqZYYY5v0om38rpDpIeCHrUFMCPjPEeSE/COetf3SU/i7EEL2GVUdSjXkGfGBfWDzIFsb/q93dRizU2R7yDr+o09R/GfRzsmRrSGvFRcihgsRw4WI4ULEcCFiuBAxXIgYLkQMFyKGCxHDhYjhQsRwIWK4EDFciBguRAwXIoYLEcOFiOFCxHAhYrgQMf4CVuqCm+17t3sAAAAASUVORK5CYII=);
+				background-size: 50px 44px;
+				-ms-touch-action: auto;
+			}
+		</style>
+		<script type="text/javascript">
+			var i = 1,gentry = null,w = null;
+			var hl = null,le = null,de = null,ie = null;
+			var unv = true;
+			var bUpdated = false; //用于兼容可能提前注入导致DOM未解析完更新的问题
+			// H5 plus事件处理
+			function plusReady() {
+				// 获取摄像头目录对象
+				plus.io.resolveLocalFileSystemURL('_downloads/', function(entry) {
+					entry.getDirectory('lygapp/img/', {
+						create: true
+					}, function(dir) {
+						gentry = dir;
+					}, function(e) {
+						outSet('Get directory "camera" failed: ' + e.message);
+					});
+				}, function(e) {
+					outSet('Resolve "_doc/" failed: ' + e.message);
+				});
+			}
+			if (window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			// 拍照
+			function getImage() {
+				outSet('开始拍照：');
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage(function(p) {
+					outLine('成功：' + p);
+					plus.io.resolveLocalFileSystemURL(p, function(entry) {
+						var url = entry.toLocalURL();  
+						uploadFileToFwq(url);
+					}, function(e) {
+						outLine('读取拍照文件错误：' + e.message);
+					});
+				}, function(e) {
+					outLine('失败：' + e.message);
+				}, {
+					filename: '_downloads/lygapp/img/',
+					index: 1,
+				});
+			}
+			
+			//上传附件到服务器  
+			function uploadFileToFwq(fileSrc) {  
+				console.log(fileSrc)
+				var task = plus.uploader.createUpload(  
+					tyUrl +'moveOfficeController.ehtm?method=handleFileUpload',   
+					{  
+						processData:false,  
+						contentType:"multipart/form-data",  
+						method: "POST",//,  
+						priority: 100  
+					},  
+					function(t, status) {
+						delfj();
+						// 上传完成  
+						//mui.toast(JSON.stringify(t));  
+						//console.log(JSON.stringify(t));  
+						/*var sub_webview = plus.webview.getWebviewById("bjgzap_chat_list.html");  
+						sub_webview.evalJS("searchInfoNew()");//调用子页面方法  */
+					}  
+				); 
+				task.addData("phoneid", plus.device.uuid);
+				task.addFile(decodeURI(fileSrc), {  
+					key: "file"  
+				});  
+				task.start();  
+			}
+
+			//删除目录下面的文件
+			function delfj(){
+				gentry.removeRecursively(function(){
+					// Success
+					outLine('成功！');
+				}, function(e){
+					outLine('失败：'+e.message);
+				});
+			}
+		</script>
+		
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #12AAC1;padding:0;height: 60px;">
+			<table style="width:100%;height:100%;border-spacing:0;">
+				<tr>
+					<td style="width:15%;"><div class="nvbt iback" onclick="back()" style="width:100%;"></div></a></td>
+					<td style="width:65%;font-size: 18pt;" id="title">掌上编办</td>
+					<td style="width:20%;font-size: 12pt;" id="exit">退出</td>
+				</tr>
+			</table>
+		</header>
+		<div id="dcontent" class="dcontent" style="padding-top:60px !important;">
+			<div class="button" onclick="getImage()" style="margin:10px auto;border:1px solid #12AAC1;background: #12AAC1;border-radius: 25px;color: #fff;width:150px;height:30px;text-align: center;">拍照</div>
+			<!-- <div class="button" onclick="getVideo()">录像</div> -->
+		</div>
+		<div id="output" style="display: none;">
+			Camera管理摄像头设备，可用于拍摄照片、录制视频文件。
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/immersed.js"></script>
+</html>

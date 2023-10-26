@@ -12,14 +12,14 @@
 			table{
 	        	width:100%;
 	        	text-align: center;
-	        	/*table-layout: fixed;*/
+	        	/* table-layout: fixed; */
 	        }
 	        
-			tr td{font-size: 14px;height: 25px;background: #fff;border:1px solid #eee;}
+			tr td{font-size: 14px;height: 25px;background: #fff;border:1px solid #999;/* word-break: keep-all; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; */}
 			.bt_tab td{
 	        	background: #DEDEDE;
                 font-size: 15px;
-                border:0;
+               /* border:0; */
 	        }
 			.mui-bar {color: #fff;}
 			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
@@ -41,8 +41,8 @@
 		</header>
         <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:60px;padding: 0;background: #eee;">
 			<div style="text-align: center;font-size: 18px;height: 40px;line-height: 40px;">机构编制信息</div>
-			<div style="width:100%;height:25%;">
-				<table id="zgjbzlb" style="height: 100%;"> 
+			<div style="width:100%;height:27%;overflow: auto;">
+				<table id="zgjbzlb" style=""> 
 					<tr class="bt_tab">
 						<td style="width:13%;" rowspan="2">部门名称</td>
 						<td style="width:13%;" rowspan="2" colspan="2">编制类别</td>
@@ -85,7 +85,7 @@
 				</table>
 			</div>
 			<div style="text-align: center;font-size: 18px;height: 40px;line-height: 40px;">苏北五市排名情况</div>
-			<div style="width:100%;height:20%;">
+			<div style="width:100%;height:23%;">
 				<table id="" style="height: 100%;"> 
 					<tr class="bt_tab">
 						<td style="width:13%;">苏北五市</td>
@@ -120,7 +120,7 @@
 				</table>
 			</div>
 			<div style="text-align: center;font-size: 18px;height: 40px;line-height: 40px;">内设机构信息</div>
-			<div style="width:100%;height:38%;overflow: auto;">
+			<div style="width:100%;height:33%;overflow: auto;">
 				<table id="nsjglb"> 
 					<tr class="bt_tab">
 						<td style="width:13%;">序号</td>
@@ -234,9 +234,9 @@
 						$("#nsjglb tr:gt(0)").remove();
 						for(i in data){
 							str+="<tr id='"+i+"' target='"+data[i].gg_bm_id+"'>"+
-							"<td style='width: 13%;border:1px solid #eee;' class='' target='"+data[i].gg_bm_id+"'>"+(i*1+1)+"</td>"+
-							"<td style='width: 18%;border:1px solid #eee;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].gg_bm_mc == undefined ? "" : data[i].gg_bm_mc)+"</td>"+
-							"<td style='width: 19%;border:1px solid #eee;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].curr_stuff == undefined ? "" : data[i].curr_stuff)+"</td>"+
+							"<td style='width: 13%;' class='' target='"+data[i].gg_bm_id+"'>"+(i*1+1)+"</td>"+
+							"<td style='width: 18%;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].gg_bm_mc == undefined ? "" : data[i].gg_bm_mc)+"</td>"+
+							"<td style='width: 19%;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].curr_stuff == undefined ? "" : data[i].curr_stuff)+"</td>"+
 							"</tr>";
 						}//
 						$("#nsjglb").append(str);
@@ -268,9 +268,11 @@
 				    	plus.nativeUI.closeWaiting();
 				    },
 					success:function(data){
+						//console.log("下属单位数量："+data);
 						xjdw = data;
 					},
 					error:function(xhr,type,errorThrown){//异常处理；
+						
 						console.log(xhr + type + errorThrown);
 					}
 				});//ajax
