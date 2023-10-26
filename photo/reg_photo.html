@@ -77,7 +77,7 @@
 			function uploadFileToFwq(fileSrc) {  
 				console.log(fileSrc)
 				var task = plus.uploader.createUpload(  
-					tyUrl +'moveOfficeController.ehtm?method=handleFileUpload',   
+					tyUrl +'moveOfficeController.ehtm?method=uploadjpg',   
 					{  
 						processData:false,  
 						contentType:"multipart/form-data",  
@@ -86,9 +86,15 @@
 					},  
 					function(t, status) {
 						delfj();
-						// 上传完成  
-						//mui.toast(JSON.stringify(t));  
-						//console.log(JSON.stringify(t));  
+						// 上传完成
+						if ( status == 200 ) { 
+							alert("上传成功");
+							files = [];
+							console.log("上传成功："+t.responseText);
+						} else {
+							alert("上传失败");
+							console.log("上传失败："+status);
+						}
 						/*var sub_webview = plus.webview.getWebviewById("bjgzap_chat_list.html");  
 						sub_webview.evalJS("searchInfoNew()");//调用子页面方法  */
 					}  
