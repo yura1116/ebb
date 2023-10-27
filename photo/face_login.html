@@ -166,8 +166,6 @@
                 var base64 = bdata.split(',')[1];//照片压缩成base位数据
 				console.log(base64)
                 //提交至接口匹配人脸库
-				,   
-                //$.post('http://192.168.1.39:8039/FaceWebService.asmx/getFace', {
                 $.post(tyUrl +'moveOfficeController.ehtm?method=getFace', {
                     "face": base64,
                     "group": "test"
