@@ -73,9 +73,29 @@
 				});
 			}
 			
+			// 录像
+			function getVideo() {
+				outSet('开始录像：');
+				var cmr = plus.camera.getCamera();
+				cmr.startVideoCapture(function(p) {
+					outLine('成功：' + p);
+					plus.io.resolveLocalFileSystemURL(p, function(entry) {
+						var url = entry.toLocalURL();  
+						//uploadFileToFwq(url);
+					}, function(e) {
+						outLine('读取录像文件错误：' + e.message);
+					});
+				}, function(e) {
+					outLine('失败：' + e.message);
+				}, {
+					filename: '_downloads/lygapp/img/',
+					index: 1
+				});
+			}
+			
 			//上传附件到服务器  
 			function uploadFileToFwq(fileSrc) {  
-				console.log(fileSrc)
+				//console.log(fileSrc)
 				var task = plus.uploader.createUpload(  
 					tyUrl +'moveOfficeController.ehtm?method=uploadjpg',   
 					{  
@@ -95,8 +115,6 @@
 							alert("上传失败");
 							console.log("上传失败："+status);
 						}
-						/*var sub_webview = plus.webview.getWebviewById("bjgzap_chat_list.html");  
-						sub_webview.evalJS("searchInfoNew()");//调用子页面方法  */
 					}  
 				); 
 				task.addData("phoneid", plus.device.uuid);
