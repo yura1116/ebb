@@ -8,45 +8,7 @@
         <link href="../css/mui.min.css" rel="stylesheet" />
 
         <style>
-            body,
-            div,
-            dl,
-            dt,
-            dd,
-            ul,
-            ol,
-            li,
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6,
-            pre,
-            code,
-            form,
-            fieldset,
-            legend,
-            input,
-            textarea,
-            p,
-            blockquote,
-            th,
-            td,
-            hr,
-            button,
-            article,
-            aside,
-            details,
-            figcaption,
-            figure,
-            footer,
-            header,
-            hgroup,
-            menu,
-            nav,
-            section,
-            br {
+           *{
                 margin: 0;
                 padding: 0;
             }
@@ -155,42 +117,53 @@
             var video,canvas,vendorUrl,interval;
             var time=0;
 			
+			
+			
             //自动拍照
             function getface(){
                 time++;
                 //绘制canvas图形
                 canvas.getContext('2d').drawImage(video, 0, 0, 100, 100);
                 //把canvas图像转为img图片
-                var bdata = canvas.toDataURL("image/png");
+                var bdata = canvas.toDataURL("image/jpg");
                 //img.src = canvas.toDataURL("image/png");
                 var base64 = bdata.split(',')[1];//照片压缩成base位数据
-				console.log(base64)
+				//console.log(base64)
                 //提交至接口匹配人脸库
                 $.post(tyUrl +'moveOfficeController.ehtm?method=getFace', {
                     "face": base64,
-                    "group": "test"
+                    "group": "test",
+					"phoneid":plus.device.uuid
                 }, function(data) {
-                    //人脸识别成功直接跳转至主页
-                    if(data.error_code == "0") {
-                        clearInterval(interval);//清除定时器
-                        //plus.webview.open("main.html");    //跳转至主页
-                    } else if(time>9){
-                        clearInterval(interval);//清除定时器
-                        time=0;//重新计时
-                        //10s后未识别成功，提示用户
-                        if(data.error_code == "110") {
-                            alert("人脸匹配度低于70，匹配失败！");
-                        } else if(data.error_code == "222202") {
-                            alert("未检测到人脸,请使用账号登录！");
-                        } else if(data.error_code == "222203") {
-                            alert("无法解析人脸，请检查图片质量！");
-                        } else if(data.error_code == "222207") {
-                            alert("未找到匹配的用户，请确认人脸库中是否存在此用户！");
-                        }else {
-                            alert("匹配失败，错误代码：" + data.error_code + "，请联系技术人员！");
-                        }
-                        //plus.webview.open("login.html");
-                    }
+					console.log(data);
+                    //人脸识别成功直接跳转至主页       					
+					if(data=='no'){
+						//clearInterval(interval);//清除定时器
+						//time=0;//重新计时
+						mui.toast('人脸匹配失败，请重试'); 
+					}else if(data=='未捕捉到人像'){
+						mui.toast('请靠近并正对屏幕'); 
+					}else if(data=='Python脚本执行失败'){
+						mui.toast('Python脚本执行失败'); 
+					}else{
+						clearInterval(interval);//清除定时器						
+						var data = JSON.parse(data);
+						//  {"username":"zz001","jc":"组织","district":"320600"}
+						plus.storage.setItem('username', data.username);
+						plus.storage.setItem('jc', data.jc);
+						plus.storage.setItem('district', data.district);
+						mui.openWindow({  
+							url:'../main.html',  
+							id:'main.html',  
+							extras:{  
+							    username:data.username,  
+							    jc:data.jc,  
+							    district:data.district  
+							}  
+						}); 
+						
+					}
+					
                 }, 'json');
             }
 
@@ -205,16 +178,24 @@
                     navigator.getMedia =navigator.getUserMedia || navagator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
                     navigator.getMedia({
+                    //navigator.mediaDevices.getUserMedia({
                         video: true, //使用摄像头对象
                         audio: false //不适用音频
                     }, function(strem) {
-						video.srcObject = strem;
+						/* video.srcObject = strem; */
+						MediaStreamTrack=typeof strem.stop==='function'?strem:strem.getTracks()[1];
+						 try{
+							video.src=window.URL.createObjectURL(strem);
+						 }catch(e){
+							 console.log(e);
+							 video.srcObject = strem;
+						 }
 						video.play();
                     }, function(error) {
                         alert(error);
                     });
-                    //interval=setInterval(getface,1000);
-					getface();
+                    interval=setInterval(getface,2000);
+					//getface();
                     /*//手动拍照
                     var checkButton = doc.getElementById('check');
                     checkButton.addEventListener('tap', function(event) {
