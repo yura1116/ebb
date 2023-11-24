@@ -41,19 +41,19 @@
 		</header>
         <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:60px;padding: 0;background: #eee;">
 			<div style="text-align: center;font-size: 18px;height: 40px;line-height: 40px;">机构编制信息</div>
-			<div style="width:100%;height:27%;overflow: auto;">
+			<div style="width:100%;height:25%;overflow: auto;">
 				<table id="zgjbzlb" style=""> 
 					<tr class="bt_tab">
-						<td style="width:13%;" rowspan="2">部门名称</td>
-						<td style="width:13%;" rowspan="2" colspan="2">编制类别</td>
+						<td style="width:30%;" rowspan="2">部门名称</td>
+						<td style="width:15%;" rowspan="2" colspan="2">编制类别</td>
 						<td colspan="5">人员编制信息</td>
 					</tr>
 					<tr class="bt_tab">
-						<td style="width:13%">核定</td>
-						<td style="width:13%">实配</td>
-						<td style="width:13%">有效<br>计划</td>
-						<td style="width:13%">空编</td>
-						<td style="width:13%">编外</td>
+						<td style="width:11%">核定</td>
+						<td style="width:11%">实配</td>
+						<td style="width:11%">有效<br>计划</td>
+						<td style="width:11%">空编</td>
+						<td style="width:11%">编外</td>
 					</tr>
 					<tr>
 						<td rowspan="3" id="company_name"></td>
@@ -88,9 +88,9 @@
 			<div style="width:100%;height:23%;">
 				<table id="" style="height: 100%;"> 
 					<tr class="bt_tab">
-						<td style="width:13%;">苏北五市</td>
-						<td style="width:13%;">编制</td>
-						<td style="width:13%;">排名</td>
+						<td style="width:50%;">苏北五市</td>
+						<td style="width:25%;">编制</td>
+						<td style="width:25%;">排名</td>
 					</tr>
 					<tr>
 						<td>连云港</td>
@@ -123,13 +123,13 @@
 			<div style="width:100%;height:25px;">
 				<table> 
 					<tr class="bt_tab">
-						<td style="width:25%;">序号</td>
-						<td style="width:50%;">内设机构名称</td>
-						<td style="width:25%;">编制数</td>
+						<td style="width:20%;">序号</td>
+						<td style="width:60%;">内设机构名称</td>
+						<td style="width:20%;">编制数</td>
 					</tr>
 				</table>
 			</div>
-			<div style="width:100%;height:30%;overflow: auto;">
+			<div style="width:100%;height:32%;overflow: auto;">
 				<table id="nsjglb"></table>
 			</div>
 		</div>
@@ -237,9 +237,9 @@
 						$("#nsjglb tr").remove();
 						for(i in data){
 							str+="<tr id='"+i+"' target='"+data[i].gg_bm_id+"'>"+
-							"<td style='width: 25%;' class='' target='"+data[i].gg_bm_id+"'>"+(i*1+1)+"</td>"+
-							"<td style='width: 50%;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].gg_bm_mc == undefined ? "" : data[i].gg_bm_mc)+"</td>"+
-							"<td style='width: 25%;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].curr_stuff == undefined ? "" : data[i].curr_stuff)+"</td>"+
+							"<td style='width: 20%;' class='' target='"+data[i].gg_bm_id+"'>"+(i*1+1)+"</td>"+
+							"<td style='width: 60%;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].gg_bm_mc == undefined ? "" : data[i].gg_bm_mc)+"</td>"+
+							"<td style='width: 20%;' class='' target='"+data[i].gg_bm_id+"'>"+(data[i].curr_stuff == undefined ? "" : data[i].curr_stuff)+"</td>"+
 							"</tr>";
 						}//
 						$("#nsjglb").append(str);
