@@ -40,8 +40,8 @@
         	</table>
 		</header>
         <div class="mui-content" style="width:100%;height: 90%;position: absolute;top:60px;padding: 0;background: #eee;">
-			<div style="width:100%;height:45%;overflow: auto;">
-				<table id="tab"> 
+			<div style="width:100%;height:110px;">
+				<table> 
 					<tr class="bt_tab">
 						<td style="width:8%;" rowspan="2">序号</td>
 						<td style="width:15%;" rowspan="2">名称</td>
@@ -59,8 +59,11 @@
 					</tr>
 				</table>
 			</div>
-			<div style="width:100%;height:45%;overflow: auto;">
-				<table id="tab1"> 
+			<div style="width:100%;height:38%;overflow: auto;">
+				<table id="tab"></table>
+			</div>
+			<div style="width:100%;height:68px;">
+				<table> 
 					<tr class="bt_tab">
 						<td style="width:12%;" rowspan="2">序号</td>
 						<td style="width:16%;" rowspan="2">名称</td>
@@ -75,6 +78,9 @@
 						<td style="width:12%;">实<br>配</td>
 					</tr>
 				</table>
+			</div>
+			<div style="width:100%;height:37%;overflow: auto;">
+				<table id="tab1"> </table>
 			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
@@ -114,19 +120,19 @@
 						}
 						var str = "";
 						var data = eval("("+data+")");
-						$("#tab tr:gt(1)").remove();
+						$("#tab tr").remove();
 						for(i in data){
 							str+="<tr target='"+data[i].company_num+"'>"+
-							"<td class='index' id='"+data[i].company_num+"'>"+(i*1+1)+"</td>"+
-							"<td>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
-							"<td>"+(data[i].jggg == undefined ? "" : data[i].jggg)+"</td>"+
-							"<td>"+(data[i].jfxs == undefined ? "" : data[i].jfxs)+"</td>"+
-							"<td>"+(data[i].sfcg == undefined ? "" : data[i].sfcg)+"</td>"+
-							"<td class='jgbz_tr' target='hd' data_sfcg='"+data[i].sfcg+"'>"+(data[i].hds_sy == undefined ? "" : data[i].hds_sy)+"</td>"+
-							"<td class='jgbz_tr' target='sp'>"+(data[i].sps_sy == undefined ? "" : data[i].sps_sy)+"</td>"+
-							"<td>"+(data[i].yxjhs_sy == undefined ? "" : data[i].yxjhs_sy)+"</td>"+
-							"<td>"+(data[i].kbs == undefined ? "" : data[i].kbs)+"</td>"+
-							"<td class='jgbz_tr' target='bwyr'>"+(data[i].bw_sy == undefined ? "" : data[i].bw_sy)+"</td>"+
+							"<td style='width:8%;' class='index' id='"+data[i].company_num+"'>"+(i*1+1)+"</td>"+
+							"<td style='width:15%;'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
+							"<td style='width:12%;' style='width:15%;'>"+(data[i].jggg == undefined ? "" : data[i].jggg)+"</td>"+
+							"<td style='width:12%;'>"+(data[i].jfxs == undefined ? "" : data[i].jfxs)+"</td>"+
+							"<td style='width:12%;'>"+(data[i].sfcg == undefined ? "" : data[i].sfcg)+"</td>"+
+							"<td style='width:8%;' style='width:8%;' style='width:8%;' style='width:8%;' style='width:8%;' class='jgbz_tr' target='hd' data_sfcg='"+data[i].sfcg+"'>"+(data[i].hds_sy == undefined ? "" : data[i].hds_sy)+"</td>"+
+							"<td style='width:8%;' style='width:8%;' style='width:8%;' style='width:8%;' class='jgbz_tr' target='sp'>"+(data[i].sps_sy == undefined ? "" : data[i].sps_sy)+"</td>"+
+							"<td style='width:8%;' style='width:8%;' style='width:8%;'>"+(data[i].yxjhs_sy == undefined ? "" : data[i].yxjhs_sy)+"</td>"+
+							"<td style='width:8%;' style='width:8%;'>"+(data[i].kbs == undefined ? "" : data[i].kbs)+"</td>"+
+							"<td style='width:8%;' class='jgbz_tr' target='bwyr'>"+(data[i].bw_sy == undefined ? "" : data[i].bw_sy)+"</td>"+
 							"</tr>";
 						}
 						$("#tab").append(str);
@@ -160,16 +166,16 @@
 						}
 						var str = "";
 						var data = eval("("+data+")");
-						$("#tab1 tr:gt(1)").remove();
+						$("#tab1 tr").remove();
 						for(i in data){
 							str+="<tr target='"+data[i].company_num+"'>"+
-							"<td class='index' id='"+data[i].company_num+"'>"+(i*1+1)+"</td>"+
-							"<td>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
-							"<td>"+(data[i].jggg == undefined ? "" : data[i].jggg)+"</td>"+
-							"<td>"+(data[i].hds_dwzz == undefined ? "" : data[i].hds_dwzz)+"</td>"+
-							"<td>"+(data[i].sps_dwzz == undefined ? "" : data[i].sps_dwzz)+"</td>"+
-							"<td>"+(data[i].hds_dwfz == undefined ? "" : data[i].hds_dwfz)+"</td>"+
-							"<td>"+(data[i].sps_dwfz == undefined ? "" : data[i].sps_dwfz)+"</td>"+
+							"<td style='width:12%;' class='index' id='"+data[i].company_num+"'>"+(i*1+1)+"</td>"+
+							"<td style='width:16%;'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
+							"<td style='width:12%;' style='width:12%;' style='width:12%;' style='width:12%;' style='width:12%;'>"+(data[i].jggg == undefined ? "" : data[i].jggg)+"</td>"+
+							"<td style='width:12%;' style='width:12%;' style='width:12%;' style='width:12%;'>"+(data[i].hds_dwzz == undefined ? "" : data[i].hds_dwzz)+"</td>"+
+							"<td style='width:12%;' style='width:12%;' style='width:12%;'>"+(data[i].sps_dwzz == undefined ? "" : data[i].sps_dwzz)+"</td>"+
+							"<td style='width:12%;' style='width:12%;'>"+(data[i].hds_dwfz == undefined ? "" : data[i].hds_dwfz)+"</td>"+
+							"<td style='width:12%;'>"+(data[i].sps_dwfz == undefined ? "" : data[i].sps_dwfz)+"</td>"+
 							"</tr>";
 						}
 						$("#tab1").append(str);

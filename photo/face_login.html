@@ -1,208 +1,217 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-        <title></title>
-        <link href="../css/mui.min.css" rel="stylesheet" />
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
 
-        <style>
-           *{
-                margin: 0;
-                padding: 0;
-            }
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
 
-            body {
-                font-family: "microsoft yahei";
-                color: #FFFFFF;
-                overflow-x: hidden;
-                overflow-y: hidden;
-                background: #333333;
-            }
-            .mui-bar{
-                background: #333333;
-                box-shadow: none;
-            }
-            .back{
-                font-size: 22px;
-                height: 100px;
-                line-height: 100px;
-                padding:0 10px;
-                border: 0px solid red;
-                margin-left: 10px;
-            }
-            .back img{
-                width: 12px;
-                height: 24px;
-            }
-            .mui-content{
-                width: 60%;
-                margin: 80px auto 50px auto;
-                background:#333333 ;
-                text-align: center;
-                border: 0px solid red;
-            }
-            .mui-content div{
-                width: 100%;
-                background:#333333 ;
-                border: 0px solid red;
-            }
-            .mui-content label{
-                color: #FFFFFF;
-                text-align: center;
-                border: 0px solid red;
-            }
-            .mui-btn {
-                padding: 10px;
-                width: 80%;
-                margin: auto;
-            }
-            .mui-content-setting1 {
-                width: 100%;
-                background: #333333;
-                border: 0px solid red;
-                padding: 0 10px;
-                font-size: 20px;
-                float: left;
-            }
-            .button {
-                background: url(icon/setting/button.png) no-repeat;
-                background-size: 100% 100%;
-                -moz-background-size: 100% 100%;
-                font-size: 20px;
-                width: 80%;
-                height: 50px;
-                margin: auto;
-                line-height: 50px;
-                border: none;
-                color: #FFFFFF;
-            }
-            video{
-                transform: rotateY(180deg);
-                -webkit-transform: rotateY(180deg);    /* Safari 和 Chrome */
-                -moz-transform: rotateY(180deg);
-            }
-        </style>
-    </head>
+			body {
+				font-family: "microsoft yahei";
+				color: #FFFFFF;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				background: #333333;
+			}
 
-    <body>
-        <header class="mui-bar mui-bar-nav">
-            <div id='user' class="mui-pull-left">
-                <div class="mui-pull-left back" onclick="back()">
-                    <img class="mui-icon-back" src="icon/main/back.png" />
-                </div>
-            </div>
-            <span class="mui-title">人脸识别登录</span>
-    </header>
+			.mui-bar {
+				background: #333333;
+				box-shadow: none;
+			}
 
-        <div class="mui-content">
-            <div style="margin: auto;margin-bottom: 50px; ">
-                <video id="video" width="100%" height="100%" style="border: 0px solid red;margin: auto;"></video>
-                <canvas id='canvas' width="100%" height="100px" style="display: none;"></canvas>
-                <!--<img id='img' src=''>-->
-            </div>
-            <label>请正对手机进行人脸验证</label>
-        </div>
-        <!--<div class="mui-content-setting1">
+			.back {
+				font-size: 22px;
+				height: 100px;
+				line-height: 100px;
+				padding: 0 10px;
+				border: 0px solid red;
+				margin-left: 10px;
+			}
+
+			.back img {
+				width: 12px;
+				height: 24px;
+			}
+
+			.mui-content {
+				width: 60%;
+				margin: 80px auto 50px auto;
+				background: #333333;
+				text-align: center;
+				border: 0px solid red;
+			}
+
+			.mui-content div {
+				width: 100%;
+				background: #333333;
+				border: 0px solid red;
+			}
+
+			.mui-content label {
+				color: #FFFFFF;
+				text-align: center;
+				border: 0px solid red;
+			}
+
+			.mui-btn {
+				padding: 10px;
+				width: 80%;
+				margin: auto;
+			}
+
+			.mui-content-setting1 {
+				width: 100%;
+				background: #333333;
+				border: 0px solid red;
+				padding: 0 10px;
+				font-size: 20px;
+				float: left;
+			}
+
+			.button {
+				background: url(icon/setting/button.png) no-repeat;
+				background-size: 100% 100%;
+				-moz-background-size: 100% 100%;
+				font-size: 20px;
+				width: 80%;
+				height: 50px;
+				margin: auto;
+				line-height: 50px;
+				border: none;
+				color: #FFFFFF;
+			}
+
+			video {
+				transform: rotateY(180deg);
+				-webkit-transform: rotateY(180deg);
+				/* Safari 和 Chrome */
+				-moz-transform: rotateY(180deg);
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div id='user' class="mui-pull-left">
+				<div class="mui-pull-left back" onclick="back()">
+					<img class="mui-icon-back" src="icon/main/back.png" />
+				</div>
+			</div>
+			<span class="mui-title">人脸识别登录</span>
+		</header>
+
+		<div class="mui-content">
+			<div style="margin: auto;margin-bottom: 50px; ">
+				<video id="video" width="100%" height="100%" style="border: 0px solid red;margin: auto;"></video>
+				<canvas id='canvas' width="100%" height="100px" style="display: none;"></canvas>
+				<!--<img id='img' src=''>-->
+			</div>
+			<label>请正对手机进行人脸验证</label>
+		</div>
+		<!--<div class="mui-content-setting1">
             <div id='check' class="button mui-text-center">人脸识别</div>
         </div>-->
-        <script src="../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/mui.min.js"></script>
 		<script src="../js/common.js"></script>
-        <script>
-            function back() {
-                plus.webview.open("login.html");
-            }
-            var video,canvas,vendorUrl,interval;
-            var time=0;
-			
-			
-			
-            //自动拍照
-            function getface(){
-                time++;
-                //绘制canvas图形
-                canvas.getContext('2d').drawImage(video, 0, 0, 100, 100);
-                //把canvas图像转为img图片
-                var bdata = canvas.toDataURL("image/jpg");
-                //img.src = canvas.toDataURL("image/png");
-                var base64 = bdata.split(',')[1];//照片压缩成base位数据
+		<script>
+			function back() {
+				plus.webview.open("login.html");
+			}
+			var video, canvas, vendorUrl, interval;
+			var time = 0;
+
+			function showAlert(message) {
+				alert(message);
+				//重新调用getface方法
+				getface();
+			}
+
+			//自动拍照
+			function getface() {
+				time++;
+				//绘制canvas图形
+				canvas.getContext('2d').drawImage(video, 0, 0, 100, 100);
+				//把canvas图像转为img图片
+				var bdata = canvas.toDataURL("image/jpg");
+				//img.src = canvas.toDataURL("image/png");
+				var base64 = bdata.split(',')[1]; //照片压缩成base位数据
 				//console.log(base64)
-                //提交至接口匹配人脸库
-                $.post(tyUrl +'moveOfficeController.ehtm?method=getFace', {
-                    "face": base64,
-                    "group": "test",
-					"phoneid":plus.device.uuid
-                }, function(data) {
+				//提交至接口匹配人脸库
+				$.post(tyUrl + 'moveOfficeController.ehtm?method=getFace', {
+					"face": base64,
+					"group": "test",
+					"phoneid": plus.device.uuid
+				}, function(data) {
 					console.log(data);
-                    //人脸识别成功直接跳转至主页       					
-					if(data=='no'){
+					//人脸识别成功直接跳转至主页       					
+					if (data == 'no') {
 						//clearInterval(interval);//清除定时器
 						//time=0;//重新计时
-						mui.toast('人脸匹配失败，请重试'); 
-					}else if(data=='未捕捉到人像'){
-						mui.toast('请靠近并正对屏幕'); 
-					}else if(data=='Python脚本执行失败'){
-						mui.toast('Python脚本执行失败'); 
-					}else{
-						clearInterval(interval);//清除定时器						
+						showAlert('人脸匹配失败，请重试');
+					} else if (data == '未捕捉到人像') {
+						showAlert('请靠近并正对屏幕');
+					} else if (data == 'Python脚本执行失败') {
+						showAlert('Python脚本执行失败');
+					} else {
+						clearInterval(interval); //清除定时器						
 						var data = JSON.parse(data);
 						//  {"username":"zz001","jc":"组织","district":"320600"}
 						plus.storage.setItem('username', data.username);
 						plus.storage.setItem('jc', data.jc);
 						plus.storage.setItem('district', data.district);
-						mui.openWindow({  
-							url:'../main.html',  
-							id:'main.html',  
-							extras:{  
-							    username:data.username,  
-							    jc:data.jc,  
-							    district:data.district  
-							}  
-						}); 
-						
+						mui.openWindow({
+							url: '../main.html',
+							id: 'main.html',
+							extras: {
+								username: data.username,
+								jc: data.jc,
+								district: data.district
+							}
+						});
+
 					}
-					
-                }, 'json');
-            }
 
-            (function($, doc) {
-                $.init();
-                $.plusReady(function() {
-                    video = doc.getElementById('video'),
-                    canvas = doc.getElementById('canvas'),
-                    vendorUrl = window.URL || window.webkitURL;
+				}, 'json');
+			}
 
-                    //初始化摄像头：媒体对象；仅支持android，ios11.0一下系统均不支持
-                    navigator.getMedia =navigator.getUserMedia || navagator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					video = doc.getElementById('video'),
+						canvas = doc.getElementById('canvas'),
+						vendorUrl = window.URL || window.webkitURL;
 
-                    navigator.getMedia({
-                    //navigator.mediaDevices.getUserMedia({
-                        video: true, //使用摄像头对象
-                        audio: false //不适用音频
-                    }, function(strem) {
-						/* video.srcObject = strem; */
-						MediaStreamTrack=typeof strem.stop==='function'?strem:strem.getTracks()[1];
-						 try{
-							video.src=window.URL.createObjectURL(strem);
-						 }catch(e){
-							 console.log(e);
-							 video.srcObject = strem;
-						 }
+					//初始化摄像头：媒体对象；仅支持android，ios11.0一下系统均不支持
+					navigator.getMedia = navigator.getUserMedia || navagator.webkitGetUserMedia || navigator
+						.mozGetUserMedia || navigator.msGetUserMedia;
+
+					navigator.getMedia({
+						video: true, //使用摄像头对象
+						audio: false //不适用音频
+					}, function(strem) {
+						video.srcObject = strem;
 						video.play();
-                    }, function(error) {
-                        alert(error);
-                    });
-                    interval=setInterval(getface,2000);
-					//getface();
-                    /*//手动拍照
-                    var checkButton = doc.getElementById('check');
-                    checkButton.addEventListener('tap', function(event) {
-                    });*/
-                });
-            }(mui, document));
-        </script>
-    </body>
+					}, function(error) {
+						alert(error);
+					});
+
+					getface();
+					/*//手动拍照
+					var checkButton = doc.getElementById('check');
+					checkButton.addEventListener('tap', function(event) {
+					});*/
+				});
+			}(mui, document));
+		</script>
+	</body>
 
 </html>
