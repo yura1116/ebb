@@ -301,18 +301,19 @@
 						var url = "";
 						if(flag == "hds_xz"){
 							url = "moveOfficeController.ehtm?method=get_list_bzhds_xz_xsdwwjg";
-						}else if(flag == "hds_sy"){
-							url = "moveOfficeController.ehtm?method=get_list_bzhds_sy_xsdwwjg";
-						}else if(flag == "hds_cg"){
-							url = "moveOfficeController.ehtm?method=get_list_bzhds_cg_xsdwwjg";
+							mui.openWindow({
+								id:'jgbz_xz_dwpz',
+							    url:'../dwjbxx/jgbz_xz_dwpz.html',
+								extras:{  
+							        cx_url:url,  
+							    }  
+							}); 
+						}else{
+							mui.openWindow({
+								id:'zgj_jgbz_xssycgdw',
+							    url:'zgj_jgbz_xssycgdw.html'
+							});
 						}
-						mui.openWindow({
-							id:'jgbz_xz_dwpz',
-						    url:'../dwjbxx/jgbz_xz_dwpz.html',
-					    	extras:{  
-						        cx_url:url,  
-						    }  
-						}); 
 					}else if(flag == "sps_xz" || flag == "sps_sy" || flag == "sps_cg"){
 						plus.storage.setItem('company_num', zgjnum);
 						var url = "";

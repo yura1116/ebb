@@ -61,6 +61,7 @@
 			</form>
 			<div class="mui-content-padded" align="center"  style="position: relative;top:59%;">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" style="padding:3% 0;width:80%;background: #12AAC1;border:1px solid #12AAC1;border-radius: 25px;font-size: 20px;">登 录</button>
+				<!-- <button id='ss_login' class="mui-btn mui-btn-block mui-btn-primary" style="padding:3% 0;width:80%;background: #12AAC1;border:1px solid #12AAC1;border-radius: 25px;font-size: 20px;">手势登录</button> -->
 			</div>
 		</div>
 		
@@ -76,13 +77,36 @@
 			$("#canvas").on('click',function(){
 				draw(verification_code);
 			});
-			
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
 					
+					mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getusernamebyphoneid',{
+						data:{
+							phoneid:plus.device.uuid,
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:60000,//超时时间设置为10秒；
+						crossDomain: true,
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+						success:function(data){
+							document.getElementById("account").value = data;
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							if(type == 'timeout') {
+					            mui.toast("请求超时：请检查网络")
+					        } else {
+					            mui.toast('请求失败：' + type + '\n err:' + errorThrown);
+					        }
+						}
+					});
+					
 					var yhm = plus.storage.getItem('username');
-					document.getElementById("account").value = yhm;
+					//document.getElementById("account").value = yhm;
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('pwd');
 					var captchaBox = doc.getElementById('captcha');
@@ -123,21 +147,29 @@
 								}else if(data == '请使用强密码，请登录电脑端V3系统，修改成强密码后，再登录该APP！'){
 									mui.toast(data);
 								}else{
+									var btnArray = ['手势', '密码'];
+									mui.confirm('以后登录采用密码或手势？', '提示', btnArray, function(e) {       
+										if (e.index == 0) {//手势登录    
+											mui.openWindow({
+											    url:'ssmm/reg.html',  
+											    id:'ssmm_reg' 
+											});
+										}
+									});
 									var data = JSON.parse(data);
 									//  {"username":"zz001","jc":"组织","district":"320600"}
 									plus.storage.setItem('username', data.username);
 									plus.storage.setItem('jc', data.jc);
 									plus.storage.setItem('district', data.district);
 									mui.openWindow({  
-									    url:'main.html',  
-									    id:'main.html',  
-									    extras:{  
-									        username:data.username,  
-									        jc:data.jc,  
-									        district:data.district  
-									    }  
+										url:'main.html',  
+										id:'main.html',  
+										extras:{  
+											username:data.username,  
+											jc:data.jc,  
+											district:data.district  
+										}  
 									}); 
-									
 									/**父页面调用子页面方法
 									var sub_webview = plus.webview.getWebviewById("main_page/search.html");
 									sub_webview.evalJS("cxdwlb('')")
