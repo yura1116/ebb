@@ -147,29 +147,54 @@
 								}else if(data == '请使用强密码，请登录电脑端V3系统，修改成强密码后，再登录该APP！'){
 									mui.toast(data);
 								}else{
-									var btnArray = ['手势', '密码'];
-									mui.confirm('以后登录采用密码或手势？', '提示', btnArray, function(e) {       
-										if (e.index == 0) {//手势登录    
-											mui.openWindow({
-											    url:'ssmm/reg.html',  
-											    id:'ssmm_reg' 
-											});
+									mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getdirectioncount',{
+										data:{
+											phoneid:plus.device.uuid,
+										},
+										dataType:'json',//服务器返回json格式数据
+										type:'post',//HTTP请求类型
+										timeout:60000,//超时时间设置为10秒；
+										async:false,
+										headers: {
+											'Content-Type': 'application/x-www-form-urlencoded'
+										},
+										success:function(data){
+											if(data == "0"){//未设置过手势密码，弹出提示
+												var btnArray = ['手势', '密码'];
+												mui.confirm('以后登录采用密码或手势？', '提示', btnArray, function(e) {       
+													if (e.index == 0) {//手势登录    
+														mui.openWindow({
+														    url:'ssmm/reg.html',  
+														    id:'ssmm_reg' 
+														});
+													}
+												});
+											}
+											var data = JSON.parse(data);
+											//  {"username":"zz001","jc":"组织","district":"320600"}
+											plus.storage.setItem('username', data.username);
+											plus.storage.setItem('jc', data.jc);
+											plus.storage.setItem('district', data.district);
+											mui.openWindow({  
+												url:'main.html',  
+												id:'main.html',  
+												extras:{  
+													username:data.username,  
+													jc:data.jc,  
+													district:data.district  
+												}  
+											}); 
+										},
+										error:function(xhr,type,errorThrown){
+											//异常处理；
+											if(type == 'timeout') {
+									            mui.toast("请求超时：请检查网络")
+									        } else {
+									            mui.toast('请求失败：' + type + '\n err:' + errorThrown);
+									        }
 										}
 									});
-									var data = JSON.parse(data);
-									//  {"username":"zz001","jc":"组织","district":"320600"}
-									plus.storage.setItem('username', data.username);
-									plus.storage.setItem('jc', data.jc);
-									plus.storage.setItem('district', data.district);
-									mui.openWindow({  
-										url:'main.html',  
-										id:'main.html',  
-										extras:{  
-											username:data.username,  
-											jc:data.jc,  
-											district:data.district  
-										}  
-									}); 
+									
 									/**父页面调用子页面方法
 									var sub_webview = plus.webview.getWebviewById("main_page/search.html");
 									sub_webview.evalJS("cxdwlb('')")
