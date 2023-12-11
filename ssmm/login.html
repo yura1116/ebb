@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		<style>
+			* {
+				color: #fff;
+				font-size: 16px;
+			}
+
+			.mui-content {
+				background: #fff;
+				width: 100%;
+				height: 100%;
+				position: relative;
+				background-size: 100%;
+				background-position: center center;
+				background-size: cover;
+				background-attachment: fixed;
+				min-height: 100%;
+				overflow: hidden;
+			}
+			
+			.mui-popup-inner div{color: #000;}
+		</style>
+
+	</head>
+
+	<body style="height:100%;">
+		<div class="mui-content">
+			<div style="position: absolute;top:18%;color: #000;text-align: center;background: url('../images/ssmm_yh.png') no-repeat center;width:100%;height:48px;"></div>
+			<div style="position: absolute;top:26%;color: #9a9a9a;text-align: center;font-size: 14px;width:100%;">输入手势密码解锁</div>
+			<div id="gesturepwd" style="position: absolute;top:40%;left:50%;margin-left:-140px;"></div>
+			<div id="reset_pwd" style="position: absolute;bottom:20px;color: #2B6DC3;text-align: center;font-size: 14px;width:100%;">重新设置</div>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.enterfocus.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/jquery.gesture.password.js"></script>
+		<script>
+			$(function() {
+				$("#gesturepwd").GesturePasswd({
+					backgroundColor: "transparent", //背景色
+					color: "#cdcdcd", //主要的控件颜色
+					roundRadii: 22, //大圆点的半径
+					pointRadii: 6, //大圆点被选中时显示的圆心的半径
+					space: 50, //大圆点之间的间隙
+					width: 260, //整个组件的宽度
+					height: 260, //整个组件的高度
+					lineColor: "#07A7F5", //用户划出线条的颜色
+					zindex: 100 //整个组件的css z-index属性
+				});
+				$("#gesturepwd").on("hasPasswd", function(e, passwd) {
+					//console.log("设置手势密码"+passwd)
+					$("#gesturepwd").trigger("passwdRight");
+					mui.ajax(tyUrl+'moveOfficeController.ehtm?method=login_direction',{
+						data:{
+							phoneid:plus.device.uuid,
+							direction:passwd,
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:60000,//超时时间设置为10秒；
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded'
+						},
+						success:function(data){
+							if(data != "未绑定移动设备！" && data != "您未被授权使用APP，请联系管理进行授权！" 
+							&& data != "您登录的设备未经授权，请使用账号密码登录后再进行绑定！" && data != "您未设置手势，请先设置手势后再使用手势登录！" 
+							&& data != "您输入的手势错误！"){
+								var data = JSON.parse(data);
+								plus.storage.setItem('username', data.username);
+								plus.storage.setItem('jc', data.jc);
+								plus.storage.setItem('district', data.district);
+								mui.openWindow({  
+									url:'../main.html',  
+									id:'main.html',  
+									extras:{  
+										username:data.username,  
+										jc:data.jc,  
+										district:data.district  
+									}  
+								}); 
+							}else{
+								alert(data);
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							if(type == 'timeout') {
+					            mui.toast("请求超时：请检查网络")
+					        } else {
+					            mui.toast('请求失败：' + type + '\n err:' + errorThrown);
+					        }
+						}
+					});
+					/* var result;
+					if (passwd == "1235789") {
+						result = true;
+					} else {
+						result = false;
+					}
+					if (result == true) {
+						$("#gesturepwd").trigger("passwdRight");
+						setTimeout(function() {
+							//密码验证正确后的其他操作，打开新的页面等。。。
+							alert("密码正确！")
+						}, 500); //延迟半秒以照顾视觉效果
+					} else {
+						$("#gesturepwd").trigger("passwdWrong");
+						//密码验证错误后的其他操作。。。
+					} */
+				});
+				
+				$("#reset_pwd").click(function(){
+					mui.prompt('验证账号密码信息', function(e) {
+						if(e.index == 1) {
+							if(mui("#username")[0].value == "" || mui("#password")[0].value == ""){
+								mui.toast('用户名或密码不能为空');
+								return false;
+							}else{
+								mui.ajax(tyUrl+'moveOfficeController.ehtm?method=login',{
+									data:{
+										username:mui("#username")[0].value,
+										pwd:mui("#password")[0].value,
+										phoneid:plus.device.uuid,
+									},
+									dataType:'json',//服务器返回json格式数据
+									type:'post',//HTTP请求类型
+									timeout:60000,//超时时间设置为10秒；
+									crossDomain: true,
+									headers: {
+										'Content-Type': 'application/x-www-form-urlencoded'
+									},
+									success:function(data){
+										//服务器返回响应，根据响应结果，分析是否登录成功；
+										if(data == '用户名或密码错误！' || data == '您登录的设备未经授权，不允许登录！'|| data == '您未被授权使用APP，请联系管理进行授权！') {
+											mui.toast(data);
+										}else if(data == '请使用强密码，请登录电脑端V3系统，修改成强密码后，再登录该APP！'){
+											mui.toast(data);
+										}else{
+											mui.openWindow({
+											    url:'reg.html',  
+											    id:'ssmm_reg' 
+											});
+										}
+									},
+									error:function(xhr,type,errorThrown){
+										//异常处理；
+										console.log(type);
+										if(type == 'timeout') {
+											mui.toast("请求超时：请检查网络")
+										} else {
+											mui.toast('请求失败：' + type + '\n err:' + errorThrown);
+										}
+									}
+								});
+							}
+						}
+					},'div');
+					var g = '<input type="text" placeholder="请输入账号" id="username" style=""/><input type="password" id="password" placeholder="请输入密码" style=""/></div>';
+					var dom = $(".mui-popup-input").html(g);
+				})
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,10 +1,10 @@
-var tyUrl = 'http://192.168.0.128:8080/MoveOffice/';
-var fileUrl = 'http://192.168.0.128:8080/MoveOffice/';
-var zpUrl = 'http://192.168.0.128:8080/MoveOffice/';
+// var tyUrl = 'http://192.168.0.128:8080/MoveOffice/';
+// var fileUrl = 'http://192.168.0.128:8080/MoveOffice/';
+// var zpUrl = 'http://192.168.0.128:8080/MoveOffice/';
 
-// var tyUrl = 'http://117.60.146.107/MoveOffice/';
-// var fileUrl = 'http://117.60.146.107/MoveOffice/';
-// var zpUrl = 'http://117.60.146.107/MoveOffice/';
+var tyUrl = 'http://117.60.146.107/MoveOffice/';
+var fileUrl = 'http://117.60.146.107/MoveOffice/';
+var zpUrl = 'http://117.60.146.107/MoveOffice/';
 
 // var tyUrl = 'http://192.168.44.200/MoveOffice/';
 // var fileUrl = 'http://192.168.44.200/MoveOffice/';
