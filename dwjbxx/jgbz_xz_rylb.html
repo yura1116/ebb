@@ -177,7 +177,10 @@
 					
 					mui(".bt_body").on('tap','tr',function(){
 						var worker_code = this.getAttribute("target");
-						var company_num = plus.storage.getItem('company_num');
+						//var company_num = plus.storage.getItem('company_num'); //单位代码不能带主管局单位代码，否则下属单位人员信息出的就不对了
+						var c=this.children;//获取选中行
+						var company_num = c[5].innerHTML;
+						
 						bs(worker_code);
 						mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getrydetail',{
 							data:{
