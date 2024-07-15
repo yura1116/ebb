@@ -57,7 +57,7 @@
 					</tr>
 					<tr>
 						<td rowspan="3" id="company_name"></td>
-						<td colspan="2">行政</td>
+						<td colspan="2" id="hds_xz_title" class="jgbz_tr" target="xz">行政</td>
 						<td id="hds_xz" class="jgbz_tr" target="xz"></td>
 						<td id="sps_xz" class="jgbz_tr" target="xz"></td>
 						<td id="yxjhs_xz"></td>
@@ -66,7 +66,7 @@
 					</tr>
 					<tr>
 						<td style="border:1px solid #fff"></td>
-						<td>事业</td>
+						<td id="hds_sy_title" class="jgbz_tr" target="sycg">事业</td>
 						<td id="hds_sy" class="jgbz_tr" target="sycg"></td>
 						<td id="sps_sy" class="jgbz_tr" target="sycg"></td>
 						<td id="yxjhs_sy"></td>
@@ -75,7 +75,7 @@
 					</tr>
 					<tr>
 						<td style="width:3%;"></td>
-						<td style="width:13%;">&nbsp;&nbsp;其中:<br>参公</td>
+						<td style="width:13%;" id="hds_cg_title" class="jgbz_tr" target="sycg">&nbsp;&nbsp;其中:<br>参公</td>
 						<td id="hds_cg" class="jgbz_tr" target="sycg"></td>
 						<td id="sps_cg" class="jgbz_tr" target="sycg"></td>
 						<td id="yxjhs_cg"></td>
@@ -172,6 +172,18 @@
 						$.each(data,function (key,value) {
 						   $("#"+key).text(value);
 						});
+						
+						if($("#kbs_xz").text() < 0){
+							$("#kbs_xz").css("color","red");
+						}
+						
+						if($("#kbs_sy").text() < 0){
+							$("#kbs_sy").css("color","red");
+						}
+						
+						if($("#kbs_cg").text() < 0){
+							$("#kbs_cg").css("color","red");
+						}
 					},
 					error:function(xhr,type,errorThrown){//异常处理；
 						console.log(xhr + type + errorThrown);
@@ -296,10 +308,10 @@
 						}); 
 					}
 				}else{//没有下级单位
-					if(flag == "hds_xz" || flag == "hds_sy" || flag == "hds_cg"){
+					if(flag == "hds_xz" || flag == "hds_xz_title" || flag == "hds_sy" || flag == "hds_sy_title" || flag == "hds_cg" || flag == "hds_cg_title"){
 						plus.storage.setItem('company_num', zgjnum);
 						var url = "";
-						if(flag == "hds_xz"){
+						if(flag == "hds_xz" || flag == "hds_xz_title"){
 							url = "moveOfficeController.ehtm?method=get_list_bzhds_xz_xsdwwjg";
 							mui.openWindow({
 								id:'jgbz_xz_dwpz',
