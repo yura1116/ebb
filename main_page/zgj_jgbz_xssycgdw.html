@@ -122,7 +122,7 @@
 						var data = eval("("+data+")");
 						$("#tab tr").remove();
 						for(i in data){
-							str+="<tr target='"+data[i].company_num+"'>"+
+							str+="<tr target='"+data[i].company_num+"' class='xsdwyjg_tr'>"+
 							"<td style='width:8%;' class='index' id='"+data[i].company_num+"'>"+(i*1+1)+"</td>"+
 							"<td style='width:15%;'>"+(data[i].company_name == undefined ? "" : data[i].company_name)+"</td>"+
 							"<td style='width:12%;' style='width:15%;'>"+(data[i].jggg == undefined ? "" : data[i].jggg)+"</td>"+
@@ -136,6 +136,12 @@
 							"</tr>";
 						}
 						$("#tab").append(str);
+						$(".xsdwyjg_tr").each(function(){
+							var a = $(this).find("td:eq(8)").text();
+							if(a < 0){
+								$(this).find("td:eq(8)").css("color","red");
+							}
+						})
 					},
 					error:function(xhr,type,errorThrown){//异常处理；
 						console.log(xhr + type + errorThrown);
