@@ -140,12 +140,12 @@
 							headers: {
 								'Content-Type': 'application/x-www-form-urlencoded'
 							},
-							success:function(data){
+							success:function(login_data){
 								//服务器返回响应，根据响应结果，分析是否登录成功；
-								if(data == '用户名或密码错误！' || data == '您登录的设备未经授权，不允许登录！'|| data == '您未被授权使用APP，请联系管理进行授权！') {
-									mui.toast(data);
-								}else if(data == '请使用强密码，请登录电脑端V3系统，修改成强密码后，再登录该APP！'){
-									mui.toast(data);
+								if(login_data == '用户名或密码错误！' || login_data == '您登录的设备未经授权，不允许登录！'|| login_data == '您未被授权使用APP，请联系管理进行授权！') {
+									mui.toast(login_data);
+								}else if(login_data == '请使用强密码，请登录电脑端V3系统，修改成强密码后，再登录该APP！'){
+									mui.toast(login_data);
 								}else{
 									mui.ajax(tyUrl+'moveOfficeController.ehtm?method=getdirectioncount',{
 										data:{
@@ -158,8 +158,8 @@
 										headers: {
 											'Content-Type': 'application/x-www-form-urlencoded'
 										},
-										success:function(data){
-											if(data == "0"){//未设置过手势密码，弹出提示
+										success:function(result){
+											if(result == "0"){//未设置过手势密码，弹出提示
 												var btnArray = ['手势', '密码'];
 												mui.confirm('以后登录采用密码或手势？', '提示', btnArray, function(e) {       
 													if (e.index == 0) {//手势登录    
@@ -170,18 +170,18 @@
 													}
 												});
 											}
-											var data = JSON.parse(data);
+											var lg_data = JSON.parse(login_data);
 											//  {"username":"zz001","jc":"组织","district":"320600"}
-											plus.storage.setItem('username', data.username);
-											plus.storage.setItem('jc', data.jc);
-											plus.storage.setItem('district', data.district);
+											plus.storage.setItem('username', lg_data.username);
+											plus.storage.setItem('jc', lg_data.jc);
+											plus.storage.setItem('district', lg_data.district);
 											mui.openWindow({  
 												url:'main.html',  
 												id:'main.html',  
 												extras:{  
-													username:data.username,  
-													jc:data.jc,  
-													district:data.district  
+													username:lg_data.username,  
+													jc:lg_data.jc,  
+													district:lg_data.district  
 												}  
 											}); 
 										},
@@ -213,22 +213,7 @@
 						});
 					})
 				});
-				
-				/*form.on('submit(sign)', function (data) {
-					data = data.field;
-					var verificationCode = verification_code.join("");
-					if(data.captcha.toUpperCase() != verificationCode) {
-						layer.tips('验证码输入错误！','#captcha',{tips: 4});
-						$("#captcha").val("");
-						$("#canvas").click();
-						return false;
-					}else{
-						//signIn();
-					}
-				});*/
-				
 			}(mui, document));
-			
 			
 			function signIn(){
 				//alert("验证通过，提交！");
