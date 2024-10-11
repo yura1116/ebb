@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css//mui.min.css" rel="stylesheet" />
+		<link href="../css/style.css" rel="stylesheet" />
+		
+		<style>
+			.tybtn{
+				border:1px solid #12AAC1 !important;
+				background: #12AAC1 !important;
+				border-radius: 25px !important;
+				color: #fff !important;
+				width:120px;
+				height:35px;
+				line-height: 35px;
+				font-size: 15px !important;
+				top:6px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
+			<div style="width:100%;height:50px;text-align:center;">
+				<input type="button" onclick="cx()" class="tybtn" style="" value="机关">
+				<input type="button" onclick="cx()" class="tybtn" style="" value="事业">
+			</div>
+			<div id="jgdzq" style="width: 100%;height:45%;border:1px solid red;padding:0 10px;box-sizing: content-box;"></div>
+			<div id="main" style="width: 100%;height:45%;border:1px solid blue"></div>
+		</div>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/echarts.min.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var district = plus.storage.getItem('district');
+					
+					var jgdzqmyChart = echarts.init(document.getElementById('jgdzq'));
+					$.ajax({
+						url: tyUrl+'moveOfficeController.ehtm?method=getdzqjgryfb',  // 请求的后台地址
+						method: 'GET',
+						dataType: 'json',
+						data:{
+							"sel_dq":district
+						},
+						success: function(response) {
+							console.log(response)
+							// 配置 ECharts 图表
+							var option1 = {
+								title: {
+									text: '党政群'
+								},
+								tooltip: {
+								    trigger: 'axis',
+								    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+								        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+								    }
+								},
+								legend: {
+								    /* data: ['核定', '实配'] */
+								},
+								xAxis: {
+									type: 'category',
+									data: response.legendDate,
+									
+								},
+								yAxis: {
+									type: 'value',
+									axisLabel: {
+										fontSize: 10 // 调整字体大小，避免标签显示不全
+									}
+								},
+								series: [
+									{
+										name: '核定',
+										type: 'bar',
+										itemStyle: {
+											color: '#009dff'  // 将 Data1 的柱子颜色统一设置为橙色
+										},
+										data: JSON.parse( response ).data1.map(Number) // 将字符串转换为数字
+									},
+									{
+										name: '实配',
+										type: 'bar',
+										itemStyle: {
+											color: '#22e4ff'  // 将 Data1 的柱子颜色统一设置为橙色
+										},
+										data: JSON.parse( response ).data2.map(Number) // 将字符串转换为数字
+									}
+								]
+							};
+							// 渲染图表
+							jgdzqmyChart.setOption(option1);
+						},
+						error: function(xhr, status, error) {
+							console.error("请求失败：" + error);
+						}
+					});
+					
+					
+					var myChart = echarts.init(document.getElementById('main'));
+					// 指定图表的配置项和数据
+					var option = {
+					  title: {
+							text: '11'
+					  },
+					  tooltip: {},
+					  legend: {
+							data: ['销量']
+					  },
+					  xAxis: {
+							data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+					  },
+					  yAxis: {},
+					  series: [
+							{
+								name: '销量',
+								 type: 'bar',
+								data: [5, 20, 36, 10, 10, 20]
+							}
+					  ]
+					};
+														
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
