@@ -9,22 +9,166 @@
 		<link href="../css/style.css" rel="stylesheet" />
 		
 		<style>
+			.mui-btn, button, input[type=button], input[type=reset], input[type=submit]{
+				color: #12AAC1;
+				background: #fff ;
+				border:1px solid #12AAC1 !important;
+				border-radius: 25px !important;
+				font-size: 15px !important;
+				padding:4px 6px !important;
+			}
 			
+			.tybtn{
+				width:70px;
+				height:30px;
+				line-height: 30px;
+				top:14px;
+			}
+			
+			.tbqy{
+				width: 100%;box-sizing: content-box;margin:0 auto;
+			}
 		</style>
 
 	</head>
 
 	<body>
 		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
-			性别年龄分布
+			<div style="width:100%;height:60px;text-align:center;">
+				<input type="button" onclick="cxtb('nl')" id="nl_btn" class="tybtn" value="年龄分布">
+				<input type="button" onclick="cxtb('xl')" id="xl_btn" class="tybtn" value="学历分布" style="margin-left:10px;">
+				<input type="button" onclick="cxtb('xb')" id="xb_btn" class="tybtn" value="性别分布" style="margin-left:10px;">
+				<input type="button" onclick="cxtb('gw')" id="gw_btn" class="tybtn" value="岗位分布" style="margin-left:10px;">
+			</div>
+			<div id="tubiao" class="tbqy"></div>
 		</div>
-		<script src="../../../js/mui.min.js"></script>
-		<script src="../../js/mui.enterfocus.js"></script>
-		<script src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/echarts.min.js"></script>
 		<script>
+			
 			(function($, doc) {
-				
+				$.init();
+				$.plusReady(function() {
+					var district = plus.storage.getItem('district');
+					var windowHeight = window.innerHeight;		
+					var elements = document.getElementsByClassName('tbqy');
+					 // 循环遍历所有元素，设置其高度
+					for (var i = 0; i < elements.length; i++) {
+						elements[i].style.height = ((windowHeight-65)) + 'px'; // 设置为窗口高度的30%
+					}
+					//默认点击机关
+					cxtb("nl");
+				});
 			}(mui, document));
+			
+			$(function(){
+				
+			
+			})	
+			//点击机关或者事业的菜单
+			function cxtb(flag){
+				var district = plus.storage.getItem('district');
+				$(".tybtn").css("background","#fff");
+				$(".tybtn").css("color","#12AAC1");
+				if(flag == "nl"){
+					$("#nl_btn").css("background","#12AAC1");
+					$("#nl_btn").css("color","#fff");
+				}else if(flag == "xl"){
+					$("#xl_btn").css("background","#12AAC1");
+					$("#xl_btn").css("color","#fff");
+				}else if(flag == "xb"){
+					$("#xb_btn").css("background","#12AAC1");
+					$("#xb_btn").css("color","#fff");
+				}else{
+					$("#gw_btn").css("background","#12AAC1");
+					$("#gw_btn").css("color","#fff");
+				}
+				showtb(district,flag);
+			}
+			
+			//机关党政群图表+政法专项图表
+			function showtb(district,flag){
+				var url = "";
+				if(flag == "nl"){
+					url = "moveOfficeController.ehtm?method=getrynlfb";
+				}else if(flag == "xl"){
+					url = "moveOfficeController.ehtm?method=getryxlfb";
+				}else if(flag == "xb"){
+					url = "moveOfficeController.ehtm?method=getryxbfb";
+				}else if(flag == "gw"){
+					url = "moveOfficeController.ehtm?method=getrygwfb";
+				}
+				$.ajax({
+					url: tyUrl+url,  // 请求的后台地址
+					method: 'GET',
+					dataType: 'json',
+					data:{
+						"sel_dq":district
+					},
+					success: function(response) {
+						console.log(response)
+						var obj = JSON.parse(response);
+						var data1 = [];
+						var legendDate = obj.legendDate;
+						var d = obj.data1;
+						for (var i = 0; i < d.length; i++) {
+							data1.push(
+								{ name: legendDate[i], value:d[i] }
+							);
+						}
+						renderingMap_bt("tubiao",obj.legendDate,data1);
+					},
+					error: function(xhr, status, error) {
+						console.error("请求失败：" + error);
+					}
+				});
+			}
+	
+			
+			function renderingMap_bt(mapID,legendData,data1){
+				var myChart = echarts.init(document.getElementById(mapID));
+				myChart.setOption({
+					tooltip: {
+						trigger: 'item', // 鼠标悬浮时显示提示框
+						formatter: "{b} : {c} ({d}%)" // 提示框显示格式
+					},
+					legend: {
+						orient: 'horizontal',  // 图例水平显示
+						bottom: 80,  // 图例放在图表底部
+						data: legendData
+					},
+					series: [
+						{
+							type: 'pie',
+							radius: ['30%','55%'],
+							data: data1,
+							center: ['50%', '40%'],  // 调整饼图位置，靠近顶部，水平居中
+							avoidLabelOverlap: true,  // 启用避免标签重叠
+							label: {
+								show: false
+							},
+							label: {
+								show: true,  // 显示标签
+								formatter: ' {c}',  // 标签内容格式，显示名字和人数
+								position: 'outside'  ,// 标签在饼图外部显示
+								textStyle: {
+									fontSize: 10  // 调整标签字体大小
+								}
+							},
+							labelLine: {
+								show: true,  // 显示指向标签的引导线
+								length: 20,  // 引导线的长度
+								length2: 15  ,// 引导线的第二段长度
+								/* smooth: true  // 引导线平滑 */
+							},
+							
+						}
+					]
+				},true);
+			}
+			
 		</script>
 	</body>
 
