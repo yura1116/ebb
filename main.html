@@ -14,7 +14,7 @@
 			.mui-bar-tab .mui-tab-item.mui-active{border-bottom: 1px solid #12AAC1;}
 			.mui-bar {color: #fff;}
 			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
-			.mui-bar-tab .mui-tab-item{height:9%;}
+			.mui-bar-tab .mui-tab-item{height:50px;line-height:50px;display: inline-block;width:75px;}
 			.mui-popover-arrow{display: none;}
 		</style>
 	</head>
@@ -29,17 +29,14 @@
         		</tr>
         	</table>
 		</header>
-        <nav class="mui-bar mui-bar-tab" style="top:60px !important;height: 50px !important;color: #999999;background: #fff;box-shadow:none;">
-           	<a id="bzgkTab" class="mui-tab-item" href="main_page/bzgk.html">
+        <nav class="mui-bar mui-bar-tab" style="top:60px !important;height: 50px !important;color: #999999;background: #fff;box-shadow:none;overflow-x: scroll;white-space: nowrap;display:unset;">
+           	<a id="bzgkTab" class="mui-tab-item" href="main_page/bzgk.html"  style="">
                 <span class="mui-tab-label">编制概况</span>
             </a>
            	<a id="" class="mui-tab-item" href="main_page/search.html">
                 <span class="mui-tab-label">一键查找</span>
             </a>
-            <!-- <a class="mui-tab-item mui-active" href="main_page/zgjbzjg.html">
-                <span class="mui-tab-label">主页</span>
-            </a> -->
-			  <a id="zyTab" class="mui-tab-item mui-active" href="main_page/qsbzjg.html">
+			<a id="zyTab" class="mui-tab-item mui-active" href="main_page/qsbzjg.html" style="width: 50px;">
 			    <span class="mui-tab-label">主页</span>
 			</a>
             <a class="mui-tab-item" href="main_page/bzjg.html">
@@ -48,6 +45,22 @@
             <a class="mui-tab-item" href="main_page/bzwj.html">
                 <span class="mui-tab-label">文件档案</span>
             </a>
+			<a class="mui-tab-item" href="zkzx/ypzl.html">
+			    <span class="mui-tab-label">一屏总览</span>
+			</a>
+			<a class="mui-tab-item" href="zkzx/zongliang.html" style="width: 50px;">
+			    <span class="mui-tab-label">总量</span>
+			</a>
+			<a class="mui-tab-item" href="zkzx/hdsp.html">
+			    <span class="mui-tab-label">核定实配</span>
+			</a>
+			<a class="mui-tab-item" href="zkzx/xbnlfb.html" style="width: 115px;">
+			    <span class="mui-tab-label">性别年龄分布</span>
+			</a>
+			<a class="mui-tab-item" href="zkzx/jwnbzqk.html" style="width: 130px;">
+			    <span class="mui-tab-label">近五年编制情况</span>
+			</a>
+			
         </nav>
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
@@ -57,7 +70,8 @@
 			(function($, doc) {
 				mui.init({ });
 				$.plusReady(function() {
-					var pages = ["main_page/bzgk.html","main_page/search.html","main_page/qsbzjg.html","main_page/bzjg.html","main_page/bzwj.html"];
+					var pages = ["main_page/bzgk.html","main_page/search.html","main_page/qsbzjg.html","main_page/bzjg.html","main_page/bzwj.html",
+					"zkzx/ypzl.html","zkzx/zongliang.html","zkzx/hdsp.html","zkzx/xbnlfb.html","zkzx/jwnbzqk.html"];
 				    var arr = document.getElementsByClassName("mui-tab-item")
 				    var styles = {
 				        top:"110px",
@@ -86,6 +100,36 @@
 				    }
 				    mui.trigger(arr[2],"tap");
 				    
+					//监听菜单点击事件 核定实配、性别年龄分布、近五年编制情况
+					var hdspTab = document.querySelector('a[href="zkzx/hdsp.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("zkzx/hdsp.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openhdsp');
+							}
+						});
+					}
+					
+					var hdspTab = document.querySelector('a[href="zkzx/xbnlfb.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("zkzx/xbnlfb.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openxbnlfb');
+							}
+						});
+					}
+					var hdspTab = document.querySelector('a[href="zkzx/jwnbzqk.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("zkzx/jwnbzqk.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openjwnbzqk');
+							}
+						});
+					}
+					
 				    window.addEventListener('openbzgk_xz', function(event) {
 				    	mui.trigger(arr[0],"tap");
 				    	var arr1 = document.getElementsByClassName("mui-tab-item");
