@@ -130,6 +130,16 @@
 						});
 					}
 					
+					var hdspTab = document.querySelector('a[href="zkzx/zongliang.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("zkzx/zongliang.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openzongliang');
+							}
+						});
+					}
+					
 				    window.addEventListener('openbzgk_xz', function(event) {
 				    	mui.trigger(arr[0],"tap");
 				    	var arr1 = document.getElementsByClassName("mui-tab-item");
