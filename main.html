@@ -100,7 +100,40 @@
 				    }
 				    mui.trigger(arr[2],"tap");
 				    
-					//监听菜单点击事件 核定实配、性别年龄分布、近五年编制情况
+					//监听菜单点击事件 一屏总览、总量、核定实配、性别年龄分布、近五年编制情况
+					
+					var hdspTab = document.querySelector('a[href="zkzx/ypzl.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("zkzx/ypzl.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openypzl');
+							}
+						});
+					}
+					
+					var hdspTab = document.querySelector('a[href="zkzx/zongliang.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("zkzx/zongliang.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openzongliang');
+							}
+						});
+					}
+					
+					window.addEventListener('openbzgk_xz', function(event) {
+						mui.trigger(arr[0],"tap");
+						var arr1 = document.getElementsByClassName("mui-tab-item");
+						arr1[2].classList.remove("mui-active");
+						arr1[0].classList.add("mui-active");
+						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
+						  mui.fire(detailPage,'openxzsygk',{
+						    "id":"xz"
+						  });
+					})
+					
+					
 					var hdspTab = document.querySelector('a[href="zkzx/hdsp.html"]');
 					if (hdspTab) {
 						hdspTab.addEventListener('tap', function() {
@@ -130,27 +163,6 @@
 						});
 					}
 					
-					var hdspTab = document.querySelector('a[href="zkzx/zongliang.html"]');
-					if (hdspTab) {
-						hdspTab.addEventListener('tap', function() {
-							var hdspPage = plus.webview.getWebviewById("zkzx/zongliang.html");
-							if (hdspPage) {
-								mui.fire(hdspPage, 'openzongliang');
-							}
-						});
-					}
-					
-				    window.addEventListener('openbzgk_xz', function(event) {
-				    	mui.trigger(arr[0],"tap");
-				    	var arr1 = document.getElementsByClassName("mui-tab-item");
-				    	arr1[2].classList.remove("mui-active");
-				    	arr1[0].classList.add("mui-active");
-						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
-						  mui.fire(detailPage,'openxzsygk',{
-						    "id":"xz"
-						  });
-					})
-				    
 				    window.addEventListener('openbzgk_sy', function(event) {
 				    	mui.trigger(arr[0],"tap");
 				    	var arr1 = document.getElementsByClassName("mui-tab-item");
