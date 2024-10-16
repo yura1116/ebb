@@ -41,10 +41,17 @@
 				padding-left: 20px;
 			}
 			.ms_div{
-				padding-left:30px;font-weight: bold;font-size: 18px;
+				padding-left:30px;font-weight: bold;font-size: 17px !important
+			}
+			.ms_div span{
+				font-size: 17px;
 			}
 			
 			#tab3 div{
+				width:20%;
+			}
+			
+			#tab4 div{
 				width:20%;
 			}
 		</style>
@@ -101,6 +108,32 @@
 				<div style=""><span id="bzzl_zf_dfp"></span></div>
 				<div style=""><span id="bzzl_sy_dfp"></span></div>
 			</div>
+			
+			<div id="tab4" class="sjqy" style="background: #fff;height:170px;margin-top:10px;padding-top:20px;display: none;">
+				<div class="ms_div"  style="padding-left: 0;margin-left:20%;text-align: center;">总量 </div>
+				<div class="ms_div"  style="padding-left: 0;text-align: center;">处级 </div>
+				<div class="ms_div"  style="padding-left: 0;;padding-left: 0;text-align: center;">科级 </div>
+				<div class="ms_div"  style="padding-left: 0;text-align: center;">股级 </div>
+			<!-- 	<div style="margin-left:20%;"><span id="zszl_zlhj"></span></div>
+				<div style=""><span id="zszl_dzqhj">合计一</span></div>
+				<div style=""><span id="zszl_zfhj"></span></div>
+				<div style=""><span id="zszl_syhj"></span></div> -->
+				<div style="text-align: center;height:40px;line-height: 40px;">核定 </div>
+				<div style="background: ;"><span id="zszl_hj_hds"></span></div>
+				<div style=""><span id="zszl_cj_hds"></span></div>
+				<div style=""><span id="zszl_kj_hds"></span></div>
+				<div style=""><span id="zszl_gj_hds"></span></div>
+				<div style="text-align: center;height:40px;line-height: 40px;">实有 </div>
+				<div style=""><span id="zszl_hj_sys"></span></div>
+				<div style=""><span id="zszl_cj_sys"></span></div>
+				<div style=""><span id="zszl_kj_sys"></span></div>
+				<div style=""><span id="zszl_gj_sys"></span></div>
+				<div style="text-align: center;height:40px;line-height: 40px;">空缺 </div>
+				<div style=""><span id="zszl_hj_kbs"></span></div>
+				<div style=""><span id="zszl_cj_kbs"></span></div>
+				<div style=""><span id="zszl_kj_kbs"></span></div>
+				<div style=""><span id="zszl_gj_kbs"></span></div>
+			</div>
 		</div>
 		<script type="text/javascript" src="../js/common.js" ></script>
 		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
@@ -147,7 +180,7 @@
 						"sel_dq":district
 					},
 					success: function(response) {
-						console.log(response)
+						/* console.log(response) */
 						$("#jgzl_hj").html(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1);
 						$("#jgzl_xz").html(JSON.parse(response).sys1);
 						var jgzl_xz_zb = (JSON.parse(response).sys1/(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1)).toFixed(4); 
@@ -168,7 +201,7 @@
 						"sel_dq":district
 					},
 					success: function(response) {
-						console.log(response)
+						/* console.log(response) */
 						$("#bwzl_hj").html(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1);
 						$("#bwzl_xz").html(JSON.parse(response).sys1);
 						var bwzl_xz_zb = (JSON.parse(response).sys1/(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1)).toFixed(4); 
@@ -187,7 +220,11 @@
 				var url = "";
 				if(flag == "bz"){
 					url = "moveOfficeController.ehtm?method=getbzzl";
+					$("#tab4").hide();
+					$("#tab3").show();
 				}else{
+					$("#tab3").hide();
+					$("#tab4").show();
 					url = "moveOfficeController.ehtm?method=getzszl";
 				}
 				$.ajax({
@@ -198,7 +235,7 @@
 						"sel_dq":district
 					},
 					success: function(response) {
-						console.log(response)
+						//console.log(response)
 						var response = JSON.parse(response);
 						if(flag == "bz"){
 							$("#bzzl_dzq_hds").html(response.data1[0]);
@@ -221,7 +258,21 @@
 							$("#hj_kbs").html(response.data1[2]*1+response.data2[2]*1+response.data3[2]*1);
 							$("#hj_dfp").html(response.data1[3]*1+response.data2[3]*1+response.data3[3]*1);
 						}else{
+							$("#zszl_cj_hds").html(response.data1[0]);
+							$("#zszl_cj_sys").html(response.data1[1]);
+							$("#zszl_cj_kbs").html(response.data1[2]);
 							
+							$("#zszl_kj_hds").html(response.data2[0]);
+							$("#zszl_kj_sys").html(response.data2[1]);
+							$("#zszl_kj_kbs").html(response.data2[2]);
+							
+							$("#zszl_gj_hds").html(response.data3[0]);
+							$("#zszl_gj_sys").html(response.data3[1]);
+							$("#zszl_gj_kbs").html(response.data3[2]);
+							
+							$("#zszl_hj_hds").html(response.data1[0]*1+response.data2[0]*1+response.data3[0]*1);
+							$("#zszl_hj_sys").html(response.data1[1]*1+response.data2[1]*1+response.data3[1]*1);
+							$("#zszl_hj_kbs").html(response.data1[2]*1+response.data2[2]*1+response.data3[2]*1);
 						}
 					},
 					error: function(xhr, status, error) {

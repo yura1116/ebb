@@ -9,19 +9,39 @@
 		<link href="../css/style.css" rel="stylesheet" />
 		
 		<style>
+			.mui-btn, button, input[type=button], input[type=reset], input[type=submit]{
+				color: #12AAC1;
+				background: #fff ;
+				border:1px solid #12AAC1 !important;
+				border-radius: 25px !important;
+				font-size: 15px !important;
+				padding:4px 12px !important;
+			}
 			
+			.tybtn{
+				width:100px;
+				height:30px;
+				line-height: 30px;
+				top:14px;
+			}
+			
+			.tbqy{
+				width: 100%;padding:0 10px;box-sizing: content-box;
+			}
 		</style>
 
 	</head>
 
 	<body>
 		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
-			一屏幕总览
+			 <div id="map" style="height: 70%;"></div>
+			<div style="height:30%;border:1px solid red"></div>
 		</div>
 		<script type="text/javascript" src="../js/common.js" ></script>
 		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/echarts.min.js"></script>
+		
 		<script>
 			(function($, doc) {
 				$.init();
@@ -29,14 +49,156 @@
 					var district = plus.storage.getItem('district');
 					var windowHeight = window.innerHeight;		
 					var elements = document.getElementsByClassName('tbqy');
-					 // 循环遍历所有元素，设置其高度
-					for (var i = 0; i < elements.length; i++) {
-						elements[i].style.height = ((windowHeight-65) * 0.5) + 'px'; // 设置为窗口高度的30%
-					}
-					//默认点击机关
-					//cxtb("jg");
+					
+					window.addEventListener('openypzl',function(event){
+					 	cxtb("");
+					});
+					
 				});
 			}(mui, document));
+			
+			
+			
+			$(function(){
+				
+			
+			})	
+			//点击机关或者事业的菜单
+			function cxtb(){
+				var district = plus.storage.getItem('district');
+				
+				// 获取文件路径
+				var jsonFilePath = '../js/lianyungang.json';
+					
+				// 使用 plus.io 读取本地文件
+				plus.io.resolveLocalFileSystemURL(jsonFilePath, function(entry) {
+					entry.file(function(file) {
+						var reader = new plus.io.FileReader();
+						reader.onloadend = function(e) {
+							try {
+								// 解析读取到的文件内容
+								var geoJson = JSON.parse(e.target.result);
+								// 注册并使用地图
+								echarts.registerMap('Lianyungang', geoJson);
+					
+								var myChart = echarts.init(document.getElementById('map'));
+								var option = {
+									/* title: {
+										text: '连云港地图',
+										left: 'center'
+									}, */
+									tooltip: {
+										trigger: 'item'
+									},
+									visualMap: {
+										min: 0,
+										max: 600,
+										left: 'right',
+										top: 'center',
+										text: ['高', '低'],
+										textStyle: {
+											color: '#ffffff'
+										},
+										inRange: {
+											color: ['#1590B8','#31B0DB', '#177398']
+										}
+									},
+									series: [{
+										name: '连云港',
+										type: 'map',
+										map: 'Lianyungang',
+										label: {
+											show: true
+										},
+										data: [
+											{ 
+												name: '海州区', 
+												value: 100, // 这个值是用来显示提示框和其他计算的，可以是任意值
+												/* itemStyle: {
+													normal: {
+														color: '#1590B8' // 自定义海州区的颜色
+													}
+												} */
+											},
+											{ 
+												name: '连云区', 
+												value: 200,
+												/* itemStyle: {
+													normal: {
+														color: '#1590B8' // 自定义连云区的颜色
+													}
+												} */
+											},{ 
+												name: '赣榆区', 
+												value: 300,
+												/* itemStyle: {
+													normal: {
+														color: '#1590B8' // 自定义连云区的颜色
+													}
+												} */
+											},{ 
+												name: '东海县', 
+												value: 400,
+												/* itemStyle: {
+													normal: {
+														color: '#177398' // 自定义连云区的颜色
+													}
+												} */
+											},
+											{
+												name: '灌云县', 
+												value: 500,
+												/* itemStyle: {
+													normal: {
+														color: '#31B0DB' // 自定义连云区的颜色
+													}
+												} */
+											},
+											{
+												name: '灌南县', 
+												value: 600,
+												/* itemStyle: {
+													normal: {
+														color: '#177398' // 自定义连云区的颜色
+													}
+												} */
+											}
+											// 其他区的数据
+										]
+									}]
+								};
+					
+								myChart.setOption(option);
+							} catch (error) {
+								console.error('解析 GeoJSON 文件出错:', error);
+							}
+						};
+						reader.readAsText(file);  // 读取文件为文本内容
+					}, function(e) {
+						console.error('读取文件失败:', e.message);
+					});
+				}, function(e) {
+					console.error('文件路径解析失败:', e.message);
+				});
+				
+				
+				/* $.ajax({
+					url: tyUrl+'moveOfficeController.ehtm?method=getdqqkinfo',  
+					method: 'GET',
+					dataType: 'json',
+					data:{
+						"sel_dq":district
+					},
+					success: function(response) {
+						console.log(response)
+					},
+					error: function(xhr, status, error) {
+						console.error("请求失败：" + error);
+					}
+				}); */
+			}
+			
+		
 		</script>
 	</body>
 
