@@ -28,14 +28,33 @@
 			.tbqy{
 				width: 100%;padding:0 10px;box-sizing: content-box;
 			}
+			
+			#qywz div{
+				padding-left: 40px;
+				height:60px;
+				line-height:60px;
+				/* background: #eee; */
+			}
+			
+			#qywz span{
+				color:#00b0c7;
+				height:60px;
+				line-height:60px;
+				padding-left: 10px;
+			}
 		</style>
 
 	</head>
 
 	<body>
-		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
-			 <div id="map" style="height: 70%;"></div>
-			<div style="height:30%;border:1px solid red"></div>
+		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #fff;overflow: hidden;">
+			<div id="map" style="height: 65%;background: #fff;"></div>
+			<div style="padding-top: 20px;background: ;" id="qywz">
+				<div style="width:55%;float: left;">占地面积：<span id="zdmj"></span></div>
+				<div style="width:40%;float: left;">乡镇：<span id="xz"></span></div>
+				<div style="width:55%;float: left;">常驻人口：<span id="czrk"></span></div>
+				<div style="width:40%;float: left;">街道：<span id="jd"></span></div>
+			</div>
 		</div>
 		<script type="text/javascript" src="../js/common.js" ></script>
 		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
@@ -93,7 +112,7 @@
 									visualMap: {
 										min: 0,
 										max: 600,
-										left: 'right',
+										left: 'left',
 										top: 'center',
 										text: ['高', '低'],
 										textStyle: {
@@ -106,6 +125,8 @@
 									series: [{
 										name: '连云港',
 										type: 'map',
+										layoutCenter: ['50%', '50%'], // 地图中心位置：居中
+										layoutSize: '90%',            // 地图大小为容器的 80%
 										map: 'Lianyungang',
 										label: {
 											show: true
@@ -182,7 +203,7 @@
 				});
 				
 				
-				/* $.ajax({
+				$.ajax({
 					url: tyUrl+'moveOfficeController.ehtm?method=getdqqkinfo',  
 					method: 'GET',
 					dataType: 'json',
@@ -191,11 +212,15 @@
 					},
 					success: function(response) {
 						console.log(response)
+						$("#zdmj").html(JSON.parse(response).zdmj);
+						$("#czrk").html(JSON.parse(response).czrk);
+						$("#xz").html(JSON.parse(response).xz);
+						$("#jd").html(JSON.parse(response).jd);
 					},
 					error: function(xhr, status, error) {
 						console.error("请求失败：" + error);
 					}
-				}); */
+				});
 			}
 			
 		
