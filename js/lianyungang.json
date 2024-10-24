@@ -5,7 +5,7 @@
 		"properties": {
 			"adcode": 320703,
 			"name": "连云区",
-			"center": [119.366487, 34.739529],
+			"center": [110.366487, 30.739529],
 			"centroid": [119.426577, 34.621139],
 			"childrenNum": 0,
 			"level": "district",
