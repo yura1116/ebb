@@ -53,7 +53,8 @@
 					var district = plus.storage.getItem('district');
 					
 					window.addEventListener('openxbnlfb',function(event){
-					 	cxtb("nl");
+						var dj_dqdm = event.detail.dj_dqdm;
+						cxtb("nl",dj_dqdm);
 					});
 				});
 			}(mui, document));
@@ -63,8 +64,7 @@
 			})	
 			
 			//点击机关或者事业的菜单
-			function cxtb(flag){
-				var district = plus.storage.getItem('district');
+			function cxtb(flag,district){
 				$(".tybtn").css("background","#fff");
 				$(".tybtn").css("color","#12AAC1");
 				if(flag == "nl"){

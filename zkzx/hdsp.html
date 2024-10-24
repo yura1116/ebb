@@ -54,7 +54,8 @@
 					var elements = document.getElementsByClassName('tbqy');
 					
 					window.addEventListener('openhdsp',function(event){
-					 	cxtb("jg");
+						var dj_dqdm = event.detail.dj_dqdm;
+						cxtb("jg",dj_dqdm);
 					});
 					
 				});
@@ -65,8 +66,7 @@
 			
 			})	
 			//点击机关或者事业的菜单
-			function cxtb(flag){
-				var district = plus.storage.getItem('district');
+			function cxtb(flag,district){
 				$(".tybtn").css("background","#fff");
 				$(".tybtn").css("color","#12AAC1");
 				if(flag == "jg"){
@@ -199,7 +199,7 @@
 							name: '实配',
 							type: 'bar',
 							itemStyle: {
-								color: '#22e4ff'
+								color: '#ffd700'
 							},
 							data: data2 
 						}

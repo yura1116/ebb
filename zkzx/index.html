@@ -20,6 +20,7 @@
 	</head>
 
 	<body>
+		<input type="hidden" id="dj_dqdm">
         <nav class="mui-bar mui-bar-tab" style="top:0 !important;height: 50px !important;color: #999999;background: #fff;box-shadow:none;overflow-x: scroll;white-space: nowrap;display:unset;">
 			<a class="mui-tab-item" href="ypzl.html">
 			    <span class="mui-tab-label mui-active">一屏总览</span>
@@ -36,7 +37,6 @@
 			<a class="mui-tab-item" href="jwnbzqk.html" style="width: 130px;">
 			    <span class="mui-tab-label">近五年编制情况</span>
 			</a>
-			
         </nav>
 		
 		<script type="text/javascript" src="../js/common.js" ></script>
@@ -47,6 +47,8 @@
 			(function($, doc) {
 				mui.init({ });
 				$.plusReady(function() {
+					var district = plus.storage.getItem('district');
+					document.getElementById('dj_dqdm').value = district;
 					var pages = ["ypzl.html","zongliang.html","hdsp.html","xbnlfb.html","jwnbzqk.html"];
 				    var arr = document.getElementsByClassName("mui-tab-item")
 				    var styles = {
@@ -96,29 +98,21 @@
 						hdspTab.addEventListener('tap', function() {
 							var hdspPage = plus.webview.getWebviewById("zongliang.html");
 							if (hdspPage) {
-								mui.fire(hdspPage, 'openzongliang');
+								mui.fire(hdspPage,'openzongliang',{
+							    	"dj_dqdm":document.getElementById('dj_dqdm').value
+							  	});
 							}
 						});
 					}
-					
-					window.addEventListener('openbzgk_xz', function(event) {
-						mui.trigger(arr[0],"tap");
-						var arr1 = document.getElementsByClassName("mui-tab-item");
-						arr1[2].classList.remove("mui-active");
-						arr1[0].classList.add("mui-active");
-						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
-						  mui.fire(detailPage,'openxzsygk',{
-						    "id":"xz"
-						  });
-					})
-					
 					
 					var hdspTab = document.querySelector('a[href="hdsp.html"]');
 					if (hdspTab) {
 						hdspTab.addEventListener('tap', function() {
 							var hdspPage = plus.webview.getWebviewById("hdsp.html");
 							if (hdspPage) {
-								mui.fire(hdspPage, 'openhdsp');
+								mui.fire(hdspPage,'openhdsp',{
+							    	"dj_dqdm":document.getElementById('dj_dqdm').value
+							  	});
 							}
 						});
 					}
@@ -128,7 +122,9 @@
 						hdspTab.addEventListener('tap', function() {
 							var hdspPage = plus.webview.getWebviewById("xbnlfb.html");
 							if (hdspPage) {
-								mui.fire(hdspPage, 'openxbnlfb');
+								mui.fire(hdspPage,'openxbnlfb',{
+							    	"dj_dqdm":document.getElementById('dj_dqdm').value
+							  	});
 							}
 						});
 					}
@@ -137,21 +133,12 @@
 						hdspTab.addEventListener('tap', function() {
 							var hdspPage = plus.webview.getWebviewById("jwnbzqk.html");
 							if (hdspPage) {
-								mui.fire(hdspPage, 'openjwnbzqk');
+								mui.fire(hdspPage,'openjwnbzqk',{
+							    	"dj_dqdm":document.getElementById('dj_dqdm').value
+							  	});
 							}
 						});
 					}
-					
-				    window.addEventListener('openbzgk_sy', function(event) {
-				    	mui.trigger(arr[0],"tap");
-				    	var arr1 = document.getElementsByClassName("mui-tab-item");
-				    	arr1[2].classList.remove("mui-active");
-				    	arr1[0].classList.add("mui-active");
-						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
-						  mui.fire(detailPage,'openxzsygk',{
-						    "id":"sy"
-						  });
-					})
 				});
 			}(mui, document));
 			

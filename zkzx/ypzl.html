@@ -68,6 +68,7 @@
 					var district = plus.storage.getItem('district');
 					var windowHeight = window.innerHeight;		
 					var elements = document.getElementsByClassName('tbqy');
+					
 					cxtb("");
 					
 					window.addEventListener('openypzl',function(event){
@@ -85,18 +86,17 @@
 			var LableData_sz, LableData_sz1;//对应地区说明--导向线的两端（点坐标）--专指市值（五角星）
 			
 			LableData_sz = [{
-					name: '连云港市',
-					value: [119.178821,34.600018]
-				}];
-				LableData_sz1 = [{
-					name: '功能区',
-					value: [119.268145, 34.622267]
-				}];
+				name: '连云港市',
+				value: [119.178821,34.580018]
+			}];
+			LableData_sz1 = [{
+				name: '功能区',
+				value: [119.238145, 34.632267]
+			}];
 			
 			//点击机关或者事业的菜单
 			function cxtb(){
 				var district = plus.storage.getItem('district');
-				console.log(district+"-----099")
 				// 获取文件路径
 				var jsonFilePath = '../js/lianyungang.json';
 					
@@ -138,7 +138,8 @@
 										top : 'center',
 										left : 'center',
 										roam : false,
-										zoom : 1.005
+										zoom : 1
+										
 									},
 									series: [{
 										name: '连云港',
@@ -149,9 +150,10 @@
 										label: { 
 											normal: { 
 												show: true,
-												color : "#fff" 
+												color : "#fff" ,
+												offset:[-5,-15]//文字的相对偏移
 											}, 
-											emphasis: { show: false }
+											//emphasis: { show: false }
 										},
 										itemStyle : {
 											normal : {
@@ -170,7 +172,7 @@
 										name: '',
 										type: 'scatter',
 										symbol : 'image://../images/xing.png',
-										symbolSize : 8,
+										symbolSize : 16,
 										coordinateSystem: 'geo',
 										data: LableData_sz,
 										label: {
@@ -183,7 +185,7 @@
 										name: '',
 										type: 'scatter',
 										symbol : 'circle',
-										symbolSize : 6,
+										symbolSize : 10,
 										coordinateSystem: 'geo',
 										data: LableData_sz1,
 										itemStyle: {
@@ -200,6 +202,39 @@
 								};
 					
 								myChart.setOption(option);
+								
+								show_mj_rk(district);//默认加载市直的数据
+								// 添加点击事件监听器
+								myChart.on('click', function (params) {
+								    // 获取点击区域的信息
+								    var clickedAreaName = params.name; // 获取区域的名称
+									var c_dq = "";
+									if(clickedAreaName == "赣榆区"){
+										c_dq = "320721";
+									}else if(clickedAreaName == "连云区"){
+										c_dq = "320703";
+									}else if(clickedAreaName == "东海县"){
+										c_dq = "320722";
+									}else if(clickedAreaName == "海州区"){
+										c_dq = "320706";
+									}else if(clickedAreaName == "灌云县"){
+										c_dq = "320723";
+									}else if(clickedAreaName == "灌南县"){
+										c_dq = "320724";
+									}
+									// 检查是否点击了 scatter 类型的图表
+									if (params.seriesType === 'scatter') {
+										show_mj_rk("320700");//切换区县重新查询数据
+										var parentWebview = plus.webview.currentWebview().opener();
+										parentWebview.evalJS('document.getElementById("dj_dqdm").value=320700');
+									}else{
+										show_mj_rk(c_dq);//切换区县重新查询数据
+										var parentWebview = plus.webview.currentWebview().opener();
+										parentWebview.evalJS('document.getElementById("dj_dqdm").value ='+c_dq);
+									}
+									
+								});
+								
 							} catch (error) {
 								console.error('解析 GeoJSON 文件出错:', error);
 							}
@@ -211,8 +246,11 @@
 				}, function(e) {
 					console.error('文件路径解析失败:', e.message);
 				});
-				
-				
+			}
+			
+			//查询地图下方数据
+			function show_mj_rk(district){
+				console.log("点击的地区代码是--"+district)
 				$.ajax({
 					url: tyUrl+'moveOfficeController.ehtm?method=getdqqkinfo',  
 					method: 'GET',
@@ -233,7 +271,6 @@
 				});
 			}
 			
-		
 		</script>
 	</body>
 

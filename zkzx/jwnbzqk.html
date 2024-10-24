@@ -50,7 +50,8 @@
 					var elements = document.getElementsByClassName('tbqy');
 					
 					window.addEventListener('openjwnbzqk',function(event){
-					 	cxtb();
+						var dj_dqdm = event.detail.dj_dqdm;
+						cxtb(dj_dqdm);
 					});
 					
 				});
@@ -62,8 +63,7 @@
 			})	
 			
 			//点击机关或者事业的菜单
-			function cxtb(){
-				var district = plus.storage.getItem('district');
+			function cxtb(district){
 				showtb(district);
 			}
 			
@@ -162,7 +162,7 @@
 							name: '实配',
 							type: 'bar',
 							itemStyle: {
-								color: '#22e4ff'
+								color: '#ffd700'
 							},
 							data: data2 
 						}
@@ -215,7 +215,7 @@
 							name: '党政群核定',
 							type: 'bar',
 							itemStyle: {
-								color: '#d15752' 
+								color: '#ff69b4' 
 							},
 							data: data1
 						},
@@ -255,7 +255,7 @@
 							name: '事业实有',
 							type: 'bar',
 							itemStyle: {
-								color: '#ff69b4'
+								color: '#d15752'
 							},
 							data: data6 
 						},
