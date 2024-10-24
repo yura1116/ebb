@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主页-掌上编办</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			*{background: #fff;}
+			.mui-active{color:#12AAC1 !important}
+			/*a{overflow: inherit !important;}*/
+			.mui-bar-tab .mui-tab-item.mui-active{border-bottom: 1px solid #12AAC1;}
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-bar-tab .mui-tab-item{height:50px;line-height:50px;display: inline-block;width:75px;}
+			.mui-popover-arrow{display: none;}
+		</style>
+	</head>
+
+	<body>
+        <nav class="mui-bar mui-bar-tab" style="top:0 !important;height: 50px !important;color: #999999;background: #fff;box-shadow:none;overflow-x: scroll;white-space: nowrap;display:unset;">
+			<a class="mui-tab-item" href="ypzl.html">
+			    <span class="mui-tab-label mui-active">一屏总览</span>
+			</a>
+			<a class="mui-tab-item" href="zongliang.html" style="width: 50px;">
+			    <span class="mui-tab-label">总量</span>
+			</a>
+			<a class="mui-tab-item" href="hdsp.html">
+			    <span class="mui-tab-label">核定实配</span>
+			</a>
+			<a class="mui-tab-item" href="xbnlfb.html" style="width: 115px;">
+			    <span class="mui-tab-label">性别年龄分布</span>
+			</a>
+			<a class="mui-tab-item" href="jwnbzqk.html" style="width: 130px;">
+			    <span class="mui-tab-label">近五年编制情况</span>
+			</a>
+			
+        </nav>
+		
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js" ></script>
+		<script src="../js/mui.min.js"></script>
+		<script>
+			
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					var pages = ["ypzl.html","zongliang.html","hdsp.html","xbnlfb.html","jwnbzqk.html"];
+				    var arr = document.getElementsByClassName("mui-tab-item")
+				    var styles = {
+				        top:"50px",
+                		bottom:"0",
+			        	width:'100%',
+				    }
+				    var pageArr = [];
+				    var slef = plus.webview.currentWebview();
+				    for(var i=0; i<arr.length; i++){
+				        // 有几个选项卡，需要创建几个子页面
+				        var page = plus.webview.create(pages[i],pages[i],styles);
+				        pageArr.push(page);
+				        !function(i){
+				            arr[i].addEventListener("tap",function(){
+				                // 让当前页面(i)显示，不是当前页面隐藏
+				                for(var j=0; j<pageArr.length; j++){
+				                    if(j!=i) pageArr[j].hide();
+				                    else pageArr[j].show();
+				                }
+				                /* 让新创建的webview，追加合并到当前的窗口上。合并成一个窗口。
+				                 * 目的：将父子窗口合并成一个页面，实现同开同关的效果。 避免点击返回安监室，子页面先关闭，而父页面的头部和尾部没有关闭的BUG。
+				                 */
+				                slef.append(pageArr[i]);
+				            })
+				        }(i);
+				    }
+				    
+					setTimeout(function() {
+					  mui.trigger(arr[0],"tap");
+					}, 1000); // 延迟以确保页面完全显示
+					
+					//监听菜单点击事件 一屏总览、总量、核定实配、性别年龄分布、近五年编制情况
+					
+					var hdspTab = document.querySelector('a[href="ypzl.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("ypzl.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openypzl');
+							}
+						});
+					}
+					
+					var hdspTab = document.querySelector('a[href="zongliang.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("zongliang.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openzongliang');
+							}
+						});
+					}
+					
+					window.addEventListener('openbzgk_xz', function(event) {
+						mui.trigger(arr[0],"tap");
+						var arr1 = document.getElementsByClassName("mui-tab-item");
+						arr1[2].classList.remove("mui-active");
+						arr1[0].classList.add("mui-active");
+						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
+						  mui.fire(detailPage,'openxzsygk',{
+						    "id":"xz"
+						  });
+					})
+					
+					
+					var hdspTab = document.querySelector('a[href="hdsp.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("hdsp.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openhdsp');
+							}
+						});
+					}
+					
+					var hdspTab = document.querySelector('a[href="xbnlfb.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("xbnlfb.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openxbnlfb');
+							}
+						});
+					}
+					var hdspTab = document.querySelector('a[href="jwnbzqk.html"]');
+					if (hdspTab) {
+						hdspTab.addEventListener('tap', function() {
+							var hdspPage = plus.webview.getWebviewById("jwnbzqk.html");
+							if (hdspPage) {
+								mui.fire(hdspPage, 'openjwnbzqk');
+							}
+						});
+					}
+					
+				    window.addEventListener('openbzgk_sy', function(event) {
+				    	mui.trigger(arr[0],"tap");
+				    	var arr1 = document.getElementsByClassName("mui-tab-item");
+				    	arr1[2].classList.remove("mui-active");
+				    	arr1[0].classList.add("mui-active");
+						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
+						  mui.fire(detailPage,'openxzsygk',{
+						    "id":"sy"
+						  });
+					})
+				});
+			}(mui, document));
+			
+			/*function changeA(){
+				mui.trigger(arr[0],"tap");
+			}*/
+		</script>
+	</body>
+
+</html>

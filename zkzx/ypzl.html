@@ -68,6 +68,7 @@
 					var district = plus.storage.getItem('district');
 					var windowHeight = window.innerHeight;		
 					var elements = document.getElementsByClassName('tbqy');
+					cxtb("");
 					
 					window.addEventListener('openypzl',function(event){
 					 	cxtb("");
@@ -76,16 +77,26 @@
 				});
 			}(mui, document));
 			
-			
-			
 			$(function(){
 				
 			
 			})	
+			
+			var LableData_sz, LableData_sz1;//对应地区说明--导向线的两端（点坐标）--专指市值（五角星）
+			
+			LableData_sz = [{
+					name: '连云港市',
+					value: [119.178821,34.600018]
+				}];
+				LableData_sz1 = [{
+					name: '功能区',
+					value: [119.268145, 34.622267]
+				}];
+			
 			//点击机关或者事业的菜单
 			function cxtb(){
 				var district = plus.storage.getItem('district');
-				
+				console.log(district+"-----099")
 				// 获取文件路径
 				var jsonFilePath = '../js/lianyungang.json';
 					
@@ -109,7 +120,7 @@
 									tooltip: {
 										trigger: 'item'
 									},
-									visualMap: {
+									/* visualMap: {
 										min: 0,
 										max: 600,
 										left: 'left',
@@ -121,6 +132,13 @@
 										inRange: {
 											color: ['#1590B8','#31B0DB', '#177398']
 										}
+									}, */
+									geo : {
+										map : 'Lianyungang',
+										top : 'center',
+										left : 'center',
+										roam : false,
+										zoom : 1.005
 									},
 									series: [{
 										name: '连云港',
@@ -128,65 +146,57 @@
 										layoutCenter: ['50%', '50%'], // 地图中心位置：居中
 										layoutSize: '90%',            // 地图大小为容器的 80%
 										map: 'Lianyungang',
-										label: {
-											show: true
+										label: { 
+											normal: { 
+												show: true,
+												color : "#fff" 
+											}, 
+											emphasis: { show: false }
 										},
-										data: [
-											{ 
-												name: '海州区', 
-												value: 100, // 这个值是用来显示提示框和其他计算的，可以是任意值
-												/* itemStyle: {
-													normal: {
-														color: '#1590B8' // 自定义海州区的颜色
-													}
-												} */
+										itemStyle : {
+											normal : {
+												areaColor : '#31B0DB',
+												borderColor : '#1590B8',
+												borderWidth : 1.5
 											},
-											{ 
-												name: '连云区', 
-												value: 200,
-												/* itemStyle: {
-													normal: {
-														color: '#1590B8' // 自定义连云区的颜色
-													}
-												} */
-											},{ 
-												name: '赣榆区', 
-												value: 300,
-												/* itemStyle: {
-													normal: {
-														color: '#1590B8' // 自定义连云区的颜色
-													}
-												} */
-											},{ 
-												name: '东海县', 
-												value: 400,
-												/* itemStyle: {
-													normal: {
-														color: '#177398' // 自定义连云区的颜色
-													}
-												} */
-											},
-											{
-												name: '灌云县', 
-												value: 500,
-												/* itemStyle: {
-													normal: {
-														color: '#31B0DB' // 自定义连云区的颜色
-													}
-												} */
-											},
-											{
-												name: '灌南县', 
-												value: 600,
-												/* itemStyle: {
-													normal: {
-														color: '#177398' // 自定义连云区的颜色
-													}
-												} */
+											emphasis : {
+												areaColor : '#177398',
+												label : {
+													color : "#fff"
+												}
 											}
-											// 其他区的数据
-										]
-									}]
+										}
+									},{
+										name: '',
+										type: 'scatter',
+										symbol : 'image://../images/xing.png',
+										symbolSize : 8,
+										coordinateSystem: 'geo',
+										data: LableData_sz,
+										label: {
+											formatter: '{b}',
+											position: 'right',
+											show: true,
+											color : "#fff"
+										}
+									},{
+										name: '',
+										type: 'scatter',
+										symbol : 'circle',
+										symbolSize : 6,
+										coordinateSystem: 'geo',
+										data: LableData_sz1,
+										itemStyle: {
+											color: 'red'
+										},
+										label: {
+											formatter: '{b}',
+											position: 'right',
+											show: true,
+											color : "#fff"
+										}
+									}
+									]
 								};
 					
 								myChart.setOption(option);
