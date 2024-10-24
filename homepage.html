@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主页-掌上编办</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			/* *{background: #fff;} */
+			.mui-active{color:#12AAC1 !important}
+			/*a{overflow: inherit !important;}*/
+			.mui-bar {color: #fff;}
+			.mui-bar td{background: #12AAC1;text-align: center;border:1px solid #12AAC1;}
+			.mui-bar .mui-tab-item{height:50px;line-height:50px;}
+			.mui-popover-arrow{display: none;}
+		</style>
+	</head>
+
+	<body>
+        <header class="mui-bar mui-bar-nav" style="background: #12AAC1;padding:0;height: 60px;">
+        	<table style="width:100%;height:100%;">
+        		<tr>
+        			<td style="width:15%;"><!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>--></td>
+        			<td style="width:65%;font-size: 18pt;" id="title">掌上编办</td>
+        			<td style="width:20%;font-size: 12pt;" id="exit">退出</td>
+        		</tr>
+        	</table>
+		</header>
+		<nav class="mui-bar mui-bar-tab"  style="bottom:0 !important;height: 50px !important;color: #999999;background: #fff;box-shadow:unset">
+			<a class="mui-tab-item" href="main_page/search.html">
+				<span class="mui-tab-label">一键查找</span>
+			</a>
+			<a class="mui-tab-item mui-active" href="main.html">
+				<span class="mui-tab-label">主页</span>
+			</a>
+			<a class="mui-tab-item" href="zkzx/index.html">
+				<span class="mui-tab-label">一屏总览</span>
+			</a>
+		</nav>
+	
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/common.js"></script>
+		<script>
+			(function($, doc) {
+				mui.init({ });
+				$.plusReady(function() {
+					var pages = ["main_page/search.html","main.html","zkzx/index.html"];
+				    var arr = document.getElementsByClassName("mui-tab-item")
+				    var styles = {
+				        top:"60px",
+                		bottom:"50px",
+			        	width:'100%',
+				    }
+				    var pageArr = [];
+				    var slef = plus.webview.currentWebview();
+				    for(var i=0; i<arr.length; i++){
+				        // 有几个选项卡，需要创建几个子页面
+				        var page = plus.webview.create(pages[i],pages[i],styles);
+				        pageArr.push(page);
+				        !function(i){
+				            arr[i].addEventListener("tap",function(){
+				                // 让当前页面(i)显示，不是当前页面隐藏
+				                for(var j=0; j<pageArr.length; j++){
+				                    if(j!=i) pageArr[j].hide();
+				                    else pageArr[j].show();
+				                }
+				                /* 让新创建的webview，追加合并到当前的窗口上。合并成一个窗口。
+				                 * 目的：将父子窗口合并成一个页面，实现同开同关的效果。 避免点击返回安监室，子页面先关闭，而父页面的头部和尾部没有关闭的BUG。
+				                 */
+				                slef.append(pageArr[i]);
+				            })
+				        }(i);
+				    }
+					
+				    mui.trigger(arr[1],"tap");
+				    
+					window.addEventListener('openbzgk_xz', function(event) {
+						mui.trigger(arr[0],"tap");
+						var arr1 = document.getElementsByClassName("mui-tab-item");
+						arr1[2].classList.remove("mui-active");
+						arr1[0].classList.add("mui-active");
+						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
+						  mui.fire(detailPage,'openxzsygk',{
+						    "id":"xz"
+						  });
+					})
+					
+					
+				    window.addEventListener('openbzgk_sy', function(event) {
+				    	mui.trigger(arr[0],"tap");
+				    	var arr1 = document.getElementsByClassName("mui-tab-item");
+				    	arr1[2].classList.remove("mui-active");
+				    	arr1[0].classList.add("mui-active");
+						detailPage = plus.webview.getWebviewById('main_page/bzgk.html');
+						  mui.fire(detailPage,'openxzsygk',{
+						    "id":"sy"
+						  });
+					})
+				});
+				
+				
+				
+				document.getElementById('exit').addEventListener('tap', function() {
+					var btn = ["确定","再看看"];
+					mui.confirm('您要退出《掌上编办》？', '退出提示',btn,function(e){
+					if(e.index==0){
+					  //mui.currentWebview.close();//退出当前页面
+					  //plus.webview.getLaunchWebview().show("pop-in");//退出到登录页面
+						if (mui.os.ios){
+						    const threadClass = plus.ios.importClass("NSThread");
+						    const mainThread = plus.ios.invoke(threadClass, "mainThread");
+						    plus.ios.invoke(mainThread, "exit");
+						}else if (mui.os.android){
+						    plus.runtime.quit();
+						}
+
+					}
+					});
+				})
+			}(mui, document));
+			
+			/*function changeA(){
+				mui.trigger(arr[0],"tap");
+			}*/
+		</script>
+	</body>
+
+</html>
