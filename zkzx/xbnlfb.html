@@ -54,7 +54,9 @@
 					
 					window.addEventListener('openxbnlfb',function(event){
 						var dj_dqdm = event.detail.dj_dqdm;
-						cxtb("nl",dj_dqdm);
+						plus.storage.setItem('xbnlfb_dj_dqdm', dj_dqdm);
+						console.log("性别年龄页面："+dj_dqdm)
+						cxtb("nl");
 					});
 				});
 			}(mui, document));
@@ -64,7 +66,7 @@
 			})	
 			
 			//点击机关或者事业的菜单
-			function cxtb(flag,district){
+			function cxtb(flag){
 				$(".tybtn").css("background","#fff");
 				$(".tybtn").css("color","#12AAC1");
 				if(flag == "nl"){
@@ -80,11 +82,11 @@
 					$("#gw_btn").css("background","#12AAC1");
 					$("#gw_btn").css("color","#fff");
 				}
-				showtb(district,flag);
+				showtb(flag);
 			}
 			
 			//机关党政群图表+政法专项图表
-			function showtb(district,flag){
+			function showtb(flag){
 				var url = "";
 				if(flag == "nl"){
 					url = "moveOfficeController.ehtm?method=getrynlfb";
@@ -100,10 +102,10 @@
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('xbnlfb_dj_dqdm')
 					},
 					success: function(response) {
-						/* console.log(response) */
+						//console.log(response)
 						var obj = JSON.parse(response);
 						var data1 = [];
 						var legendDate = obj.legendDate;

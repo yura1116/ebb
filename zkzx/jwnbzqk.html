@@ -51,7 +51,9 @@
 					
 					window.addEventListener('openjwnbzqk',function(event){
 						var dj_dqdm = event.detail.dj_dqdm;
-						cxtb(dj_dqdm);
+						console.log("近五年情况页面："+dj_dqdm)
+						plus.storage.setItem('jwnbzqk_dj_dqdm', dj_dqdm);
+						showtb();
 					});
 					
 				});
@@ -62,19 +64,14 @@
 			
 			})	
 			
-			//点击机关或者事业的菜单
-			function cxtb(district){
-				showtb(district);
-			}
-			
 			//机关党政群图表+政法专项图表
-			function showtb(district){
+			function showtb(){
 				$.ajax({
 					url: tyUrl+'moveOfficeController.ehtm?method=getsyjgsl', 
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('jwnbzqk_dj_dqdm')
 					},
 					success: function(response) {
 						/* console.log(response) */
@@ -90,7 +87,7 @@
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district,
+						"sel_dq":plus.storage.getItem('jwnbzqk_dj_dqdm'),
 						"sel_nd":new Date().getFullYear()
 					},
 					success: function(response) {

@@ -48,7 +48,9 @@
 				mui.init({ });
 				$.plusReady(function() {
 					var district = plus.storage.getItem('district');
-					document.getElementById('dj_dqdm').value = district;
+					//document.getElementById('dj_dqdm').value = district;
+					document.getElementById('dj_dqdm').value = "";//传空值是为了默认查询全市的数据
+					
 					var pages = ["ypzl.html","zongliang.html","hdsp.html","xbnlfb.html","jwnbzqk.html"];
 				    var arr = document.getElementsByClassName("mui-tab-item")
 				    var styles = {

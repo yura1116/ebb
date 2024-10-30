@@ -55,7 +55,9 @@
 					
 					window.addEventListener('openhdsp',function(event){
 						var dj_dqdm = event.detail.dj_dqdm;
-						cxtb("jg",dj_dqdm);
+						plus.storage.setItem('hdsp_dj_dqdm', dj_dqdm);
+						console.log("核定实配页面："+dj_dqdm)
+						cxtb("jg");
 					});
 					
 				});
@@ -66,17 +68,17 @@
 			
 			})	
 			//点击机关或者事业的菜单
-			function cxtb(flag,district){
+			function cxtb(flag){
 				$(".tybtn").css("background","#fff");
 				$(".tybtn").css("color","#12AAC1");
 				if(flag == "jg"){
 					$("#jg_btn").css("background","#12AAC1");
 					$("#jg_btn").css("color","#fff");
-					showjgtb(district);
+					showjgtb();
 				}else{
 					$("#sy_btn").css("background","#12AAC1");
 					$("#sy_btn").css("color","#fff");
-					showsytb(district);
+					showsytb();
 				}
 			}
 			
@@ -87,7 +89,7 @@
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('hdsp_dj_dqdm')
 					},
 					success: function(response) {
 						//console.log(response)
@@ -103,7 +105,7 @@
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('hdsp_dj_dqdm')
 					},
 					success: function(response) {
 						//console.log(response)
@@ -123,7 +125,7 @@
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('hdsp_dj_dqdm')
 					},
 					success: function(response) {
 						/* console.log(response) */
@@ -139,7 +141,7 @@
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('hdsp_dj_dqdm')
 					},
 					success: function(response) {
 						/* console.log(response) */

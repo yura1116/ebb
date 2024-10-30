@@ -22,7 +22,7 @@
 				width:100px;
 				height:30px;
 				line-height: 30px;
-				top:25px;
+				top:15px;
 			}
 			
 			.tbqy{
@@ -36,9 +36,9 @@
 			
 			.sjqy span{
 				color:#00b0c7;
-				height:40px;
-				line-height:40px;
-				padding-left: 20px;
+				height:35px;
+				line-height:35px;
+				padding-left: 10px;
 			}
 			.ms_div{
 				padding-left:30px;font-weight: bold;font-size: 17px !important
@@ -59,19 +59,19 @@
 	</head>
 
 	<body>
-		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;">
-			<div style="width:100%;height:70px;text-align:center;">
-				<input type="button" onclick="cxzl('bz')" id="bzzl_btn" class="tybtn" value="编制总量">
-				<input type="button" onclick="cxzl('zs')" id="zszl_btn" class="tybtn" value="职数总量" style="margin-left:20px;">
+		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #eee;overflow: hidden;overflow: auto;">
+			<div style="width:100%;height:50px;text-align:center;">
+				<input type="button" onclick="showzl('bz')" id="bzzl_btn" class="tybtn" value="编制总量">
+				<input type="button" onclick="showzl('zs')" id="zszl_btn" class="tybtn" value="职数总量" style="margin-left:20px;">
 			</div>
-			<div id="" class="sjqy" style="background: #fff;height:140px;margin-top:10px;padding:10px 0;">
+			<div id="" class="sjqy" style="background: #fff;height:120px;margin-top:10px;padding:10px 0;">
 				<div class="ms_div" style="width:100%;">总量 <span id="jgzl_hj" style=""></span></div>
 				<div style="width:60%;padding-left:40px;">行政 <span id="jgzl_xz"></span></div>
 				<div style="width:35%;">占比 <span id="jgzl_xz_zb"></span></div>
 				<div style="width:60%;padding-left:40px;">事业 <span id="jgzl_sy"></span></div>
 				<div style="width:35%;">占比 <span id="jgzl_sy_zb"></span></div>
 			</div>
-			<div id="" class="sjqy" style="background: #fff;height:140px;margin-top:10px;padding:10px 0;">
+			<div id="" class="sjqy" style="background: #fff;height:120px;margin-top:10px;padding:10px 0;">
 				<div class="ms_div"  style="width:100%;">编外总量 <span id="bwzl_hj" style=""></span></div>
 				<div style="width:60%;padding-left:40px;">行政 <span id="bwzl_xz"></span></div>
 				<div style="width:35%;">占比 <span id="bwzl_xz_zb"></span></div>
@@ -149,7 +149,9 @@
 					
 					window.addEventListener('openzongliang',function(event){
 						var dj_dqdm = event.detail.dj_dqdm;
-						cxzl("bz",dj_dqdm);
+						console.log("总量页面："+dj_dqdm)
+						plus.storage.setItem('zongliang_dj_dqdm', dj_dqdm);
+						cxzl("bz");
 					});
 					
 				});
@@ -160,34 +162,32 @@
 			
 			})	
 			//点击机关或者事业的菜单
-			function cxzl(flag,district){
-				$(".tybtn").css("background","#fff");
-				$(".tybtn").css("color","#12AAC1");
-				if(flag == "bz"){
-					$("#bzzl_btn").css("background","#12AAC1");
-					$("#bzzl_btn").css("color","#fff");
-					showzl(district,flag);
-				}else{
-					$("#zszl_btn").css("background","#12AAC1");
-					$("#zszl_btn").css("color","#fff");
-					showzl(district,flag);
-				}
+			function cxzl(flag){
+				showzl("bz");
 				$.ajax({//机构数量
 					url: tyUrl+'moveOfficeController.ehtm?method=getjgzl',  
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('zongliang_dj_dqdm')
 					},
 					success: function(response) {
 						/* console.log(response) */
 						$("#jgzl_hj").html(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1);
 						$("#jgzl_xz").html(JSON.parse(response).sys1);
 						var jgzl_xz_zb = (JSON.parse(response).sys1/(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1)).toFixed(4); 
-						$("#jgzl_xz_zb").html((jgzl_xz_zb*100).toFixed(2) + "%");
+						if(isNaN((jgzl_xz_zb*100).toFixed(2))){
+							$("#jgzl_xz_zb").html("%");
+						}else{
+							$("#jgzl_xz_zb").html((jgzl_xz_zb*100).toFixed(2) + "%");
+						}
 						$("#jgzl_sy").html(JSON.parse(response).sys2);
 						var jgzl_sy_zb = (JSON.parse(response).sys2/(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1)).toFixed(4);
-						$("#jgzl_sy_zb").html((jgzl_sy_zb*100).toFixed(2) + "%");
+						if(isNaN((jgzl_sy_zb*100).toFixed(2))){
+							$("#jgzl_sy_zb").html("%");
+						}else{
+							$("#jgzl_sy_zb").html((jgzl_sy_zb*100).toFixed(2) + "%");
+						}
 					},
 					error: function(xhr, status, error) {
 						console.error("请求失败：" + error);
@@ -198,17 +198,91 @@
 					method: 'GET',
 					dataType: 'json',
 					data:{
-						"sel_dq":district
+						"sel_dq":plus.storage.getItem('zongliang_dj_dqdm')
 					},
 					success: function(response) {
 						/* console.log(response) */
 						$("#bwzl_hj").html(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1);
 						$("#bwzl_xz").html(JSON.parse(response).sys1);
 						var bwzl_xz_zb = (JSON.parse(response).sys1/(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1)).toFixed(4); 
-						$("#bwzl_xz_zb").html((bwzl_xz_zb*100).toFixed(2) + "%");
+						if(isNaN((bwzl_xz_zb*100).toFixed(2))){
+							$("#bwzl_xz_zb").html("%");
+						}else{
+							$("#bwzl_xz_zb").html((bwzl_xz_zb*100).toFixed(2) + "%");
+						}
 						$("#bwzl_sy").html(JSON.parse(response).sys2);
 						var bwzl_sy_zb = (JSON.parse(response).sys2/(JSON.parse(response).sys1*1+JSON.parse(response).sys2*1)).toFixed(4);
-						$("#bwzl_sy_zb").html((bwzl_sy_zb*100).toFixed(2) + "%");
+						if(isNaN((bwzl_xz_zb*100).toFixed(2))){
+							$("#bwzl_sy_zb").html("%");
+						}else{
+							$("#bwzl_sy_zb").html((bwzl_sy_zb*100).toFixed(2) + "%");
+						}
+					},
+					error: function(xhr, status, error) {
+						console.error("请求失败：" + error);
+					}
+				});
+				
+				$.ajax({
+					url: tyUrl+"moveOfficeController.ehtm?method=getbzzl",  // 请求的后台地址
+					method: 'GET',
+					dataType: 'json',
+					data:{
+						"sel_dq":plus.storage.getItem('zongliang_dj_dqdm')
+					},
+					success: function(response) {
+						//console.log(response)
+						var response = JSON.parse(response);
+						$("#bzzl_dzq_hds").html(response.data1[0]);
+						$("#bzzl_dzq_sys").html(response.data1[1]);
+						$("#bzzl_dzq_kbs").html(response.data1[2]);
+						$("#bzzl_dzq_dfp").html(response.data1[3]);
+						
+						$("#bzzl_zf_hds").html(response.data2[0]);
+						$("#bzzl_zf_sys").html(response.data2[1]);
+						$("#bzzl_zf_kbs").html(response.data2[2]);
+						$("#bzzl_zf_dfp").html(response.data2[3]);
+						
+						$("#bzzl_sy_hds").html(response.data3[0]);
+						$("#bzzl_sy_sys").html(response.data3[1]);
+						$("#bzzl_sy_kbs").html(response.data3[2]);
+						$("#bzzl_sy_dfp").html(response.data3[3]);
+						
+						$("#hj_hds").html(response.data1[0]*1+response.data2[0]*1+response.data3[0]*1);
+						$("#hj_sys").html(response.data1[1]*1+response.data2[1]*1+response.data3[1]*1);
+						$("#hj_kbs").html(response.data1[2]*1+response.data2[2]*1+response.data3[2]*1);
+						$("#hj_dfp").html(response.data1[3]*1+response.data2[3]*1+response.data3[3]*1);
+					},
+					error: function(xhr, status, error) {
+						console.error("请求失败：" + error);
+					}
+				});
+				
+				$.ajax({
+					url: tyUrl+"moveOfficeController.ehtm?method=getbzzl",  // 请求的后台地址
+					method: 'GET',
+					dataType: 'json',
+					data:{
+						"sel_dq":plus.storage.getItem('zongliang_dj_dqdm')
+					},
+					success: function(response) {
+						//console.log(response)
+						var response = JSON.parse(response);
+						$("#zszl_cj_hds").html(response.data1[0]);
+						$("#zszl_cj_sys").html(response.data1[1]);
+						$("#zszl_cj_kbs").html(response.data1[2]);
+						
+						$("#zszl_kj_hds").html(response.data2[0]);
+						$("#zszl_kj_sys").html(response.data2[1]);
+						$("#zszl_kj_kbs").html(response.data2[2]);
+						
+						$("#zszl_gj_hds").html(response.data3[0]);
+						$("#zszl_gj_sys").html(response.data3[1]);
+						$("#zszl_gj_kbs").html(response.data3[2]);
+						
+						$("#zszl_hj_hds").html(response.data1[0]*1+response.data2[0]*1+response.data3[0]*1);
+						$("#zszl_hj_sys").html(response.data1[1]*1+response.data2[1]*1+response.data3[1]*1);
+						$("#zszl_hj_kbs").html(response.data1[2]*1+response.data2[2]*1+response.data3[2]*1);
 					},
 					error: function(xhr, status, error) {
 						console.error("请求失败：" + error);
@@ -216,69 +290,21 @@
 				});
 			}
 			
-			function showzl(district,flag){
+			function showzl(flag){
 				var url = "";
+				$(".tybtn").css("background","#fff");
+				$(".tybtn").css("color","#12AAC1");
 				if(flag == "bz"){
-					url = "moveOfficeController.ehtm?method=getbzzl";
 					$("#tab4").hide();
 					$("#tab3").show();
+					$("#bzzl_btn").css("background","#12AAC1");
+					$("#bzzl_btn").css("color","#fff");
 				}else{
+					$("#zszl_btn").css("background","#12AAC1");
+					$("#zszl_btn").css("color","#fff");
 					$("#tab3").hide();
 					$("#tab4").show();
-					url = "moveOfficeController.ehtm?method=getzszl";
 				}
-				$.ajax({
-					url: tyUrl+url,  // 请求的后台地址
-					method: 'GET',
-					dataType: 'json',
-					data:{
-						"sel_dq":district
-					},
-					success: function(response) {
-						//console.log(response)
-						var response = JSON.parse(response);
-						if(flag == "bz"){
-							$("#bzzl_dzq_hds").html(response.data1[0]);
-							$("#bzzl_dzq_sys").html(response.data1[1]);
-							$("#bzzl_dzq_kbs").html(response.data1[2]);
-							$("#bzzl_dzq_dfp").html(response.data1[3]);
-							
-							$("#bzzl_zf_hds").html(response.data2[0]);
-							$("#bzzl_zf_sys").html(response.data2[1]);
-							$("#bzzl_zf_kbs").html(response.data2[2]);
-							$("#bzzl_zf_dfp").html(response.data2[3]);
-							
-							$("#bzzl_sy_hds").html(response.data3[0]);
-							$("#bzzl_sy_sys").html(response.data3[1]);
-							$("#bzzl_sy_kbs").html(response.data3[2]);
-							$("#bzzl_sy_dfp").html(response.data3[3]);
-							
-							$("#hj_hds").html(response.data1[0]*1+response.data2[0]*1+response.data3[0]*1);
-							$("#hj_sys").html(response.data1[1]*1+response.data2[1]*1+response.data3[1]*1);
-							$("#hj_kbs").html(response.data1[2]*1+response.data2[2]*1+response.data3[2]*1);
-							$("#hj_dfp").html(response.data1[3]*1+response.data2[3]*1+response.data3[3]*1);
-						}else{
-							$("#zszl_cj_hds").html(response.data1[0]);
-							$("#zszl_cj_sys").html(response.data1[1]);
-							$("#zszl_cj_kbs").html(response.data1[2]);
-							
-							$("#zszl_kj_hds").html(response.data2[0]);
-							$("#zszl_kj_sys").html(response.data2[1]);
-							$("#zszl_kj_kbs").html(response.data2[2]);
-							
-							$("#zszl_gj_hds").html(response.data3[0]);
-							$("#zszl_gj_sys").html(response.data3[1]);
-							$("#zszl_gj_kbs").html(response.data3[2]);
-							
-							$("#zszl_hj_hds").html(response.data1[0]*1+response.data2[0]*1+response.data3[0]*1);
-							$("#zszl_hj_sys").html(response.data1[1]*1+response.data2[1]*1+response.data3[1]*1);
-							$("#zszl_hj_kbs").html(response.data1[2]*1+response.data2[2]*1+response.data3[2]*1);
-						}
-					},
-					error: function(xhr, status, error) {
-						console.error("请求失败：" + error);
-					}
-				});
 			}
 	
 		</script>

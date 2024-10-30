@@ -50,9 +50,9 @@
 		<div class="mui-content" style="width: 100%;height:100%;position: absolute;background: #fff;overflow: hidden;">
 			<div id="map" style="height: 65%;background: #fff;"></div>
 			<div style="padding-top: 20px;background: ;" id="qywz">
-				<div style="width:55%;float: left;">占地面积：<span id="zdmj"></span></div>
+				<div style="width:60%;float: left;">占地面积：<span id="zdmj"></span></div>
 				<div style="width:40%;float: left;">乡镇：<span id="xz"></span></div>
-				<div style="width:55%;float: left;">常驻人口：<span id="czrk"></span></div>
+				<div style="width:60%;float: left;">常驻人口：<span id="czrk"></span></div>
 				<div style="width:40%;float: left;">街道：<span id="jd"></span></div>
 			</div>
 		</div>
@@ -87,16 +87,19 @@
 			
 			LableData_sz = [{
 				name: '连云港市',
-				value: [119.178821,34.580018]
+				value: [119.178821,34.580018],
+				customType: 'star'
 			}];
 			LableData_sz1 = [{
 				name: '功能区',
-				value: [119.238145, 34.632267]
+				value: [119.238145, 34.632267],
+				customType: 'circle'
 			}];
 			
 			//点击机关或者事业的菜单
 			function cxtb(){
-				var district = plus.storage.getItem('district');
+				//var district = plus.storage.getItem('district');
+				var district = "";//传空值是为了默认查询全市的数据
 				// 获取文件路径
 				var jsonFilePath = '../js/lianyungang.json';
 					
@@ -185,7 +188,7 @@
 										name: '',
 										type: 'scatter',
 										symbol : 'circle',
-										symbolSize : 10,
+										symbolSize : 12,
 										coordinateSystem: 'geo',
 										data: LableData_sz1,
 										itemStyle: {
@@ -222,11 +225,17 @@
 									}else if(clickedAreaName == "灌南县"){
 										c_dq = "320724";
 									}
-									// 检查是否点击了 scatter 类型的图表
 									if (params.seriesType === 'scatter') {
-										show_mj_rk("320700");//切换区县重新查询数据
-										var parentWebview = plus.webview.currentWebview().opener();
-										parentWebview.evalJS('document.getElementById("dj_dqdm").value=320700');
+										if (params.data.customType === 'star') {//点击连云港
+											show_mj_rk("320700");//切换区县重新查询数据
+											var parentWebview = plus.webview.currentWebview().opener();
+											parentWebview.evalJS('document.getElementById("dj_dqdm").value=320700');
+										}else if(params.data.customType === 'circle') {//点击功能区
+											show_mj_rk("320701");//切换区县重新查询数据
+											var parentWebview = plus.webview.currentWebview().opener();
+											parentWebview.evalJS('document.getElementById("dj_dqdm").value=320701');
+										}
+										
 									}else{
 										show_mj_rk(c_dq);//切换区县重新查询数据
 										var parentWebview = plus.webview.currentWebview().opener();
