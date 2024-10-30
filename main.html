@@ -33,9 +33,9 @@
            	<a id="bzgkTab" class="mui-tab-item" href="main_page/bzgk.html"  style="">
                 <span class="mui-tab-label">编制概况</span>
             </a>
-           	<a id="" class="mui-tab-item" href="main_page/search.html">
+           <!-- 	<a id="" class="mui-tab-item" href="main_page/search.html">
                 <span class="mui-tab-label">一键查找</span>
-            </a>
+            </a> -->
 			<a id="zyTab" class="mui-tab-item mui-active" href="main_page/qsbzjg.html">
 			    <span class="mui-tab-label">主页</span>
 			</a>
@@ -54,7 +54,8 @@
 			(function($, doc) {
 				mui.init({ });
 				$.plusReady(function() {
-					var pages = ["main_page/bzgk.html","main_page/search.html","main_page/qsbzjg.html","main_page/bzjg.html","main_page/bzwj.html"];
+					//var pages = ["main_page/bzgk.html","main_page/search.html","main_page/qsbzjg.html","main_page/bzjg.html","main_page/bzwj.html"];
+					var pages = ["main_page/bzgk.html","main_page/qsbzjg.html","main_page/bzjg.html","main_page/bzwj.html"];
 				    var arr = document.getElementsByClassName("mui-tab-item")
 				    var styles = {
 				        top:"50px",
@@ -81,7 +82,8 @@
 				            })
 				        }(i);
 				    }
-				    mui.trigger(arr[2],"tap");
+				    //mui.trigger(arr[2],"tap");
+				    mui.trigger(arr[1],"tap");
 				    
 				    window.addEventListener('openbzgk_sy', function(event) {
 				    	mui.trigger(arr[0],"tap");
