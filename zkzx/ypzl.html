@@ -100,6 +100,11 @@
 			function cxtb(){
 				//var district = plus.storage.getItem('district');
 				var district = "";//传空值是为了默认查询全市的数据
+				if(plus.storage.getItem('district') == "320700"){
+					district = "";//传空值是为了默认查询全市的数据
+				}else{
+					district = plus.storage.getItem('district');
+				}
 				// 获取文件路径
 				var jsonFilePath = '../js/lianyungang.json';
 					
@@ -212,36 +217,37 @@
 								    // 获取点击区域的信息
 								    var clickedAreaName = params.name; // 获取区域的名称
 									var c_dq = "";
-									if(clickedAreaName == "赣榆区"){
-										c_dq = "320721";
-									}else if(clickedAreaName == "连云区"){
-										c_dq = "320703";
-									}else if(clickedAreaName == "东海县"){
-										c_dq = "320722";
-									}else if(clickedAreaName == "海州区"){
-										c_dq = "320706";
-									}else if(clickedAreaName == "灌云县"){
-										c_dq = "320723";
-									}else if(clickedAreaName == "灌南县"){
-										c_dq = "320724";
-									}
-									if (params.seriesType === 'scatter') {
-										if (params.data.customType === 'star') {//点击连云港
-											show_mj_rk("320700");//切换区县重新查询数据
-											var parentWebview = plus.webview.currentWebview().opener();
-											parentWebview.evalJS('document.getElementById("dj_dqdm").value=320700');
-										}else if(params.data.customType === 'circle') {//点击功能区
-											show_mj_rk("320701");//切换区县重新查询数据
-											var parentWebview = plus.webview.currentWebview().opener();
-											parentWebview.evalJS('document.getElementById("dj_dqdm").value=320701');
+									if(plus.storage.getItem('district') == "320700"){//只有市直地图可以点击
+										if(clickedAreaName == "赣榆区"){
+											c_dq = "320721";
+										}else if(clickedAreaName == "连云区"){
+											c_dq = "320703";
+										}else if(clickedAreaName == "东海县"){
+											c_dq = "320722";
+										}else if(clickedAreaName == "海州区"){
+											c_dq = "320706";
+										}else if(clickedAreaName == "灌云县"){
+											c_dq = "320723";
+										}else if(clickedAreaName == "灌南县"){
+											c_dq = "320724";
 										}
-										
-									}else{
-										show_mj_rk(c_dq);//切换区县重新查询数据
-										var parentWebview = plus.webview.currentWebview().opener();
-										parentWebview.evalJS('document.getElementById("dj_dqdm").value ='+c_dq);
+										if (params.seriesType === 'scatter') {
+											if (params.data.customType === 'star') {//点击连云港
+												show_mj_rk("320700");//切换区县重新查询数据
+												var parentWebview = plus.webview.currentWebview().opener();
+												parentWebview.evalJS('document.getElementById("dj_dqdm").value=320700');
+											}else if(params.data.customType === 'circle') {//点击功能区
+												show_mj_rk("320701");//切换区县重新查询数据
+												var parentWebview = plus.webview.currentWebview().opener();
+												parentWebview.evalJS('document.getElementById("dj_dqdm").value=320701');
+											}
+											
+										}else{
+											show_mj_rk(c_dq);//切换区县重新查询数据
+											var parentWebview = plus.webview.currentWebview().opener();
+											parentWebview.evalJS('document.getElementById("dj_dqdm").value ='+c_dq);
+										}
 									}
-									
 								});
 								
 							} catch (error) {
